@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
+import '../anonHome.dart';
+
 class AllDayRent extends StatefulWidget {
   @override
   _AllDayRentState createState() => _AllDayRentState();
@@ -386,6 +388,10 @@ class _AllDayRentState extends State<AllDayRent> {
           onPressed: (){
             _databaseService.anonCustomerDataUpdate(name, surname ,email, age,weight,phoneNumber);
             _databaseService.anonRentalData(fullStack, kiteBarStack, boardStack, harnessStack, total, dayType, rentalDate);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AnonymousHomePage()),
+            );
           },
         ),
       ],

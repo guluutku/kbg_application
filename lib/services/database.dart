@@ -58,4 +58,32 @@ class DatabaseService{
     });
   }
 
+  // subCollection for anonymous private lesson
+  void anonPrivateLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    await databaseReference.collection("anonim").document(firebaseUser.uid).collection("Private Lesson").add({
+      'Total Hours': hours,
+      'One Hour': oneHour,
+      'Six Hours': sixHours,
+      'Eight Hours': eightHours,
+      'Session': session,
+      'Price': price,
+      'Date': lessonDate,
+    });
+  }
+
+  // subCollection for anonymous group lesson
+  void anonGroupLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    await databaseReference.collection("anonim").document(firebaseUser.uid).collection("Group Lesson").add({
+      'Total Hours': hours,
+      'One Hour': oneHour,
+      'Six Hours': sixHours,
+      'Eight Hours': eightHours,
+      'Session': session,
+      'Price': price,
+      'Date': lessonDate,
+    });
+  }
+
 }
