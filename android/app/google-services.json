@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "60596612978",
+    "firebase_url": "https://kbg-app.firebaseio.com",
+    "project_id": "kbg-app",
+    "storage_bucket": "kbg-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60596612978:android:dcd7f774cab6b65af9f7eb",
+        "android_client_info": {
+          "package_name": "com.gunluuutku.kbgapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60596612978-chggqaugrfqvk4r20irl8jld4dtvloo6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAspFd84_j9Iy3CZ20uTSU2CkoMHrWY6Vk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60596612978-chggqaugrfqvk4r20irl8jld4dtvloo6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
