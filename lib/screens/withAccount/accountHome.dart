@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:kbgapp/screens/withAccount/profile.dart';
 import 'package:kbgapp/services/authentication.dart';
 import 'package:kbgapp/services/database.dart';
+import 'package:kbgapp/sharedCode/logout.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
 class AccountHome extends StatefulWidget {
@@ -31,11 +33,11 @@ class _AccountHomeState extends State<AccountHome> {
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
           child: Column(
             children: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.person),
-                label: Text("logout"),
-                onPressed: () async{
-                  await _authService.signOut();
+              logout,
+              FlatButton(
+                child: Text("Profil"),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
                 },
               ),
             ],
@@ -61,11 +63,27 @@ class _AccountHomeState extends State<AccountHome> {
         ],
       ),
 
-      body: Center(
-        child: Column(
-          children: <Widget>[
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
 
-          ],
+            children: <Widget>[
+              Text("Choose lesson or rent"),
+
+              RaisedButton(
+                child: Text("Lesson"),
+                onPressed: (){},
+              ),
+
+              RaisedButton(
+                child: Text("Rent"),
+                onPressed: (){},
+              ),
+            ],
+          ),
         ),
       ),
     );
