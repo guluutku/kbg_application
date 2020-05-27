@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:kbgapp/screens/withAccount/profile.dart';
+import 'package:kbgapp/screens/withAccount/rental/rentalPage.dart';
 import 'package:kbgapp/services/authentication.dart';
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/logout.dart';
@@ -80,7 +81,12 @@ class _AccountHomeState extends State<AccountHome> {
 
               RaisedButton(
                 child: Text("Rent"),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RentalPage())
+                  );
+                },
               ),
             ],
           ),

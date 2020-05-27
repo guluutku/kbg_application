@@ -21,7 +21,7 @@ class _SignInState extends State<EntryPage> {
 
   final DatabaseService _firestoreDatabaseService = DatabaseService();
 
-  String name;
+  String name, surname, phoneNumber;
   int age = 0;
   double weight = 0.0;
 
@@ -56,6 +56,18 @@ class _SignInState extends State<EntryPage> {
 
               SizedBox(height: 20,),
 
+              TextFormField(
+                decoration: textInputDecoration.copyWith(labelText: "surname"),
+                validator: (value) => value.isEmpty ? "surname" : null,
+                onChanged: (value){
+                  setState(() {
+                    surname = value;
+                  });
+                },
+              ),
+
+              SizedBox(height: 20,),
+
               TextField(
                 decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
                 keyboardType: TextInputType.number,
@@ -83,6 +95,18 @@ class _SignInState extends State<EntryPage> {
                   });
                 },
               ),
+
+              SizedBox(height: 20,),
+
+              TextFormField(
+                decoration: textInputDecoration.copyWith(labelText: "phone number"),
+                validator: (value) => value.isEmpty ? "phone number" : null,
+                onChanged: (value){
+                  setState(() {
+                    phoneNumber = value;
+                  });
+                },
+              ),
             ],
           ),
         ),
@@ -100,7 +124,7 @@ class _SignInState extends State<EntryPage> {
             child: Text("PPP"),
             onPressed: (){
               setState(() {
-                _databaseService.customerDataUpdate(name, age, weight);
+                _databaseService.customerDataUpdate(name, surname, age, weight, phoneNumber);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => AccountHome()));
               });
             },

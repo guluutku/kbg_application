@@ -17,23 +17,79 @@ class DatabaseService{
   final databaseReference = Firestore.instance;
 
   // collection reference
-  final CollectionReference colRef = Firestore.instance.collection('deneme');
+  final CollectionReference colRef = Firestore.instance.collection('membership');
 
   // update customer's data using uid while sign-in
-  void customerDataUpdate(String name, int age, double weight) async {
+  void customerDataUpdate(String name, String surname,  int age, double weight, String phoneNumber) async {
     var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("deneme")
+    await databaseReference.collection("membership")
         .document(firebaseUser.uid).setData({
       'name': name,
+      'surname': surname,
       'age': age,
       'weight': weight,
+      'phone number': phoneNumber,
+    });
+  }
+
+  // subCollection member half day rental
+  void memberHalfDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate) async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    await databaseReference.collection("membership").document(firebaseUser.uid).collection("Half Day Rentals").add({
+      'Full Equipment': full,
+      'Kite N Bar': kiteBar,
+      'Board': board,
+      'Harness': harness,
+      'Price(TL)': price,
+      'Rental Date': rentDate
+    });
+  }
+
+  // subCollection member all day rental
+  void memberAllDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate) async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    await databaseReference.collection("membership").document(firebaseUser.uid).collection("All Day Rentals").add({
+      'Full Equipment': full,
+      'Kite N Bar': kiteBar,
+      'Board': board,
+      'Harness': harness,
+      'Price(TL)': price,
+      'Rental Date': rentDate
+    });
+  }
+
+  // subCollection for member private lesson
+  void memberPrivateLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    await databaseReference.collection("membership").document(firebaseUser.uid).collection("Private Lesson").add({
+      'Total Hours': hours,
+      'One Hour': oneHour,
+      'Six Hours': sixHours,
+      'Eight Hours': eightHours,
+      'Session': session,
+      'Price': price,
+      'Date': lessonDate,
+    });
+  }
+
+  // subCollection for member group lesson
+  void memberGroupLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    await databaseReference.collection("membership").document(firebaseUser.uid).collection("Group Lesson").add({
+      'Total Hours': hours,
+      'One Hour': oneHour,
+      'Six Hours': sixHours,
+      'Eight Hours': eightHours,
+      'Session': session,
+      'Price': price,
+      'Date': lessonDate,
     });
   }
 
   // anonymous user's data
   void anonCustomerDataUpdate(String name, String surName, String email, int age, double weight, String phoneNumber) async {
     var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("anonim")
+    await databaseReference.collection("anonymous")
         .document(firebaseUser.uid).setData({
       'name': name,
       'surname': surName,
@@ -44,16 +100,28 @@ class DatabaseService{
     });
   }
 
-  // subCollection for anonymous rental
-  void anonRentalData(int full, int kiteBar, int board, int harness, int price, String dayType, DateTime rentDate) async{
+  // subCollection for anonymous half day rental
+  void anonHalfDayRentalData(int full, int kiteBar, int board, int harness, int price,DateTime rentDate) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("anonim").document(firebaseUser.uid).collection("Rentals").add({
+    await databaseReference.collection("anonymous").document(firebaseUser.uid).collection("Half Day Rentals").add({
       'Full Equipment': full,
       'Kite N Bar': kiteBar,
       'Board': board,
       'Harness': harness,
       'Price(TL)': price,
-      'Rent Type': dayType,
+      'Rental Date': rentDate
+    });
+  }
+
+  // subCollection for anonymous all day rental
+  void anonAllDayRentalData(int full, int kiteBar, int board, int harness, int price,DateTime rentDate) async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    await databaseReference.collection("anonymous").document(firebaseUser.uid).collection("All Day Rentals").add({
+      'Full Equipment': full,
+      'Kite N Bar': kiteBar,
+      'Board': board,
+      'Harness': harness,
+      'Price(TL)': price,
       'Rental Date': rentDate
     });
   }
@@ -61,7 +129,7 @@ class DatabaseService{
   // subCollection for anonymous private lesson
   void anonPrivateLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("anonim").document(firebaseUser.uid).collection("Private Lesson").add({
+    await databaseReference.collection("anonymous").document(firebaseUser.uid).collection("Private Lesson").add({
       'Total Hours': hours,
       'One Hour': oneHour,
       'Six Hours': sixHours,
@@ -75,7 +143,7 @@ class DatabaseService{
   // subCollection for anonymous group lesson
   void anonGroupLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("anonim").document(firebaseUser.uid).collection("Group Lesson").add({
+    await databaseReference.collection("anonymous").document(firebaseUser.uid).collection("Group Lesson").add({
       'Total Hours': hours,
       'One Hour': oneHour,
       'Six Hours': sixHours,

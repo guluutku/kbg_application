@@ -32,7 +32,6 @@ class _AllDayRentState extends State<AllDayRent> {
   int harnessStack = 0;
 
   int total = 0;
-  String dayType = "Full Day";
 
   String name = "", surname, email, phoneNumber;
   int age;
@@ -387,7 +386,7 @@ class _AllDayRentState extends State<AllDayRent> {
           child: Text("Confirm & Continue"),
           onPressed: (){
             _databaseService.anonCustomerDataUpdate(name, surname ,email, age,weight,phoneNumber);
-            _databaseService.anonRentalData(fullStack, kiteBarStack, boardStack, harnessStack, total, dayType, rentalDate);
+            _databaseService.anonAllDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, total, rentalDate);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AnonymousHomePage()),

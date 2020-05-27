@@ -9,7 +9,6 @@ class AnonRentalPage extends StatefulWidget {
 }
 
 class _AnonRentalPageState extends State<AnonRentalPage> {
-  bool value = false;
 
   @override
   Widget build(BuildContext context) {

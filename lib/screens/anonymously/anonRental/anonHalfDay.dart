@@ -21,8 +21,6 @@ class _HalfDayRentalState extends State<HalfDayRental> {
 
   DateTime rentalDate = new DateTime.now();
 
-  String dayType = "Half Day";
-
   int _full = 0;
   int _kiteBar = 0;
   int _board = 0;
@@ -388,7 +386,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
           child: Text("Confirm & Continue"),
           onPressed: (){
             _databaseService.anonCustomerDataUpdate(name, surname ,email, age,weight,phoneNumber);
-            _databaseService.anonRentalData(fullStack, kiteBarStack, boardStack, harnessStack, totalHalfDayEquip, dayType, rentalDate);
+            _databaseService.anonHalfDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, totalHalfDayEquip, rentalDate);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AnonymousHomePage()),
