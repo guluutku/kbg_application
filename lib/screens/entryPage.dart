@@ -234,7 +234,7 @@ class _SignInState extends State<EntryPage> {
         });
       } else { // sends to account page
           var firebaseUser = await FirebaseAuth.instance.currentUser();
-          final snapShot =await Firestore.instance.collection("deneme")
+          final snapShot = await Firestore.instance.collection("membership")
               .document(firebaseUser.uid)
               .get();
 

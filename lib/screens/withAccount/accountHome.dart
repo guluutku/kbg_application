@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kbgapp/screens/withAccount/lessons/lessonsHome.dart';
 
 import 'package:kbgapp/screens/withAccount/profile.dart';
 import 'package:kbgapp/screens/withAccount/rental/rentalPage.dart';
@@ -76,7 +77,12 @@ class _AccountHomeState extends State<AccountHome> {
 
               RaisedButton(
                 child: Text("Lesson"),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LessonHome())
+                  );
+                },
               ),
 
               RaisedButton(
