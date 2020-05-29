@@ -12,12 +12,14 @@ import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 class AccountHome extends StatefulWidget {
   @override
   _AccountHomeState createState() => _AccountHomeState();
+
 }
 
 class _AccountHomeState extends State<AccountHome> {
 
   TextEditingController _value = new TextEditingController();
 
+  String email;
   String name;
   int age = 0;
   double weight = 0.0;

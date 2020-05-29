@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:kbgapp/modules/customers.dart';
@@ -69,5 +70,4 @@ class AuthService{
       return null;
     }
   }
-
 }

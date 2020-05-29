@@ -19,15 +19,12 @@ class EntryPage extends StatefulWidget {
 
 class _SignInState extends State<EntryPage> {
 
-  final DatabaseService _firestoreDatabaseService = DatabaseService();
-
   String name, surname, phoneNumber;
   int age = 0;
   double weight = 0.0;
 
   DatabaseService _databaseService = new DatabaseService();
 
-  final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
@@ -245,6 +242,5 @@ class _SignInState extends State<EntryPage> {
           }
       }
     }
-     // if snS.exist go screen else showDialog(await)
-  } //showDialog func
+  }
 }
