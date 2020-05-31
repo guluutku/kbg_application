@@ -42,7 +42,7 @@ class _AnonRentalPageState extends State<AnonRentalPage> {
               onPressed: (){
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HalfDayRental())
+                    MaterialPageRoute(builder: (context) => AnonHalfDayRental())
                 );
               },
               child: Text("Half day rental"),

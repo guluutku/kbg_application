@@ -2,17 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:kbgapp/screens/sharedScreens/halfDayRental.dart';
+import 'package:kbgapp/screens/sharedScreens/information.dart';
+import 'package:kbgapp/screens/sharedScreens/startDate.dart';
 
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 import '../anonHome.dart';
 
-class HalfDayRental extends StatefulWidget {
+class AnonHalfDayRental extends StatefulWidget {
   @override
-  _HalfDayRentalState createState() => _HalfDayRentalState();
+  _AnonHalfDayRentalState createState() => _AnonHalfDayRentalState();
 }
 
-class _HalfDayRentalState extends State<HalfDayRental> {
+class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
+
+  int _selectedPage = 0;
+  final _pageOptions = [
+    HalfDayRental(),
+    StartDate(),
+    Information(),
+  ];
 
   DatabaseService _databaseService = new DatabaseService();
 
@@ -23,24 +33,44 @@ class _HalfDayRentalState extends State<HalfDayRental> {
 
       appBar: AppBar(
         title: Text('Half Day Rental'),
+        actions: <Widget>[
+          RaisedButton(
+            child: Text("Done"),
+            onPressed: () {
+              rentConfirmation(context);
+            },
+          )
+        ],
       ),
+      body: _pageOptions[_selectedPage],
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedPage,
         backgroundColor: Colors.blue[600],
+
+        onTap: (int index){
+          setState(() {
+            _selectedPage = index;
+          });
+        },
+
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text("Home"),
+            title: Text("Equipments"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.usb),
-            title: Text("HHHHHHH"),
+            icon: Icon(Icons.calendar_today),
+            title: Text("Date"),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            title: Text("Information"),
           ),
         ],
       ),
     );
   }
 
-  /**
   void rentConfirmation(BuildContext context){
     var alertDialog = AlertDialog(
       title: Text(
@@ -48,19 +78,13 @@ class _HalfDayRentalState extends State<HalfDayRental> {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: Text(
-          "The equipments you want to rent are:"
-              "$fullStack" +"  Full Equipment,  "
-              "$kiteBarStack"+"  Kite and Bar,  "
-              "$boardStack"+"  Boards,  "
-              "$harnessStack"+"  Harnesses  "
-              "Total: $totalHalfDayEquip  TL"
+         "asaddasda"
       ),
       actions: <Widget>[
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: (){
-            _databaseService.anonCustomerDataUpdate(name, surname ,email, age,weight,phoneNumber);
-            _databaseService.anonHalfDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, totalHalfDayEquip, rentalDate);
+
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AnonymousHomePage()),
@@ -78,5 +102,5 @@ class _HalfDayRentalState extends State<HalfDayRental> {
         }
     );
   }
-      */
+
 }

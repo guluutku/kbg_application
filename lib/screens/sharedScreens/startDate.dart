@@ -2,31 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class StartDate extends StatefulWidget {
-
-  @override
-  _StartDateState createState() => _StartDateState();
-}
-
-class _StartDateState extends State<StartDate> {
+class StartDate extends StatelessWidget {
+  
   final dateForm = DateFormat("dd - mm - yyyy");
 
   DateTime startDate = new DateTime.now();
 
-  CalendarController _calendarController;
-
-  @override
-  void initState(){
-    super.initState();
-    _calendarController = CalendarController();
-  }
+  CalendarController _calendarController = new CalendarController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Calender"),
-      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -45,7 +31,6 @@ class _StartDateState extends State<StartDate> {
               headerStyle: HeaderStyle(
                 centerHeaderTitle: true,
                 formatButtonShowsNext: false,
-
               ),
 
             )

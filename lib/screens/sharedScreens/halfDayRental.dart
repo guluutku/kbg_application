@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 
+
 class HalfDayRental extends StatefulWidget {
+
   @override
   _HalfDayRentalState createState() => _HalfDayRentalState();
 }
 
 class _HalfDayRentalState extends State<HalfDayRental> {
-
   int _full = 0;
+
   int _kiteBar = 0;
+
   int _board = 0;
+
   int _harness = 0;
 
   int fullStack = 0;
+
   int kiteBarStack = 0;
+
   int boardStack = 0;
+
   int harnessStack = 0;
 
   int totalHalfDayEquip = 0;
@@ -27,7 +34,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
   }
 
   void _incrementFullEquipStack() { // increase _fullStack by 1
-    setState(() {
+     setState(() {
       fullStack++;
     });
   }
@@ -46,16 +53,16 @@ class _HalfDayRentalState extends State<HalfDayRental> {
   }
 
   void _incrementBoardStack() { // increase _boardStack by 1
-    setState(() {
+   setState(() {
       boardStack++;
     });
   }
 
   void _minusBoardStack() { // increase _boardStack by 1 never under 0
-    setState(() {
+   setState(() {
       if (boardStack != 0)
         boardStack--;
-    });
+       });
   }
 
   void _incrementHarnessStack() { // increase _harnessStack by 1
@@ -208,6 +215,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
 
                   new RaisedButton( // decrease _harnessStack by 1
                     onPressed: (){
+                      print(harnessStack);
                       _minusHarnessStack();
                       _harnessPrice();
                       totalPrice();
@@ -242,5 +250,4 @@ class _HalfDayRentalState extends State<HalfDayRental> {
       ),
     );
   }
-
 }

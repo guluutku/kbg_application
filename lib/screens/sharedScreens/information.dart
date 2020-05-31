@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
-class Information extends StatefulWidget {
-  @override
-  _InformationState createState() => _InformationState();
-}
 
-class _InformationState extends State<Information> {
+class Information extends StatelessWidget {
 
   String name, surname, email, phoneNumber;
   int age;
@@ -25,9 +21,7 @@ class _InformationState extends State<Information> {
                 decoration: textInputDecoration.copyWith(labelText: "name"),
                 validator: (value) => value.isEmpty ? "name" : null,
                 onChanged: (value){
-                  setState(() {
-                    name = value;
-                  });
+                  name = value;
                 },
               ),
 
@@ -37,9 +31,7 @@ class _InformationState extends State<Information> {
                 decoration: textInputDecoration.copyWith(labelText: "surname"),
                 validator: (value) => value.isEmpty ? "surname" : null,
                 onChanged: (value){
-                  setState(() {
-                    surname = value;
-                  });
+                  surname = value;
                 },
               ),
 
@@ -49,9 +41,7 @@ class _InformationState extends State<Information> {
                 decoration: textInputDecoration.copyWith(labelText: "email"),
                 validator: (value) => value.isEmpty ? "email" : null,
                 onChanged: (value){
-                  setState(() {
-                    email = value;
-                  });
+                  email = value;
                 },
               ),
 
@@ -61,9 +51,7 @@ class _InformationState extends State<Information> {
                 decoration: textInputDecoration.copyWith(labelText: "Phone"),
                 validator: (value) => value.isEmpty ? "phone" : null,
                 onChanged: (value){
-                  setState(() {
-                    phoneNumber = value;
-                  });
+                  phoneNumber = value;
                 },
               ),
 
@@ -76,9 +64,7 @@ class _InformationState extends State<Information> {
                   WhitelistingTextInputFormatter.digitsOnly,
                 ],
                 onChanged: (_value){
-                  setState(() {
-                    age = int.parse(_value);
-                  });
+                  age = int.parse(_value);
                 },
               ),
 
@@ -91,9 +77,7 @@ class _InformationState extends State<Information> {
                   WhitelistingTextInputFormatter.digitsOnly
                 ],
                 onChanged: (_value){
-                  setState(() {
-                    weight = double.parse(_value);
-                  });
+                  weight = double.parse(_value);
                 },
               ),
             ],

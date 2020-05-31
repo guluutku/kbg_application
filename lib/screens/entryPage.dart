@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:kbgapp/screens/Admin/adminHome.dart';
 import 'package:kbgapp/screens/signUp.dart';
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/authentication.dart';
@@ -30,7 +31,7 @@ class _SignInState extends State<EntryPage> {
 
   String email = "";
   String password = "";
-  String error ="";
+  String error = "";
 
   final AuthService _auth = AuthService();
 
@@ -220,15 +221,18 @@ class _SignInState extends State<EntryPage> {
   //log-in via e-mail
   void signIn() async {
     if (_formKey.currentState.validate()) {
+      var firebaseUser = await FirebaseAuth.instance.currentUser();
+
       dynamic result = await _auth
           .signInEmail(email, password);
-
 
       if (result == null) {
         setState(() {
           loading = false;
           error = "Wrong email";
         });
+      } else if(firebaseUser.uid == "aMDsuSJ9h6eIJuWX0SvwmXJTvTJ3"){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminHome()));
       } else { // sends to account page
           var firebaseUser = await FirebaseAuth.instance.currentUser();
           final snapShot = await Firestore.instance.collection("membership")
