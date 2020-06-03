@@ -21,6 +21,15 @@ class _AllDayRentState extends State<AllDayRent> {
 
   DateTime rentalDate = new DateTime.now();
 
+  final _formKey = GlobalKey<FormState>();
+
+  String _name;
+  String _surname;
+  int _age;
+  double _weight;
+  String _phoneNumber;
+  String _email;
+
   int _full = 0;
   int _kiteBar = 0;
   int _board = 0;
@@ -31,11 +40,7 @@ class _AllDayRentState extends State<AllDayRent> {
   int boardStack = 0;
   int harnessStack = 0;
 
-  int total = 0;
-
-  String name = "", surname, email, phoneNumber;
-  int age;
-  double weight;
+  int totalAllDayEquipPrice = 0;
 
   void _minusFullEquipStack() { // decrease _fullStack by 1 never under 0
     setState(() {
@@ -106,7 +111,7 @@ class _AllDayRentState extends State<AllDayRent> {
   }
 
   int totalPrice(){ // Calculate total price the customer will pay
-    return total = _harness + _board + _kiteBar + _full;
+    return totalAllDayEquipPrice = _harness + _board + _kiteBar + _full;
   }
 
   @override
@@ -259,82 +264,6 @@ class _AllDayRentState extends State<AllDayRent> {
                 value: true,
               ),
 
-              TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "name"),
-                validator: (value) => value.isEmpty ? "name" : null,
-                onChanged: (value){
-                  setState(() {
-                    name = value;
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "surname"),
-                validator: (value) => value.isEmpty ? "surname" : null,
-                onChanged: (value){
-                  setState(() {
-                    surname = value;
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "email"),
-                validator: (value) => value.isEmpty ? "email" : null,
-                onChanged: (value){
-                  setState(() {
-                    email = value;
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "Phone"),
-                validator: (value) => value.isEmpty ? "phone" : null,
-                onChanged: (value){
-                  setState(() {
-                    phoneNumber = value;
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextField(
-                decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly,
-                ],
-                onChanged: (_value){
-                  setState(() {
-                    age = int.parse(_value);
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextField(
-                decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ],
-                onChanged: (_value){
-                  setState(() {
-                    weight = double.parse(_value);
-                  });
-                },
-              ),
-
               Text("$rentalDate"),
 
               RaisedButton(
@@ -353,11 +282,16 @@ class _AllDayRentState extends State<AllDayRent> {
                 },
               ),
 
+
               RaisedButton(
+                child: Text("Give personal information"),
                 onPressed: (){
-                  rentConfirmation(context);
+                  if( totalAllDayEquipPrice == 0){
+                    print("Wrong info");
+                  } else{
+                    personalInfo(context);
+                  }
                 },
-                child: Text("Continue"),
               ),
             ],
           ),
@@ -367,42 +301,77 @@ class _AllDayRentState extends State<AllDayRent> {
       );
   }
 
-  void rentConfirmation(BuildContext context){
-    var alertDialog = AlertDialog(
-      title: Text(
-        "CONFIRMATION",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      content: Text(
-          "The equipments you want to rent are:"
-              "$fullStack  Full Equipment,  "
-              "$kiteBarStack  Kite and Bar,  "
-              "$boardStack  Boards,  "
-              "$harnessStack  Harnesses  "
-              "Total: $total  TL"
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text("Confirm & Continue"),
-          onPressed: (){
-            _databaseService.anonCustomerDataUpdate(name, surname ,email, age,weight,phoneNumber);
-            _databaseService.anonAllDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, total, rentalDate);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AnonymousHomePage()),
-            );
-          },
-        ),
-      ],
-      backgroundColor: Colors.pink,
-    );
+  void personalInfo(BuildContext context){
+    showModalBottomSheet(context: context, builder: (context){ // TODO: try showCupertinoModalPopup
+      return Container(
+        padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 100.0),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                  validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                  onChanged: (val) => setState(() => _name = val),
+                ),
+                SizedBox(height: 10.0),
 
-    showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return alertDialog;
-        }
-    );
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                  validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                  onChanged: (val) => setState(() => _surname = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
+                  validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
+                  onChanged: (val) => setState(() => _phoneNumber = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
+                  validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
+                  onChanged: (val) => setState(() => _email = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                  validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly,
+                  ],
+                  onChanged: (val) => setState(() => _age = int.parse(val)),
+                ),
+                SizedBox(height: 10.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                  validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                  onChanged: (val) => setState(() => _weight = double.parse(val)),
+                ),
+                SizedBox(height: 10.0),
+                RaisedButton(
+                    color: Colors.pink[400],
+                    child: Text(
+                      'Update',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () async {
+                      _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
+                      _databaseService.anonAllDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, totalAllDayEquipPrice, rentalDate);
+                    }
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 
 }

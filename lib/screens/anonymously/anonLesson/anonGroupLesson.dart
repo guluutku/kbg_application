@@ -19,96 +19,101 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
 
   final dateForm = DateFormat("dd - mm - yyyy");
 
-  DateTime lessonDate = new DateTime.now();
+  DateTime _lessonDate = new DateTime.now();
 
-  String name = "", surname, email, phoneNumber;
-  int age;
-  double weight;
+  final _formKey = GlobalKey<FormState>();
+
+  String _name;
+  String _surname;
+  int _age;
+  double _weight;
+  String _phoneNumber;
+  String _email;
 
   int _sixHours = 0;
   int _eightHours = 0;
   int _hour = 0;
 
-  int sixHoursStack = 0;
-  int eightHoursStack = 0;
-  int hourStack = 0;
+  int _sixHoursStack = 0;
+  int _eightHoursStack = 0;
+  int _oneHourStack = 0;
 
-  int totalLessonPrice = 0;
-  int totalHour = 0;
+  int _totalLessonPrice = 0;
+  int _totalHours = 0;
 
-  bool morningSession = false;
-  String session;
+  bool _morningSession = false;
+  String _session;
 
   void selectedSession(){
-    if(morningSession){
+    if(_morningSession){
       setState(() {
-        session ="Morning Session";
+        _session ="Morning Session";
       });
     } else{
-      session = "Afternoon Session";
+      _session = "Afternoon Session";
     }
   }
 
   void incrementSixHours(){
     setState(() {
-      sixHoursStack++;
+      _sixHoursStack++;
     });
   }
 
   void decreaseSixHours(){
-    if(sixHoursStack != 0){
+    if(_sixHoursStack != 0){
       setState(() {
-        sixHoursStack--;
+        _sixHoursStack--;
       });
     }
   }
 
   int sixHoursPrice(){
-    return _sixHours = 1600 * sixHoursStack;
+    return _sixHours = 1600 * _sixHoursStack;
   }
 
   void incrementEightHours(){
     setState(() {
-      eightHoursStack++;
+      _eightHoursStack++;
     });
   }
 
   void decreaseEightHours(){
-    if(eightHoursStack != 0){
+    if(_eightHoursStack != 0){
       setState(() {
-        eightHoursStack--;
+        _eightHoursStack--;
       });
     }
   }
 
   int eightHoursPrice(){
-    return _eightHours = 2100 * eightHoursStack;
+    return _eightHours = 2100 * _eightHoursStack;
   }
 
   void incrementHour(){
     setState(() {
-      hourStack++;
+      _oneHourStack++;
     });
   }
 
   void decreaseHour(){
-    if(hourStack != 0){
+    if(_oneHourStack != 0){
       setState(() {
-        hourStack--;
+        _oneHourStack--;
       });
     }
   }
 
   int hourPrice(){
-    return _hour = 300 * hourStack;
+    return _hour = 300 * _oneHourStack;
   }
 
   int totalPrice() {
-    return totalLessonPrice = _eightHours + _hour + _sixHours;
+    return _totalLessonPrice = _eightHours + _hour + _sixHours;
   }
 
   int totalHours(){
-    return totalHour = 1 * hourStack + 6 * sixHoursStack + 8 * eightHoursStack;
+    return _totalHours = 1 * _oneHourStack + 6 * _sixHoursStack + 8 * _eightHoursStack;
   }
 
   @override
@@ -159,7 +164,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                         color: Colors.black),
                   ),
 
-                  new Text('$eightHoursStack',
+                  new Text('$_eightHoursStack',
                       style: new TextStyle(fontSize: 30.0)),
 
                   new RaisedButton( // increase _eightHoursStack by 1
@@ -191,7 +196,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                         color: Colors.black),
                   ),
 
-                  new Text('$sixHoursStack',
+                  new Text('$_sixHoursStack',
                       style: new TextStyle(fontSize: 30.0)),
 
                   new RaisedButton( // increase _sixHoursStack by 1
@@ -223,7 +228,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                         color: Colors.black),
                   ),
 
-                  new Text('$hourStack',
+                  new Text('$_oneHourStack',
                       style: new TextStyle(fontSize: 30.0)),
 
                   new RaisedButton( // increase _hourStack by 1
@@ -258,12 +263,12 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 onChanged: (value){
                   if(value){
                     setState(() {
-                      morningSession = true;
+                      _morningSession = true;
                       selectedSession();
                     });
                   } else if(value == false){
                     setState(() {
-                      morningSession = false;
+                      _morningSession = false;
                       selectedSession();
                     });
                   } else{
@@ -273,95 +278,21 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 hint: Text("Sessions"),
               ),
 
-              TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "name"),
-                validator: (value) => value.isEmpty ? "name" : null,
-                onChanged: (value){
-                  setState(() {
-                    name = value;
-                  });
-                },
-              ),
 
-              SizedBox(height: 20,),
 
-              TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "surname"),
-                validator: (value) => value.isEmpty ? "surname" : null,
-                onChanged: (value){
-                  setState(() {
-                    surname = value;
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "email"),
-                validator: (value) => value.isEmpty ? "email" : null,
-                onChanged: (value){
-                  setState(() {
-                    email = value;
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "Phone"),
-                validator: (value) => value.isEmpty ? "phone" : null,
-                onChanged: (value){
-                  setState(() {
-                    phoneNumber = value;
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextField(
-                decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly,
-                ],
-                onChanged: (_value){
-                  setState(() {
-                    age = int.parse(_value);
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextField(
-                decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ],
-                onChanged: (_value){
-                  setState(() {
-                    weight = double.parse(_value);
-                  });
-                },
-              ),
-
-              Text("$lessonDate"),
+              Text("$_lessonDate"),
 
               RaisedButton(
                 child: Text("Date"),
                 onPressed: (){
                   showDatePicker(
                     context: context,
-                    initialDate: lessonDate,
+                    initialDate: _lessonDate,
                     firstDate: DateTime(2020),
                     lastDate: DateTime(2021),
                   ).then((date)  {
                     setState((){
-                      lessonDate = date;
+                      _lessonDate = date;
                     });
                   });
                 },
@@ -369,7 +300,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
 
               RaisedButton(
                 onPressed: (){
-                  lessonConfirmation(context);
+                  personalInfo(context);
                 },
                 child: Text("Continue"),
               ),
@@ -380,7 +311,88 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
     );
   }
 
-  void lessonConfirmation(BuildContext context) {
+  void personalInfo(BuildContext context){
+    showModalBottomSheet(context: context, builder: (context){ // TODO: try showCupertinoModalPopup
+      return Container(
+        padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 100.0),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                  validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                  onChanged: (val) => setState(() => _name = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                  validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                  onChanged: (val) => setState(() => _surname = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
+                  validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
+                  onChanged: (val) => setState(() => _phoneNumber = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
+                  validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
+                  onChanged: (val) => setState(() => _email = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                  validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly,
+                  ],
+                  onChanged: (val) => setState(() => _age = int.parse(val)),
+                ),
+                SizedBox(height: 10.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                  validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                  onChanged: (val) => setState(() => _weight = double.parse(val)),
+                ),
+                SizedBox(height: 10.0),
+                RaisedButton(
+                    color: Colors.pink[400],
+                    child: Text(
+                      'Update',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () async {
+                      _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
+                      _databaseService.anonGroupLessonData(
+                          _totalHours,
+                          _oneHourStack,
+                          _sixHoursStack,
+                          _eightHoursStack,
+                          _session,
+                          _totalLessonPrice,
+                          _lessonDate);
+                    }
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
+  /**
+  void lessonConfirmation(BuildContext context) { //TODO: bu sayfaya göre uygun hale getir
     var alertDialog = AlertDialog(
       title: Text(
         "CONFIRMATION",
@@ -424,5 +436,5 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
         }
     );
   }
-
+*/
 }

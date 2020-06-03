@@ -20,7 +20,7 @@ class DatabaseService{
   final CollectionReference colRef = Firestore.instance.collection('membership');
 
   // update customer's data using uid while sign-in
-  void customerDataUpdate(String name, String surname,  int age, double weight, String phoneNumber) async {
+  void memberDataUpdate(String name, String surname,  int age, double weight, String phoneNumber) async {
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     await databaseReference.collection("membership")
         .document(firebaseUser.uid).setData({

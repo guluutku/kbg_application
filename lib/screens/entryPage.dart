@@ -122,7 +122,7 @@ class _SignInState extends State<EntryPage> {
             child: Text("PPP"),
             onPressed: (){
               setState(() {
-                _databaseService.customerDataUpdate(name, surname, age, weight, phoneNumber);
+                _databaseService.memberDataUpdate(name, surname, age, weight, phoneNumber);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => AccountHome()));
               });
             },
