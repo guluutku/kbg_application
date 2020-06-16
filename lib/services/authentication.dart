@@ -5,10 +5,6 @@ import 'database.dart';
 
 class AuthService{
 
-  final Customer customers;
-
-  AuthService({this.customers});
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on firebase user

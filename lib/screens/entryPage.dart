@@ -13,12 +13,12 @@ import 'package:kbgapp/sharedCode/appBar.dart';
 import 'anonymously/anonHome.dart';
 import 'package:kbgapp/services/database.dart';
 
-class EntryPage extends StatefulWidget {
+class SignInState extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
 }
 
-class _SignInState extends State<EntryPage> {
+class _SignInState extends State<SignInState> {
 
   String name, surname, phoneNumber;
   int age = 0;
@@ -119,7 +119,7 @@ class _SignInState extends State<EntryPage> {
         content: writeText(context),
         actions: <Widget>[
           RaisedButton(
-            child: Text("PPP"),
+            child: Text("Save"),
             onPressed: (){
               setState(() {
                 _databaseService.memberDataUpdate(name, surname, age, weight, phoneNumber);
@@ -223,15 +223,14 @@ class _SignInState extends State<EntryPage> {
     if (_formKey.currentState.validate()) {
       var firebaseUser = await FirebaseAuth.instance.currentUser();
 
-      dynamic result = await _auth
-          .signInEmail(email, password);
+      dynamic result = await _auth.signInEmail(email, password);
 
-      if (result == null) {
+      if (result == null) { // if email is false
         setState(() {
           loading = false;
           error = "Wrong email";
         });
-      } else if(firebaseUser.uid == "aMDsuSJ9h6eIJuWX0SvwmXJTvTJ3"){
+      } else if(firebaseUser.uid == "aMDsuSJ9h6eIJuWX0SvwmXJTvTJ3"){ // tried to find admin with its uid
           Navigator.push(context, MaterialPageRoute(builder: (context) => AdminHome()));
       } else { // sends to account page
           var firebaseUser = await FirebaseAuth.instance.currentUser();
@@ -239,9 +238,9 @@ class _SignInState extends State<EntryPage> {
               .document(firebaseUser.uid)
               .get();
 
-          if(snapShot.exists){
+          if(snapShot.exists){ // if user has a collection, go to user screens
             Navigator.push(context, MaterialPageRoute(builder: (context) => AccountHome()));
-          } else{
+          } else{ // if user doesn't have any collection, pop-up a dialog
             userInfoDialog(context);
           }
       }

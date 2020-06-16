@@ -23,12 +23,19 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
 
   final _formKey = GlobalKey<FormState>();
 
+  // personal information of person who makes appointment
   String _name;
   String _surname;
   int _age;
   double _weight;
   String _phoneNumber;
   String _email;
+
+  // personal information of second student
+  String _secondName;
+  String _secondSurname;
+  int _secondAge;
+  double _secondWeight;
 
   int _sixHours = 0;
   int _eightHours = 0;
@@ -122,6 +129,12 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         title: Text("Private Lesson"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Send lesson"),
+            onPressed: () => lessonConfirmation(context),
+          ),
+        ],
       ),
 
       body: SingleChildScrollView(
@@ -129,7 +142,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
           child: Column(
             children: <Widget>[
               Text(
-                "Please how many hours you want to puchose.",
+                "Please how many hours you want to purchase.",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
@@ -278,8 +291,6 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 hint: Text("Sessions"),
               ),
 
-
-
               Text("$_lessonDate"),
 
               RaisedButton(
@@ -302,7 +313,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 onPressed: (){
                   personalInfo(context);
                 },
-                child: Text("Continue"),
+                child: Text("Give personal information"),
               ),
             ],
           ),
@@ -314,7 +325,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
   void personalInfo(BuildContext context){
     showModalBottomSheet(context: context, builder: (context){ // TODO: try showCupertinoModalPopup
       return Container(
-        padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 100.0),
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -322,6 +333,9 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                Text("Your information"),
+                SizedBox(height: 10.0),
+
                 TextFormField(
                   decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
                   validator: (val) => val.isEmpty ? 'Please enter a name' : null,
@@ -359,29 +373,58 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                   onChanged: (val) => setState(() => _age = int.parse(val)),
                 ),
                 SizedBox(height: 10.0),
+
                 TextFormField(
                   decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
                   validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
                   onChanged: (val) => setState(() => _weight = double.parse(val)),
                 ),
                 SizedBox(height: 10.0),
+
+                Text("Group members information"),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                  validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                  onChanged: (val) => setState(() => _secondName = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                  validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                  onChanged: (val) => setState(() => _secondSurname = val),
+                ),
+                SizedBox(height: 10.0),
+
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                  validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly,
+                  ],
+                  onChanged: (val) => setState(() => _secondAge = int.parse(val)),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                  validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                  onChanged: (val) => setState(() => _secondWeight = double.parse(val)),
+                ),
+                SizedBox(height: 10.0),
+
                 RaisedButton(
                     color: Colors.pink[400],
                     child: Text(
-                      'Update',
+                      'Close and Save Informations',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () async {
-                      _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-                      _databaseService.anonGroupLessonData(
-                          _totalHours,
-                          _oneHourStack,
-                          _sixHoursStack,
-                          _eightHoursStack,
-                          _session,
-                          _totalLessonPrice,
-                          _lessonDate);
-                    }
+                    onPressed: (){
+                      Navigator.of(context).pop(false);
+                    },
                 ),
               ],
             ),
@@ -391,7 +434,6 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
     });
   }
 
-  /**
   void lessonConfirmation(BuildContext context) { //TODO: bu sayfaya göre uygun hale getir
     var alertDialog = AlertDialog(
       title: Text(
@@ -399,30 +441,29 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: Text(
-          "The leesons you want to take are:"
-              "$hourStack" + "  One Hour Lessons,  "
-              "$sixHoursStack" + "  6 hours lessons,  "
-              "$eightHoursStack" + "  8 hours lessons,  "
-              "Total: $totalLessonPrice  TL"
+          ""
       ),
       actions: <Widget>[
         FlatButton(
           child: Text("Confirm & Continue"),
-          onPressed: () {
-            _databaseService.anonCustomerDataUpdate(
-                name, surname, email, age, weight, phoneNumber);
+          onPressed: () async {
+            _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
             _databaseService.anonGroupLessonData(
-                totalHour,
-                hourStack,
-                sixHoursStack,
-                eightHoursStack,
-                session,
-                totalLessonPrice,
-                lessonDate);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AnonymousHomePage()),
+              _totalHours,
+              _oneHourStack,
+              _sixHoursStack,
+              _eightHoursStack,
+              _session,
+              _totalLessonPrice,
+              _lessonDate
             );
+            Navigator.of(context).pop(AnonymousHomePage());
+          }
+        ),
+        FlatButton(
+          child: Text("Close"),
+          onPressed: () {
+            Navigator.of(context).pop(false);
           },
         ),
       ],
@@ -436,5 +477,5 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
         }
     );
   }
-*/
+
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:kbgapp/screens/withAccount/accountHome.dart';
+
 import 'package:kbgapp/services/database.dart';
+import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
 class GroupLesson extends StatefulWidget {
   @override
@@ -11,6 +13,14 @@ class GroupLesson extends StatefulWidget {
 class _GroupLessonState extends State<GroupLesson> {
 
   DatabaseService _databaseService = new DatabaseService();
+
+  final _formKey = GlobalKey<FormState>();
+
+  // personal information of second student
+  String _name;
+  String _surname;
+  int _age;
+  double _weight;
 
   final dateForm = DateFormat("dd - mm - yyyy");
 
@@ -24,8 +34,8 @@ class _GroupLessonState extends State<GroupLesson> {
   int eightHoursStack = 0;
   int hourStack = 0;
 
-  int totalLessonPrice = 0;
-  int totalHour = 0;
+  int _totalLessonPrice = 0;
+  int _totalHour = 0;
 
   bool morningSession = false;
   String session;
@@ -95,11 +105,11 @@ class _GroupLessonState extends State<GroupLesson> {
   }
 
   int totalPrice() {
-    return totalLessonPrice = _eightHours + _hour + _sixHours;
+    return _totalLessonPrice = _eightHours + _hour + _sixHours;
   }
 
   int totalHours() {
-    return totalHour = 1 * hourStack + 6 * sixHoursStack + 8 * eightHoursStack;
+    return _totalHour = 1 * hourStack + 6 * sixHoursStack + 8 * eightHoursStack;
   }
 
   @override
@@ -107,7 +117,22 @@ class _GroupLessonState extends State<GroupLesson> {
     return Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
-        title: Text("Private Lesson"),
+        title: Text("Group Lesson"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              "Make an appointment",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 15,
+              ),
+            ),
+            onPressed: (){
+              lessonConfirmation(context);
+            },
+          )
+        ],
       ),
 
       body: SingleChildScrollView(
@@ -284,7 +309,7 @@ class _GroupLessonState extends State<GroupLesson> {
 
               RaisedButton(
                 onPressed: () {
-                  lessonConfirmation(context);
+                  _secondStudent(context);
                 },
                 child: Text("Continue"),
               ),
@@ -306,24 +331,14 @@ class _GroupLessonState extends State<GroupLesson> {
               "$hourStack" + "  One Hour Lessons,  "
               "$sixHoursStack" + "  6 hours lessons,  "
               "$eightHoursStack" + "  8 hours lessons,  "
-              "Total: $totalLessonPrice  TL"
+              "Total: $_totalLessonPrice  TL"
       ),
       actions: <Widget>[
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: () {
-            _databaseService.memberGroupLessonData(
-                totalHour,
-                hourStack,
-                sixHoursStack,
-                eightHoursStack,
-                session,
-                totalLessonPrice,
-                lessonDate);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AccountHome()),
-            );
+            _databaseService.memberGroupLessonData(_totalHour, _hour, _sixHours, _eightHours, session, _totalLessonPrice, lessonDate
+                , _name, _surname, _age, _weight);
           },
         ),
       ],
@@ -336,5 +351,67 @@ class _GroupLessonState extends State<GroupLesson> {
           return alertDialog;
         }
     );
+  }
+
+  void _secondStudent(BuildContext context){
+    showModalBottomSheet(context: context, builder: (context){ // TODO: try showCupertinoModalPopup
+      return Container(
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 45.0),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text("Please write the second student's personal information"),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                  validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                  onChanged: (val) => setState(() => _name = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                  validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                  onChanged: (val) => setState(() => _surname = val),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                  validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly,
+                  ],
+                  onChanged: (val) => setState(() => _age = int.parse(val)),
+                ),
+                SizedBox(height: 10.0),
+
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                  validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                  onChanged: (val) => setState(() => _weight = double.parse(val)),
+                ),
+                SizedBox(height: 10.0),
+
+                RaisedButton(
+                  color: Colors.pink[400],
+                  child: Text(
+                    'Close and Save Informations',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: (){
+                    Navigator.of(context).pop(false);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 }

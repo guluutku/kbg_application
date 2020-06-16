@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
+import '../anonHome.dart';
+
 class AnonHalfDayRental extends StatefulWidget {
   AnonHalfDayRental({Key key}) : super(key: key);
 
@@ -28,90 +30,90 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
 
   final dateForm = DateFormat("dd - mm - yyyy");
 
-  DateTime rentalDate = new DateTime.now();
+  DateTime _rentalDate = new DateTime.now();
 
   int _full = 0;
   int _kiteBar = 0;
   int _board = 0;
   int _harness = 0;
 
-  int fullStack = 0;
-  int kiteBarStack = 0;
-  int boardStack = 0;
-  int harnessStack = 0;
+  int _fullStack = 0;
+  int _kiteBarStack = 0;
+  int _boardStack = 0;
+  int _harnessStack = 0;
 
-  int totalHalfDayEquipPrice = 0;
+  int _totalHalfDayEquipPrice = 0;
 
   void _minusFullEquipStack() { // decrease _fullStack by 1 never under 0
     setState(() {
-      if (fullStack != 0)
-        fullStack--;
+      if (_fullStack != 0)
+        _fullStack--;
     });
   }
 
   void _incrementFullEquipStack() { // increase _fullStack by 1
     setState(() {
-      fullStack++;
+      _fullStack++;
     });
   }
 
   void _incrementKiteBarStack() { // increase _kiteBarStack by 1
     setState(() {
-      kiteBarStack++;
+      _kiteBarStack++;
     });
   }
 
   void _minusKiteBarStack() { // increase _kiteBarStack by 1 never under 0
     setState(() {
-      if (kiteBarStack != 0)
-        kiteBarStack--;
+      if (_kiteBarStack != 0)
+        _kiteBarStack--;
     });
   }
 
   void _incrementBoardStack() { // increase _boardStack by 1
     setState(() {
-      boardStack++;
+      _boardStack++;
     });
   }
 
   void _minusBoardStack() { // increase _boardStack by 1 never under 0
     setState(() {
-      if (boardStack != 0)
-        boardStack--;
+      if (_boardStack != 0)
+        _boardStack--;
     });
   }
 
   void _incrementHarnessStack() { // increase _harnessStack by 1
     setState(() {
-      harnessStack++;
+      _harnessStack++;
     });
   }
 
   void _minusHarnessStack() { // increase _harnessStack by 1 never under 0
     setState(() {
-      if (harnessStack != 0)
-        harnessStack--;
+      if (_harnessStack != 0)
+        _harnessStack--;
     });
   }
 
   int _fullEquipmentPrice(){ // multiply to give us total full equipment price
-    return _full = 160 * fullStack;
+    return _full = 160 * _fullStack;
   }
 
   int _kiteBarPrice(){ // multiply to give us total kite+bar price
-    return _kiteBar = 140 * kiteBarStack;
+    return _kiteBar = 140 * _kiteBarStack;
   }
 
   int _boardPrice(){ // multiply to give us total board price
-    return _board = 120 * boardStack;
+    return _board = 120 * _boardStack;
   }
 
   int _harnessPrice(){ // multiply to give us total harness price
-    return _harness = 60 * harnessStack;
+    return _harness = 60 * _harnessStack;
   }
 
   int totalPrice(){ // Calculate total price the customer will pay
-    return totalHalfDayEquipPrice = _harness + _board + _kiteBar + _full;
+    return _totalHalfDayEquipPrice = _harness + _board + _kiteBar + _full;
   }
 
 
@@ -123,12 +125,17 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
       appBar: AppBar(
         title: Text('Half Day Rental'),
         actions: <Widget>[
-          RaisedButton(
-            child: Text("Done"),
-            onPressed: () {
-
-            },
-          )
+          FlatButton(
+            child: Text(
+                "Send rental",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 17
+              ),
+            ),
+            onPressed: () => rentalConfirmation(context),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -156,7 +163,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
                   ),
 
                   new Text(
-                    '$fullStack',
+                    '$_fullStack',
                     style: new TextStyle(
                         fontSize: 30.0
                     ),
@@ -193,7 +200,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
                         color: Colors.black),
                   ),
 
-                  new Text('$kiteBarStack',
+                  new Text('$_kiteBarStack',
                       style: new TextStyle(fontSize: 30.0)),
 
                   new RaisedButton( // increase _kiteBarStack by 1
@@ -224,7 +231,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
                     ),
                   ),
 
-                  new Text('$boardStack',
+                  new Text('$_boardStack',
                       style: new TextStyle(fontSize: 30.0)),
 
                   new RaisedButton( // increase _boardStack by 1
@@ -255,7 +262,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
                     ),
                   ),
 
-                  new Text('$harnessStack',
+                  new Text('$_harnessStack',
                       style: new TextStyle(fontSize: 30.0)
                   ),
 
@@ -275,19 +282,19 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
                 value: true,
               ),
 
-              Text("$rentalDate"),
+              Text("$_rentalDate"),
 
               RaisedButton(
                 child: Text("Date"),
                 onPressed: (){
                   showDatePicker(
                     context: context,
-                    initialDate: rentalDate,
+                    initialDate: _rentalDate,
                     firstDate: DateTime(2020),
                     lastDate: DateTime(2021),
                   ).then((date)  {
                     setState((){
-                      rentalDate = date;
+                      _rentalDate = date;
                     });
                   });
                 },
@@ -296,7 +303,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
               RaisedButton(
                 child: Text("Give personal information"),
                 onPressed: (){
-                  if( totalHalfDayEquipPrice == 0){
+                  if( _totalHalfDayEquipPrice == 0){
                     print("Wrong info");
                   } else{
                     personalInfo(context);
@@ -316,10 +323,12 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
         padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 100.0),
         child: Form(
           key: _formKey,
+
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
+
               children: <Widget>[
                 TextFormField(
                   decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
@@ -358,21 +367,22 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
                   onChanged: (val) => setState(() => _age = int.parse(val)),
                 ),
                 SizedBox(height: 10.0),
+
                 TextFormField(
                   decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
                   validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
                   onChanged: (val) => setState(() => _weight = double.parse(val)),
                 ),
                 SizedBox(height: 10.0),
+
                 RaisedButton(
                     color: Colors.pink[400],
                     child: Text(
                       'Update',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () async {
-                      _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-                      _databaseService.anonHalfDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, totalHalfDayEquipPrice, rentalDate);
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
                     }
                 ),
               ],
@@ -381,6 +391,42 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
         ),
       );
     });
+  }
+
+  void rentalConfirmation(BuildContext context) { //TODO: bu sayfaya göre uygun hale getir
+    var alertDialog = AlertDialog(
+      title: Text(
+        "CONFIRMATION",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      content: Text(
+          ""
+      ),
+      actions: <Widget>[
+        FlatButton(
+            child: Text("Confirm & Continue"),
+            onPressed: () async {
+              _databaseService.anonHalfDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalHalfDayEquipPrice, _rentalDate);
+              _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
+              Navigator.of(context).pop(AnonymousHomePage());
+            }
+        ),
+        FlatButton(
+          child: Text("Close"),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
+      ],
+      backgroundColor: Colors.pink,
+    );
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertDialog;
+        }
+    );
   }
 
 }

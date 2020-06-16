@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kbgapp/screens/withAccount/lessons/lessonsHome.dart';
 
-import 'package:kbgapp/screens/withAccount/profile.dart';
 import 'package:kbgapp/screens/withAccount/rental/rentalPage.dart';
 import 'package:kbgapp/services/authentication.dart';
 import 'package:kbgapp/services/database.dart';
@@ -38,12 +37,6 @@ class _AccountHomeState extends State<AccountHome> {
           child: Column(
             children: <Widget>[
               logout,
-              FlatButton(
-                child: Text("Profil"),
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Profile()));
-                },
-              ),
             ],
           ),
         );

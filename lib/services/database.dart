@@ -19,6 +19,7 @@ class DatabaseService{
   // collection reference
   final CollectionReference colRef = Firestore.instance.collection('membership');
 
+
   // update customer's data using uid while sign-in
   void memberDataUpdate(String name, String surname,  int age, double weight, String phoneNumber) async {
     var firebaseUser = await FirebaseAuth.instance.currentUser();
@@ -73,7 +74,8 @@ class DatabaseService{
   }
 
   // subCollection for member group lesson
-  void memberGroupLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
+  void memberGroupLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate
+      , String name, String surname, int age, double weight) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     await databaseReference.collection("membership").document(firebaseUser.uid).collection("Group Lesson").add({
       'Total Hours': hours,
@@ -83,6 +85,7 @@ class DatabaseService{
       'Session': session,
       'Price': price,
       'Date': lessonDate,
+      'Second Student': FieldValue.arrayUnion([name, surname, age, weight])
     });
   }
 
