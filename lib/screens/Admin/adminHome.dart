@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-class AdminHome extends StatelessWidget {
+class AdminHome extends StatefulWidget {
+  @override
+  _AdminHomeState createState() => _AdminHomeState();
+}
+
+class _AdminHomeState extends State<AdminHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Admin"),
-      ),
       body: Center(
-        child: Text("Affffff"),
+        child: Text("Admin"),
       ),
     );
   }

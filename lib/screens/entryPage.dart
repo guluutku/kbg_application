@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:kbgapp/screens/Admin/adminHome.dart';
+import 'package:kbgapp/screens/Admin/adminBottomnavigator.dart';
 import 'package:kbgapp/screens/signUp.dart';
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/authentication.dart';
@@ -221,9 +221,9 @@ class _SignInState extends State<SignInState> {
   //log-in via e-mail
   void signIn() async {
     if (_formKey.currentState.validate()) {
-      var firebaseUser = await FirebaseAuth.instance.currentUser();
 
       dynamic result = await _auth.signInEmail(email, password);
+      var firebaseUser = await FirebaseAuth.instance.currentUser();
 
       if (result == null) { // if email is false
         setState(() {
@@ -231,7 +231,7 @@ class _SignInState extends State<SignInState> {
           error = "Wrong email";
         });
       } else if(firebaseUser.uid == "aMDsuSJ9h6eIJuWX0SvwmXJTvTJ3"){ // tried to find admin with its uid
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminHome()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AdminBottomNavigator()));
       } else { // sends to account page
           var firebaseUser = await FirebaseAuth.instance.currentUser();
           final snapShot = await Firestore.instance.collection("membership")
