@@ -302,7 +302,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: (){
-            _databaseService.memberHalfDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, totalHalfDayEquip, rentalDate);
+            _databaseService.halfDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, totalHalfDayEquip, rentalDate);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AccountHome()),

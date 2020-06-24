@@ -370,14 +370,15 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                     ),
                     onPressed: () async {
                       _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-                      _databaseService.anonPrivateLessonData(
+                      _databaseService.privateLessonData(
                           _totalHours,
                           _oneHourStack,
                           _sixHoursStack,
                           _eightHoursStack,
                           _session,
                           _totalLessonPrice,
-                          _lessonDate);
+                          _lessonDate
+                      );
                     }
                 ),
               ],

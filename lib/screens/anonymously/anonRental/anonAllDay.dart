@@ -402,7 +402,7 @@ class _AllDayRentState extends State<AllDayRent> {
         FlatButton(
             child: Text("Confirm & Continue"),
             onPressed: () async {
-              _databaseService.anonAllDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalAllDayEquipPrice, _rentalDate);
+              _databaseService.allDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalAllDayEquipPrice, _rentalDate);
               _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
               Navigator.of(context).pop(AnonymousHomePage());
             }

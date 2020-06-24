@@ -337,7 +337,7 @@ class _GroupLessonState extends State<GroupLesson> {
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: () {
-            _databaseService.memberGroupLessonData(_totalHour, _hour, _sixHours, _eightHours, session, _totalLessonPrice, lessonDate
+            _databaseService.groupLessonData(_totalHour, _hour, _sixHours, _eightHours, session, _totalLessonPrice, lessonDate
                 , _name, _surname, _age, _weight);
           },
         ),

@@ -448,14 +448,18 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
           child: Text("Confirm & Continue"),
           onPressed: () async {
             _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-            _databaseService.anonGroupLessonData(
+            _databaseService.groupLessonData(
               _totalHours,
               _oneHourStack,
               _sixHoursStack,
               _eightHoursStack,
               _session,
               _totalLessonPrice,
-              _lessonDate
+              _lessonDate,
+                _secondName,
+                _secondSurname,
+                _secondAge,
+                _secondWeight
             );
             Navigator.of(context).pop(AnonymousHomePage());
           }

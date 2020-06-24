@@ -300,7 +300,7 @@ class _AllDayRentState extends State<AllDayRent> {
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: (){
-            _databaseService.memberAllDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, total, rentalDate);
+            _databaseService.allDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, total, rentalDate);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AccountHome()),

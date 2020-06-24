@@ -19,6 +19,19 @@ class DatabaseService{
   // collection reference
   final CollectionReference colRef = Firestore.instance.collection('membership');
 
+  // anonymous user's data
+  void anonCustomerDataUpdate(String name, String surName, String email, int age, double weight, String phoneNumber) async {
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    await databaseReference.collection("anonymous")
+        .document(firebaseUser.uid).setData({
+      'name': name,
+      'surname': surName,
+      'e-mail': email,
+      'age': age,
+      'weight': weight,
+      'phone number': phoneNumber,
+    });
+  }
 
   // update customer's data using uid while sign-in
   void memberDataUpdate(String name, String surname,  int age, double weight, String phoneNumber) async {
@@ -34,9 +47,9 @@ class DatabaseService{
   }
 
   // subCollection member half day rental
-  void memberHalfDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate) async{
+  void halfDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("membership").document(firebaseUser.uid).collection("Half Day Rentals").add({
+    await databaseReference.collection("Half Day Rentals").document(firebaseUser.uid).setData({
       'Full Equipment': full,
       'Kite N Bar': kiteBar,
       'Board': board,
@@ -47,9 +60,9 @@ class DatabaseService{
   }
 
   // subCollection member all day rental
-  void memberAllDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate) async{
+  void allDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("membership").document(firebaseUser.uid).collection("All Day Rentals").add({
+    await databaseReference.collection("All Day Rental").document(firebaseUser.uid).setData({
       'Full Equipment': full,
       'Kite N Bar': kiteBar,
       'Board': board,
@@ -60,9 +73,9 @@ class DatabaseService{
   }
 
   // subCollection for member private lesson
-  void memberPrivateLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
+  void privateLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("membership").document(firebaseUser.uid).collection("Private Lesson").add({
+    await databaseReference.collection("Private Lesson").document(firebaseUser.uid).setData({
       'Total Hours': hours,
       'One Hour': oneHour,
       'Six Hours': sixHours,
@@ -74,10 +87,10 @@ class DatabaseService{
   }
 
   // subCollection for member group lesson
-  void memberGroupLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate
+  void groupLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate
       , String name, String surname, int age, double weight) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("membership").document(firebaseUser.uid).collection("Group Lesson").add({
+    await databaseReference.collection("Group Lesson").document(firebaseUser.uid).setData({
       'Total Hours': hours,
       'One Hour': oneHour,
       'Six Hours': sixHours,
@@ -89,72 +102,6 @@ class DatabaseService{
     });
   }
 
-  // anonymous user's data
-  void anonCustomerDataUpdate(String name, String surName, String email, int age, double weight, String phoneNumber) async {
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("anonymous")
-        .document(firebaseUser.uid).setData({
-      'name': name,
-      'surname': surName,
-      'e-mail': email,
-      'age': age,
-      'weight': weight,
-      'phone number': phoneNumber,
-    });
-  }
 
-  // subCollection for anonymous half day rental
-  void anonHalfDayRentalData(int full, int kiteBar, int board, int harness, int price,DateTime rentDate) async{
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("anonymous").document(firebaseUser.uid).collection("Half Day Rentals").add({
-      'Full Equipment': full,
-      'Kite N Bar': kiteBar,
-      'Board': board,
-      'Harness': harness,
-      'Price(TL)': price,
-      'Rental Date': rentDate
-    });
-  }
-
-  // subCollection for anonymous all day rental
-  void anonAllDayRentalData(int full, int kiteBar, int board, int harness, int price,DateTime rentDate) async{
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("anonymous").document(firebaseUser.uid).collection("All Day Rentals").add({
-      'Full Equipment': full,
-      'Kite N Bar': kiteBar,
-      'Board': board,
-      'Harness': harness,
-      'Price(TL)': price,
-      'Rental Date': rentDate
-    });
-  }
-
-  // subCollection for anonymous private lesson
-  void anonPrivateLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("anonymous").document(firebaseUser.uid).collection("Private Lesson").add({
-      'Total Hours': hours,
-      'One Hour': oneHour,
-      'Six Hours': sixHours,
-      'Eight Hours': eightHours,
-      'Session': session,
-      'Price': price,
-      'Date': lessonDate,
-    });
-  }
-
-  // subCollection for anonymous group lesson
-  void anonGroupLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    await databaseReference.collection("anonymous").document(firebaseUser.uid).collection("Group Lesson").add({
-      'Total Hours': hours,
-      'One Hour': oneHour,
-      'Six Hours': sixHours,
-      'Eight Hours': eightHours,
-      'Session': session,
-      'Price': price,
-      'Date': lessonDate,
-    });
-  }
 
 }

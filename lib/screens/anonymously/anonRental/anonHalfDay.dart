@@ -406,7 +406,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
         FlatButton(
             child: Text("Confirm & Continue"),
             onPressed: () async {
-              _databaseService.anonHalfDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalHalfDayEquipPrice, _rentalDate);
+              _databaseService.halfDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalHalfDayEquipPrice, _rentalDate);
               _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
               Navigator.of(context).pop(AnonymousHomePage());
             }

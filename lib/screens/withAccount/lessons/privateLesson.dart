@@ -316,7 +316,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: () {
-            _databaseService.memberPrivateLessonData(
+            _databaseService.privateLessonData(
                 totalHour,
                 hourStack,
                 sixHoursStack,
