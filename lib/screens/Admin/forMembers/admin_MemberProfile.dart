@@ -1,52 +1,70 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kbgapp/screens/Admin/forMembers/admin_MembersHome.dart';
 
+// ignore: camel_case_types
 class Admin_MemberProfile extends StatefulWidget {
 
+  final String docID;
+
+  Admin_MemberProfile({Key key, @required this.docID}) : super(key: key);
+
   @override
-  _Admin_MemberProfileState createState() => _Admin_MemberProfileState();
+  _Admin_MemberProfileState createState() => _Admin_MemberProfileState(docID);
 }
 
+// ignore: camel_case_types
 class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
 
+  String docID;
+  _Admin_MemberProfileState(this.docID);
+
   Firestore _firestore = Firestore.instance;
-  List<DocumentSnapshot> _subColl = [];
+  List<DocumentSnapshot> _members = [];
 
-  _getSubCollection() async {
-    Query subQuery = _firestore.collection("anonymous").document().collection("Half Day Rentals");
+  bool _loading = true;
 
-    QuerySnapshot querySnapshot1 = await subQuery.getDocuments();
-    _subColl = querySnapshot1.documents;
+  _getMember() async {
+    Query query = _firestore.collection("Half Day Rentals");
+    setState(() {
+      _loading = true;
+    });
+    QuerySnapshot querySnapshot = await query.getDocuments();
+    _members = querySnapshot.documents;
+    setState(() {
+      _loading = false;
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    _getSubCollection();
+    _getMember();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Buraya subcolletionlar gelecek."),
+        title: Text("Profile"),
       ),
-
-      body:  Container(
-        child: ListView.builder(
-          itemCount: _subColl.length,
-          itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: ListTile(
-              leading: CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.brown,
-              ),
-              title: Text("Name: " + _subColl[index].data["Board"]),
-            ),
-          );
-        }),
-      )
+      body: Container(
+        child: _members.length == 0 ? Center(child: Text("empty"),) : ListView.builder(
+            itemCount: _members.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                leading: CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.brown,
+                ),
+                title: Text("Name: " + _members[index].data["asd"] + _members[index].data["afg"]),
+                onTap: (){
+                  print(docID);
+                },
+              );
+            }),
+      ),
     );
   }
+
 }

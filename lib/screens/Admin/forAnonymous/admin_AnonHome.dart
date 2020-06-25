@@ -48,10 +48,7 @@ class _Admin_AnonHomeState extends State<Admin_AnonHome> {
                   title: Text("Name: " + _anony[index].data["name"] + _anony[index].data["surname"]),
                   onTap: (){
                     setState(() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Admin_MemberProfile())
-                      );
+
                     });
                   },
                 ),
