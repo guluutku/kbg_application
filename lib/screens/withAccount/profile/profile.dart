@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:kbgapp/screens/withAccount/profile/updateInformations.dart';
+import 'package:kbgapp/services/authentication.dart';
+import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -12,7 +16,7 @@ class _ProfileState extends State<Profile> {
 
   Firestore _firestore = Firestore.instance;
 
-  String name, surname, phone;
+  String name, surname, phone, email, password;
   int age;
   double weight;
 
@@ -74,10 +78,71 @@ class _ProfileState extends State<Profile> {
             Card(
               child: Text("Weight: $weight"),
             ),
+
+            RaisedButton(
+              child: Text("Delete"),
+              onPressed: () {
+                deleteAccount(context);
+              },
+            )
           ],
         ),
       ),
     );
+  }
+
+  writeText(BuildContext context){
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                decoration: textInputDecoration.copyWith(labelText: "e-mail"),
+                validator: (value) => value.isEmpty ? "e-mail" : null,
+                onChanged: (value){
+                  setState(() {
+                    email = value;
+                  });
+                },
+              ),
+
+              SizedBox(height: 20,),
+
+              TextFormField(
+                decoration: textInputDecoration.copyWith(labelText: "Password"),
+                validator: (value) => value.isEmpty ? "password" : null,
+                onChanged: (value){
+                  setState(() {
+                    password = value;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  deleteAccount(BuildContext context){
+    return showDialog(context: context, builder: (context){
+      return AlertDialog(
+        title: Text("Do you want to delete your account?"),
+        content: writeText(context),
+        actions: <Widget>[
+          RaisedButton(
+            child: Text("Delete"),
+            onPressed: (){
+              setState(() async {
+                await AuthService().deleteUser(email, password);
+              });
+            },
+          ),
+        ],
+      );
+    });
   }
 
 }

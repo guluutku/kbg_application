@@ -14,6 +14,7 @@ class DatabaseService{
   DatabaseService({this.uid, this.customers});
 
   final databaseReference = Firestore.instance;
+  final CollectionReference userCollection = Firestore.instance.collection('membership');
 
   // anonymous user's data to firestore
   void anonCustomerDataUpdate(String name, String surName, String email, int age, double weight, String phoneNumber) async {
@@ -98,6 +99,9 @@ class DatabaseService{
     });
   }
 
-
+  // delete an account document
+  Future deleteUser() {
+    return userCollection.document(uid).delete();
+  }
 
 }
