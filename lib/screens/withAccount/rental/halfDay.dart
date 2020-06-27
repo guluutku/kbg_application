@@ -12,8 +12,6 @@ class _HalfDayRentalState extends State<HalfDayRental> {
 
   DatabaseService _databaseService = new DatabaseService();
 
-  final dateForm = DateFormat("dd - mm - yyyy");
-
   DateTime rentalDate = new DateTime.now();
 
   int _full = 0;

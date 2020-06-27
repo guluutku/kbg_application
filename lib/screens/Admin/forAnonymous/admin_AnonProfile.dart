@@ -1,25 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-// ignore: camel_case_types
-class Admin_MemberProfile extends StatefulWidget {
+class Admin_AnonProfile extends StatefulWidget {
 
   final String docID;
 
-  Admin_MemberProfile({Key key, @required this.docID}) : super(key: key);
+  Admin_AnonProfile({Key key, @required this.docID}) : super(key: key);
 
   @override
-  _Admin_MemberProfileState createState() => _Admin_MemberProfileState(docID);
+  _Admin_AnonProfileState createState() => _Admin_AnonProfileState(docID);
 }
 
-// ignore: camel_case_types
-class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
+class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
 
   String _docID;
-  _Admin_MemberProfileState(this._docID);
+  _Admin_AnonProfileState(this._docID);
 
   // variables for customers' data
-  String _name, _surname, _phone, _secondPersonName, _secondPersonSurname;
+  String _name, _surname, _phone, _secondPersonName, _secondPersonSurname, _email;
   int _age, _secondPersonAge;
   double _weight, _secondPersonWeight;
 
@@ -43,17 +41,16 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
 
   Firestore _firestore = Firestore.instance;
 
-  bool _loading = true;
-
   // gets customer data from firestore
   _getCustomerInfo() async {
-    DocumentSnapshot snapshot =  await _firestore.collection('membership').document(_docID).get();
+    DocumentSnapshot snapshot =  await _firestore.collection('anonymous').document(_docID).get();
     setState(() {
       _name = snapshot['name'];
       _surname = snapshot['surname'];
       _phone = snapshot['phone number'];
       _age = snapshot['age'];
       _weight = snapshot['weight'];
+      _email = snapshot['e-mail'];
     });
   }
 
@@ -138,16 +135,16 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
             Card(
               child: _halfBoard == null && _halfHarness == null && _halfPrice == null && _halfEquipment == null ? Text("NOOOOOO")
                   : Column(
-                    children: <Widget>[
-                      Text("Half Day Rental:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red),),
-                      _halfBoard == 0 ? Text("No board") : Text("Number of Boards: $_halfBoard"),
-                      _halfEquipment == 0 ? Text("No full equipment") : Text("Full Equipments: $_halfEquipment"),
-                      _halfHarness == 0 ? Text("No full equipment") : Text("Harnesses: $_halfHarness"),
-                      _halfKiteBar == 0 ? Text("No full equipment") : Text("Kite N Bar: $_halfKiteBar"),
-                      Text("Price(TL): $_halfPrice"),
-                      Text("$_halfDate"),
-                    ],
-                  ) ,
+                children: <Widget>[
+                  Text("Half Day Rental:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red),),
+                  _halfBoard == 0 ? Text("No board") : Text("Number of Boards: $_halfBoard"),
+                  _halfEquipment == 0 ? Text("No full equipment") : Text("Full Equipments: $_halfEquipment"),
+                  _halfHarness == 0 ? Text("No full equipment") : Text("Harnesses: $_halfHarness"),
+                  _halfKiteBar == 0 ? Text("No full equipment") : Text("Kite N Bar: $_halfKiteBar"),
+                  Text("Price(TL): $_halfPrice"),
+                  Text("$_halfDate"),
+                ],
+              ) ,
             ),
 
             // show full day rental information
@@ -169,9 +166,9 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
             // show private lesson
             Card(
               child: _privateTotalHours == null && _privateSixHours == null  && _privateSession == null && _privatePrice == null && _privateOneHours == null && _privateEightHours == null && _privateDate == null ? Text("Loading")
-              : Column(
+                  : Column(
                 children: <Widget>[
-                  Text("Private Lesson:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red),),
+                  Text("Half Day Rental:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red),),
                   _privateOneHours == 0 ? Text("No board") : Text("One Hour Lessons: $_privateOneHours"),
                   _privateSixHours == 0 ? Text("No full equipment") : Text("Six Hours Lessons: $_privateSixHours"),
                   _privateEightHours == 0 ? Text("No full equipment") : Text("Eight Hour Lessons: $_privateEightHours"),
@@ -187,5 +184,4 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
       ),
     );
   }
-
 }

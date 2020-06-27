@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kbgapp/screens/withAccount/profile/updateInformations.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _ProfileState extends State<Profile> {
   int age;
   double weight;
 
-  getName() async {
+  _getProfile() async {
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot snapshot =  await _firestore.collection('membership').document(firebaseUser.uid).get();
     setState(() {
@@ -31,7 +32,7 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    getName();
+    _getProfile();
   }
 
   @override
@@ -39,6 +40,16 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Update"),
+            onPressed: (){
+              setState(() {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateInformation()));
+              });
+            },
+          )
+        ],
       ),
       body: Container(
         child: name == null && surname == null && phone == null && age == null && weight == null ? Text("la") : Column( // TODO: loading ekle

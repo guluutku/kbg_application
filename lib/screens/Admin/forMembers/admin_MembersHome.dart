@@ -21,8 +21,8 @@ class _Admin_MembersHomeState extends State<Admin_MembersHome> {
 
   String _docID;
 
-  _getDocID(String docID){ //TODO: use this DO NOT FORGET
-    var ref = _firestore.collection("membership").where("name", isEqualTo: docID).getDocuments();
+  _getDocID(String name){ //TODO: use this DO NOT FORGET
+    var ref = _firestore.collection("membership").where("name", isEqualTo: name).getDocuments();
     ref.then((_documentID) => this._docID = _documentID.documents[0].documentID); // take document ID to a variable
   }
 
@@ -50,6 +50,7 @@ class _Admin_MembersHomeState extends State<Admin_MembersHome> {
       appBar: AppBar(
         title: Text("Profile"),
       ),
+
       body: Container(
         child: _members.length == 0 ? Center(child: Text("empty"),) : ListView.builder(
             itemCount: _members.length,
@@ -59,14 +60,14 @@ class _Admin_MembersHomeState extends State<Admin_MembersHome> {
                   radius: 20,
                   backgroundColor: Colors.brown,
                 ),
-                title: Text("Name: " + _members[index].data["name"]),
+                title: Text("Customer: " + _members[index].data["name"] + " " + _members[index].data["surname"]),
                 onTap: (){
-                  _getDocID(_members[index].data["name"]);
-                  print(_docID);
-                  Navigator.push(
+                  _getDocID(_members[index].data["name"]).then({
+                    Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Admin_MemberProfile(docID: _docID,))
-                  );
+                    )
+                  });
                 },
               );
             }),

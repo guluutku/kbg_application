@@ -173,6 +173,14 @@ class _SignInState extends State<SignInState> {
                     obscureText: true,
                   ),
 
+                  // sign-in with e-mail
+                  RaisedButton(
+                      child: Text('sign-in'),
+                      onPressed: () {
+                        signIn();
+                      }
+                  ),
+
                   /** sign-in anonymously */
                   RaisedButton(
                     child: Text('sign in anon'),
@@ -180,14 +188,6 @@ class _SignInState extends State<SignInState> {
                       anonymous();
                     },
                   ),
-
-                  // sign-in with e-mail
-                  RaisedButton(
-                    child: Text('sign-in'),
-                    onPressed: () {
-                      signIn();
-                    }
-                   ),
 
                   /** sign-up */
                   RaisedButton(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kbgapp/screens/withAccount/lessons/lessonsHome.dart';
 
+import 'package:kbgapp/screens/withAccount/lessons/lessonsHome.dart';
+import 'file:///C:/Users/gunul/AndroidStudioProjects/kbg_app-master/lib/screens/withAccount/profile/profile.dart';
 import 'package:kbgapp/screens/withAccount/rental/rentalPage.dart';
 import 'package:kbgapp/services/authentication.dart';
 import 'package:kbgapp/services/database.dart';
@@ -11,7 +12,6 @@ import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 class AccountHome extends StatefulWidget {
   @override
   _AccountHomeState createState() => _AccountHomeState();
-
 }
 
 class _AccountHomeState extends State<AccountHome> {
@@ -50,13 +50,22 @@ class _AccountHomeState extends State<AccountHome> {
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         actions: <Widget>[
-
-
           FlatButton.icon(
             icon: Icon(Icons.settings),
             label: Text("settings"),
             onPressed: () => _settingSheetPanel(),
           ),
+
+          FlatButton.icon(
+            icon: Icon(Icons.person),
+            label: Text("Profile"),
+            onPressed: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Profile())
+              );
+            },
+          )
         ],
       ),
 
