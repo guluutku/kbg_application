@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:kbgapp/screens/withAccount/lessons/lessonsHome.dart';
-import 'file:///C:/Users/gunul/AndroidStudioProjects/kbg_app-master/lib/screens/withAccount/profile/profile.dart';
 import 'package:kbgapp/screens/withAccount/rental/rentalPage.dart';
 import 'package:kbgapp/services/authentication.dart';
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/logout.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
+
+import 'profile/profile.dart';
 
 class AccountHome extends StatefulWidget {
   @override
