@@ -13,8 +13,6 @@ class _PrivateLessonState extends State<PrivateLesson> {
 
   DatabaseService _databaseService = new DatabaseService();
 
-  final dateForm = DateFormat("dd - mm - yyyy");
-
   DateTime lessonDate = new DateTime.now();
 
   int _sixHours = 0;
@@ -28,7 +26,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
   int totalLessonPrice = 0;
   int totalHour = 0;
 
-  bool morningSession = false;
+  bool morningSession;
   String session;
 
   void selectedSession(){
@@ -110,6 +108,8 @@ class _PrivateLessonState extends State<PrivateLesson> {
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         title: Text("Private Lesson"),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
       ),
 
       body: SingleChildScrollView(
@@ -135,100 +135,106 @@ class _PrivateLessonState extends State<PrivateLesson> {
                 ),
               ),
 
-              Row( // Calculate kite+bar price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("8 Hours packege: 1600 TL"),
+              Card(
+                child: Row( // Calculate kite+bar price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("8 Hours packege: 1600 TL"),
 
-                  new RaisedButton( // decrease _eightHoursStack by 1
-                    onPressed: (){
-                      decreaseEightHours();
-                      eightHoursPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
-                  ),
+                    new FlatButton( // decrease _eightHoursStack by 1
+                      onPressed: (){
+                        decreaseEightHours();
+                        eightHoursPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black),
+                    ),
 
-                  new Text('$eightHoursStack',
-                      style: new TextStyle(fontSize: 30.0)),
+                    new Text('$eightHoursStack',
+                        style: new TextStyle(fontSize: 30.0)),
 
-                  new RaisedButton( // increase _eightHoursStack by 1
-                    onPressed: (){
-                      incrementEightHours();
-                      eightHoursPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(Icons.add, color: Colors.black,),
-                  ),
-                ],
+                    new FlatButton( // increase _eightHoursStack by 1
+                      onPressed: (){
+                        incrementEightHours();
+                        eightHoursPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(Icons.add, color: Colors.black,),
+                    ),
+                  ],
+                ),
               ),
 
-              Row( // Calculate kite+bar price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("6 Hours packege: 1300 TL"),
+              Card(
+                child: Row( // Calculate kite+bar price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("6 Hours packege: 1300 TL"),
 
-                  new RaisedButton( // decrease _sixHoursStack by 1
-                    onPressed: (){
-                      decreaseSixHours();
-                      sixHoursPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
-                  ),
+                    new FlatButton( // decrease _sixHoursStack by 1
+                      onPressed: (){
+                        decreaseSixHours();
+                        sixHoursPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black),
+                    ),
 
-                  new Text('$sixHoursStack',
-                      style: new TextStyle(fontSize: 30.0)),
+                    new Text('$sixHoursStack',
+                        style: new TextStyle(fontSize: 30.0)),
 
-                  new RaisedButton( // increase _sixHoursStack by 1
-                    onPressed: (){
-                      incrementSixHours();
-                      sixHoursPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(Icons.add, color: Colors.black,),
-                  ),
-                ],
+                    new FlatButton( // increase _sixHoursStack by 1
+                      onPressed: (){
+                        incrementSixHours();
+                        sixHoursPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(Icons.add, color: Colors.black,),
+                    ),
+                  ],
+                ),
               ),
 
-              Row( // Calculate kite+bar price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("1 Hour packege: 250 TL"),
+              Card(
+                child: Row( // Calculate kite+bar price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("1 Hour packege: 250 TL"),
 
-                  new RaisedButton( // decrease _hourStack by 1
-                    onPressed: (){
-                      decreaseHour();
-                      hourPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
-                  ),
+                    new FlatButton( // decrease _hourStack by 1
+                      onPressed: (){
+                        decreaseHour();
+                        hourPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black),
+                    ),
 
-                  new Text('$hourStack',
-                      style: new TextStyle(fontSize: 30.0)),
+                    new Text('$hourStack',
+                        style: new TextStyle(fontSize: 30.0)),
 
-                  new RaisedButton( // increase _hourStack by 1
-                    onPressed: (){
-                      incrementHour();
-                      hourPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(Icons.add, color: Colors.black,),
-                  ),
-                ],
+                    new FlatButton( // increase _hourStack by 1
+                      onPressed: (){
+                        incrementHour();
+                        hourPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(Icons.add, color: Colors.black,),
+                    ),
+                  ],
+                ),
               ),
 
               DropdownButton<bool>(
@@ -263,13 +269,19 @@ class _PrivateLessonState extends State<PrivateLesson> {
                     return "wrong";
                   }
                 },
-                hint: Text("Sessions"),
+                hint: Text(morningSession == null ? "Sessions" : "$session" ),
               ),
 
-              Text("$lessonDate"),
+              Text(
+                "$lessonDate",
+                style: TextStyle(
+                  fontSize: 20
+              ),
+              ),
 
+              SizedBox(height:  10.0),
               RaisedButton(
-                child: Text("Date"),
+                child: Text("Lesson Date"),
                 onPressed: (){
                   showDatePicker(
                     context: context,
@@ -288,7 +300,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
                 onPressed: (){
                   lessonConfirmation(context);
                 },
-                child: Text("Continue"),
+                child: Text("Make an Appointment"),
               ),
             ],
           ),

@@ -42,14 +42,17 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.brown[100],
       appBar: AppBar(
         title: Text("Profile"),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
         actions: <Widget>[
           FlatButton(
-            child: Text("Update"),
+            child: Text("Delete Account"),
             onPressed: (){
               setState(() {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateInformation()));
+                deleteAccount(context);
               });
             },
           )
@@ -61,28 +64,44 @@ class _ProfileState extends State<Profile> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Card(
-              child: Text("Name: $name"),
+              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+              child: Text(
+                "Name: $name",
+                style: TextStyle(fontSize: 25),
+              ),
             ),
 
             Card(
-              child: Text("Surname: $surname"),
+              child: Text(
+                "Surname: $surname",
+                style: TextStyle(fontSize: 25),
+              ),
             ),
 
             Card(
-              child: Text("Phone Number: $phone"),
+              child: Text(
+                "Phone Number: $phone",
+                style: TextStyle(fontSize: 25),
+              ),
             ),
 
             Card(
-              child: Text("Age: $age"),
+              child: Text(
+                "Age: $age",
+                style: TextStyle(fontSize: 25),
+              ),
             ),
             Card(
-              child: Text("Weight: $weight"),
+              child: Text(
+                "Weight: $weight",
+                style: TextStyle(fontSize: 25),
+              ),
             ),
 
             RaisedButton(
-              child: Text("Delete"),
+              child: Text("Change Personal Information"),
               onPressed: () {
-                deleteAccount(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateInformation()));
               },
             )
           ],
@@ -107,7 +126,7 @@ class _ProfileState extends State<Profile> {
                 },
               ),
 
-              SizedBox(height: 20,),
+              SizedBox(height: 25,),
 
               TextFormField(
                 decoration: textInputDecoration.copyWith(labelText: "Password"),

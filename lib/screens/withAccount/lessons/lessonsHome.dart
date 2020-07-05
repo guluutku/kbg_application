@@ -16,6 +16,8 @@ class _LessonHomeState extends State<LessonHome> {
 
       appBar: AppBar(
         title: Text("Lessons"),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
       ),
 
       body: Center(

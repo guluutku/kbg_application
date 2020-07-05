@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
@@ -22,8 +21,6 @@ class _GroupLessonState extends State<GroupLesson> {
   int _age;
   double _weight;
 
-  final dateForm = DateFormat("dd - mm - yyyy");
-
   DateTime lessonDate = new DateTime.now();
 
   int _sixHours = 0;
@@ -37,7 +34,7 @@ class _GroupLessonState extends State<GroupLesson> {
   int _totalLessonPrice = 0;
   int _totalHour = 0;
 
-  bool morningSession = false;
+  bool morningSession;
   String session;
 
   void selectedSession() {
@@ -118,10 +115,12 @@ class _GroupLessonState extends State<GroupLesson> {
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         title: Text("Group Lesson"),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
         actions: <Widget>[
           FlatButton(
             child: Text(
-              "Make an appointment",
+              "Add second student",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -129,7 +128,7 @@ class _GroupLessonState extends State<GroupLesson> {
               ),
             ),
             onPressed: (){
-              lessonConfirmation(context);
+              _secondStudent(context);
             },
           )
         ],
@@ -158,100 +157,106 @@ class _GroupLessonState extends State<GroupLesson> {
                 ),
               ),
 
-              Row( // Calculate kite+bar price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("8 Hours packege: 2100 TL"),
+              Card(
+                child: Row( // Calculate kite+bar price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("8 Hours packege: 2100 TL"),
 
-                  new RaisedButton( // decrease _eightHoursStack by 1
-                    onPressed: () {
-                      decreaseEightHours();
-                      eightHoursPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
-                  ),
+                    new FlatButton( // decrease _eightHoursStack by 1
+                      onPressed: () {
+                        decreaseEightHours();
+                        eightHoursPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black),
+                    ),
 
-                  new Text('$eightHoursStack',
-                      style: new TextStyle(fontSize: 30.0)),
+                    new Text('$eightHoursStack',
+                        style: new TextStyle(fontSize: 30.0)),
 
-                  new RaisedButton( // increase _eightHoursStack by 1
-                    onPressed: () {
-                      incrementEightHours();
-                      eightHoursPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(Icons.add, color: Colors.black,),
-                  ),
-                ],
+                    new FlatButton( // increase _eightHoursStack by 1
+                      onPressed: () {
+                        incrementEightHours();
+                        eightHoursPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(Icons.add, color: Colors.black,),
+                    ),
+                  ],
+                ),
               ),
 
-              Row( // Calculate kite+bar price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("6 Hours packege: 1600 TL"),
+              Card(
+                child: Row( // Calculate kite+bar price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("6 Hours packege: 1600 TL"),
 
-                  new RaisedButton( // decrease _sixHoursStack by 1
-                    onPressed: () {
-                      decreaseSixHours();
-                      sixHoursPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
-                  ),
+                    new FlatButton( // decrease _sixHoursStack by 1
+                      onPressed: () {
+                        decreaseSixHours();
+                        sixHoursPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black),
+                    ),
 
-                  new Text('$sixHoursStack',
-                      style: new TextStyle(fontSize: 30.0)),
+                    new Text('$sixHoursStack',
+                        style: new TextStyle(fontSize: 30.0)),
 
-                  new RaisedButton( // increase _sixHoursStack by 1
-                    onPressed: () {
-                      incrementSixHours();
-                      sixHoursPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(Icons.add, color: Colors.black,),
-                  ),
-                ],
+                    new FlatButton( // increase _sixHoursStack by 1
+                      onPressed: () {
+                        incrementSixHours();
+                        sixHoursPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(Icons.add, color: Colors.black,),
+                    ),
+                  ],
+                ),
               ),
 
-              Row( // Calculate kite+bar price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("1 Hour packege: 300 TL"),
+              Card(
+                child: Row( // Calculate kite+bar price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("1 Hour packege: 300 TL"),
 
-                  new RaisedButton( // decrease _hourStack by 1
-                    onPressed: () {
-                      decreaseHour();
-                      hourPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
-                  ),
+                    new FlatButton( // decrease _hourStack by 1
+                      onPressed: () {
+                        decreaseHour();
+                        hourPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black),
+                    ),
 
-                  new Text('$hourStack',
-                      style: new TextStyle(fontSize: 30.0)),
+                    new Text('$hourStack',
+                        style: new TextStyle(fontSize: 30.0)),
 
-                  new RaisedButton( // increase _hourStack by 1
-                    onPressed: () {
-                      incrementHour();
-                      hourPrice();
-                      totalPrice();
-                      totalHours();
-                    },
-                    child: new Icon(Icons.add, color: Colors.black,),
-                  ),
-                ],
+                    new FlatButton( // increase _hourStack by 1
+                      onPressed: () {
+                        incrementHour();
+                        hourPrice();
+                        totalPrice();
+                        totalHours();
+                      },
+                      child: new Icon(Icons.add, color: Colors.black,),
+                    ),
+                  ],
+                ),
               ),
 
               DropdownButton<bool>(
@@ -286,13 +291,20 @@ class _GroupLessonState extends State<GroupLesson> {
                     return "wrong";
                   }
                 },
-                hint: Text("Sessions"),
+                hint: Text(morningSession == null ? "Sessions" : "$session"),
               ),
 
-              Text("$lessonDate"),
+              Text(
+                "$lessonDate",
+                style: TextStyle(
+                    fontSize: 20
+                ),
+              ),
+
+              SizedBox(height: 10.0,),
 
               RaisedButton(
-                child: Text("Date"),
+                child: Text("Lesson Date"),
                 onPressed: () {
                   showDatePicker(
                     context: context,
@@ -307,11 +319,13 @@ class _GroupLessonState extends State<GroupLesson> {
                 },
               ),
 
+              SizedBox(height: 10.0,),
+
               RaisedButton(
                 onPressed: () {
-                  _secondStudent(context);
+                  lessonConfirmation(context);
                 },
-                child: Text("Continue"),
+                child: Text("Make an Appointment"),
               ),
             ],
           ),
@@ -356,6 +370,7 @@ class _GroupLessonState extends State<GroupLesson> {
   void _secondStudent(BuildContext context){
     showModalBottomSheet(context: context, builder: (context){ // TODO: try showCupertinoModalPopup
       return Container(
+        color: Colors.brown[100],
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 45.0),
         child: Form(
           key: _formKey,
@@ -400,7 +415,7 @@ class _GroupLessonState extends State<GroupLesson> {
                 RaisedButton(
                   color: Colors.pink[400],
                   child: Text(
-                    'Close and Save Informations',
+                    'Close and Save Information',
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: (){

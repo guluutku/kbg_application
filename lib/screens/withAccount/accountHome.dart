@@ -7,7 +7,6 @@ import 'package:kbgapp/services/authentication.dart';
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/logout.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
-
 import 'profile/profile.dart';
 
 class AccountHome extends StatefulWidget {
@@ -23,10 +22,6 @@ class _AccountHomeState extends State<AccountHome> {
   String name;
   int age = 0;
   double weight = 0.0;
-
-  DatabaseService _databaseService = new DatabaseService();
-
-  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {

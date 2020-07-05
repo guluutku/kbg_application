@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/database.dart';
 
@@ -11,8 +11,6 @@ class AllDayRent extends StatefulWidget {
 class _AllDayRentState extends State<AllDayRent> {
 
   DatabaseService _databaseService = new DatabaseService();
-
-  final dateForm = DateFormat("dd - mm - yyyy");
 
   DateTime rentalDate = new DateTime.now();
 
@@ -107,6 +105,8 @@ class _AllDayRentState extends State<AllDayRent> {
 
       appBar: AppBar(
         title: Text('All Day Rental'),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
       ),
 
       body: SingleChildScrollView(
@@ -114,135 +114,143 @@ class _AllDayRentState extends State<AllDayRent> {
 
           child: Column(
             children: <Widget>[
-              Row( // Calculate full equipment price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("Full Equipment (250 TL)"),
+              Card(
+                child: Row( // Calculate full equipment price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Full Equipment (250 TL)"),
 
-                  new RaisedButton( // decrease _fullStack by 1
-                    onPressed: (){
-                      _minusFullEquipStack();
-                      _fullEquipmentPrice();
-                      totalPrice();
-                    },
-                    child: new Icon(
-                        const IconData(
-                          0xe15b,
-                          fontFamily: 'MaterialIcons',
-                        ),
-                        color: Colors.black),
-                  ),
-
-                  new Text(
-                    '$fullStack',
-                    style: new TextStyle(
-                        fontSize: 30.0
+                    new FlatButton( // decrease _fullStack by 1
+                      onPressed: (){
+                        _minusFullEquipStack();
+                        _fullEquipmentPrice();
+                        totalPrice();
+                      },
+                      child: new Icon(
+                          const IconData(
+                            0xe15b,
+                            fontFamily: 'MaterialIcons',
+                          ),
+                          color: Colors.black),
                     ),
-                  ),
 
-                  new RaisedButton( // increase _fullStack by 1
-                    onPressed: (){
-                      _incrementFullEquipStack();
-                      _fullEquipmentPrice();
-                      totalPrice();
-                    },
-                    child: new Icon(
-                      Icons.add,
-                      color: Colors.black,
+                    new Text(
+                      '$fullStack',
+                      style: new TextStyle(
+                          fontSize: 30.0
+                      ),
                     ),
-                  ),
 
-                ],
+                    new FlatButton( // increase _fullStack by 1
+                      onPressed: (){
+                        _incrementFullEquipStack();
+                        _fullEquipmentPrice();
+                        totalPrice();
+                      },
+                      child: new Icon(
+                        Icons.add,
+                        color: Colors.black,
+                      ),
+                    ),
+
+                  ],
+                ),
               ),
 
-              Row( // Calculate kite+bar price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("Kite+Bar (200 TL)"),
+              Card(
+                child: Row( // Calculate kite+bar price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Kite+Bar (200 TL)"),
 
-                  new RaisedButton( // decrease _kiteBarStack by 1
-                    onPressed: (){
-                      _minusKiteBarStack();
-                      _kiteBarPrice();
-                      totalPrice();
-                    },
-                    child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
-                  ),
+                    new FlatButton( // decrease _kiteBarStack by 1
+                      onPressed: (){
+                        _minusKiteBarStack();
+                        _kiteBarPrice();
+                        totalPrice();
+                      },
+                      child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black),
+                    ),
 
-                  new Text('$kiteBarStack',
-                      style: new TextStyle(fontSize: 30.0)),
+                    new Text('$kiteBarStack',
+                        style: new TextStyle(fontSize: 30.0)),
 
-                  new RaisedButton( // increase _kiteBarStack by 1
-                    onPressed: (){
-                      _incrementKiteBarStack();
-                      _kiteBarPrice();
-                      totalPrice();
-                    },
-                    child: new Icon(Icons.add, color: Colors.black,),
-                  ),
-                ],
+                    new FlatButton( // increase _kiteBarStack by 1
+                      onPressed: (){
+                        _incrementKiteBarStack();
+                        _kiteBarPrice();
+                        totalPrice();
+                      },
+                      child: new Icon(Icons.add, color: Colors.black,),
+                    ),
+                  ],
+                ),
               ),
 
-              Row( // Calculate board price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("Board (150 TL)"),
+              Card(
+                child: Row( // Calculate board price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Board (150 TL)"),
 
-                  new RaisedButton( // decrease _boardStack by 1
-                    onPressed: (){
-                      _minusBoardStack();
-                      _boardPrice();
-                      totalPrice();
-                    },
-                    child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
-                  ),
+                    new FlatButton( // decrease _boardStack by 1
+                      onPressed: (){
+                        _minusBoardStack();
+                        _boardPrice();
+                        totalPrice();
+                      },
+                      child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black),
+                    ),
 
-                  new Text('$boardStack',
-                      style: new TextStyle(fontSize: 30.0)),
+                    new Text('$boardStack',
+                        style: new TextStyle(fontSize: 30.0)),
 
-                  new RaisedButton( // increase _boardStack by 1
-                    onPressed: (){
-                      _incrementBoardStack();
-                      _boardPrice();
-                      totalPrice();
-                    },
-                    child: new Icon(Icons.add, color: Colors.black,),
-                  ),
-                ],
+                    new FlatButton( // increase _boardStack by 1
+                      onPressed: (){
+                        _incrementBoardStack();
+                        _boardPrice();
+                        totalPrice();
+                      },
+                      child: new Icon(Icons.add, color: Colors.black,),
+                    ),
+                  ],
+                ),
               ),
 
-              Row( // Calculate harness price
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("Harness (100 TL)"),
+              Card(
+                child: Row( // Calculate harness price
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Harness (100 TL)"),
 
-                  new RaisedButton( // decrease _harnessStack by 1
-                    onPressed: (){
-                      _minusHarnessStack();
-                      _harnessPrice();
-                      totalPrice();
-                    },
-                    child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
-                  ),
+                    new FlatButton( // decrease _harnessStack by 1
+                      onPressed: (){
+                        _minusHarnessStack();
+                        _harnessPrice();
+                        totalPrice();
+                      },
+                      child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black),
+                    ),
 
-                  new Text('$harnessStack',
-                      style: new TextStyle(fontSize: 30.0)),
+                    new Text('$harnessStack',
+                        style: new TextStyle(fontSize: 30.0)),
 
-                  new RaisedButton( // increase _harnessStack by 1
-                    onPressed: (){
-                      _incrementHarnessStack();
-                      _harnessPrice();
-                      totalPrice();
-                    },
-                    child: new Icon(Icons.add, color: Colors.black,),
-                  ),
-                ],
+                    new FlatButton( // increase _harnessStack by 1
+                      onPressed: (){
+                        _incrementHarnessStack();
+                        _harnessPrice();
+                        totalPrice();
+                      },
+                      child: new Icon(Icons.add, color: Colors.black,),
+                    ),
+                  ],
+                ),
               ),
 
               CheckboxListTile(
@@ -250,7 +258,12 @@ class _AllDayRentState extends State<AllDayRent> {
                 value: true,
               ),
 
-              Text("$rentalDate"),
+              Text(
+                "$rentalDate",
+                style: TextStyle(
+                    fontSize: 20
+                ),
+              ),
 
               RaisedButton(
                 child: Text("Date"),

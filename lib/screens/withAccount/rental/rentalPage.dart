@@ -16,6 +16,8 @@ class _RentalPageState extends State<RentalPage> {
 
       appBar: AppBar(
         title: Text('Rental'),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
       ),
 
       body: Center(

@@ -13,12 +13,12 @@ import 'package:kbgapp/sharedCode/appBar.dart';
 import 'anonymously/anonHome.dart';
 import 'package:kbgapp/services/database.dart';
 
-class SignInState extends StatefulWidget {
+class EntryPage extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
 }
 
-class _SignInState extends State<SignInState> {
+class _SignInState extends State<EntryPage> {
 
   String name, surname, phoneNumber;
   int age = 0;
