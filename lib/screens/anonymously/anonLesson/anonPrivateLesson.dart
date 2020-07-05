@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
-import 'package:kbgapp/screens/anonymously/anonHome.dart';
 
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
@@ -15,8 +13,6 @@ class AnonPrivateLessons extends StatefulWidget {
 class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
 
   DatabaseService _databaseService = new DatabaseService();
-
-  final dateForm = DateFormat("dd - mm - yyyy");
 
   DateTime _lessonDate = new DateTime.now();
 
@@ -40,7 +36,7 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
   int _totalLessonPrice = 0;
   int _totalHours = 0;
 
-  bool morningSession = false;
+  bool morningSession;
   String _session;
 
   void selectedSession(){
@@ -146,100 +142,106 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                   ),
                 ),
 
-                Row( // Calculate kite+bar price
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text("8 Hours packege: 1600 TL"),
+                Card(
+                  child: Row( // Calculate kite+bar price
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text("8 Hours packege: 1600 TL"),
 
-                    new RaisedButton( // decrease _eightHoursStack by 1
-                      onPressed: (){
-                        decreaseEightHours();
-                        eightHoursPrice();
-                        totalPrice();
-                        totalHours();
-                      },
-                      child: new Icon(
-                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                          color: Colors.black),
-                    ),
+                      new FlatButton( // decrease _eightHoursStack by 1
+                        onPressed: (){
+                          decreaseEightHours();
+                          eightHoursPrice();
+                          totalPrice();
+                          totalHours();
+                        },
+                        child: new Icon(
+                            const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                            color: Colors.black),
+                      ),
 
-                    new Text('$_eightHoursStack',
-                        style: new TextStyle(fontSize: 30.0)),
+                      new Text('$_eightHoursStack',
+                          style: new TextStyle(fontSize: 30.0)),
 
-                    new RaisedButton( // increase _eightHoursStack by 1
-                      onPressed: (){
-                        incrementEightHours();
-                        eightHoursPrice();
-                        totalPrice();
-                        totalHours();
-                      },
-                      child: new Icon(Icons.add, color: Colors.black,),
-                    ),
-                  ],
+                      new FlatButton( // increase _eightHoursStack by 1
+                        onPressed: (){
+                          incrementEightHours();
+                          eightHoursPrice();
+                          totalPrice();
+                          totalHours();
+                        },
+                        child: new Icon(Icons.add, color: Colors.black,),
+                      ),
+                    ],
+                  ),
                 ),
 
-                Row( // Calculate kite+bar price
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text("6 Hours packege: 1300 TL"),
+                Card(
+                  child: Row( // Calculate kite+bar price
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text("6 Hours packege: 1300 TL"),
 
-                    new RaisedButton( // decrease _sixHoursStack by 1
-                      onPressed: (){
-                        decreaseSixHours();
-                        sixHoursPrice();
-                        totalPrice();
-                        totalHours();
-                      },
-                      child: new Icon(
-                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                          color: Colors.black),
-                    ),
+                      new FlatButton( // decrease _sixHoursStack by 1
+                        onPressed: (){
+                          decreaseSixHours();
+                          sixHoursPrice();
+                          totalPrice();
+                          totalHours();
+                        },
+                        child: new Icon(
+                            const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                            color: Colors.black),
+                      ),
 
-                    new Text('$_sixHoursStack',
-                        style: new TextStyle(fontSize: 30.0)),
+                      new Text('$_sixHoursStack',
+                          style: new TextStyle(fontSize: 30.0)),
 
-                    new RaisedButton( // increase _sixHoursStack by 1
-                      onPressed: (){
-                        incrementSixHours();
-                        sixHoursPrice();
-                        totalPrice();
-                        totalHours();
-                      },
-                      child: new Icon(Icons.add, color: Colors.black,),
-                    ),
-                  ],
+                      new FlatButton( // increase _sixHoursStack by 1
+                        onPressed: (){
+                          incrementSixHours();
+                          sixHoursPrice();
+                          totalPrice();
+                          totalHours();
+                        },
+                        child: new Icon(Icons.add, color: Colors.black,),
+                      ),
+                    ],
+                  ),
                 ),
 
-                Row( // Calculate kite+bar price
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text("1 Hour packege: 250 TL"),
+                Card(
+                  child: Row( // Calculate kite+bar price
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text("1 Hour packege: 250 TL"),
 
-                    new RaisedButton( // decrease _hourStack by 1
-                      onPressed: (){
-                        decreaseHour();
-                        hourPrice();
-                        totalPrice();
-                        totalHours();
-                      },
-                      child: new Icon(
-                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                          color: Colors.black),
-                    ),
+                      new FlatButton( // decrease _hourStack by 1
+                        onPressed: (){
+                          decreaseHour();
+                          hourPrice();
+                          totalPrice();
+                          totalHours();
+                        },
+                        child: new Icon(
+                            const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                            color: Colors.black),
+                      ),
 
-                    new Text('$_oneHourStack',
-                        style: new TextStyle(fontSize: 30.0)),
+                      new Text('$_oneHourStack',
+                          style: new TextStyle(fontSize: 30.0)),
 
-                    new RaisedButton( // increase _hourStack by 1
-                      onPressed: (){
-                        incrementHour();
-                        hourPrice();
-                        totalPrice();
-                        totalHours();
-                      },
-                      child: new Icon(Icons.add, color: Colors.black,),
-                    ),
-                  ],
+                      new FlatButton( // increase _hourStack by 1
+                        onPressed: (){
+                          incrementHour();
+                          hourPrice();
+                          totalPrice();
+                          totalHours();
+                        },
+                        child: new Icon(Icons.add, color: Colors.black,),
+                      ),
+                    ],
+                  ),
                 ),
 
                 DropdownButton<bool>(
@@ -274,10 +276,15 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                       return "wrong";
                     }
                   },
-                  hint: Text("Sessions"),
+                  hint: Text(morningSession == null ? "Sessions" : "$_session"),
                 ),
 
-                Text("$_lessonDate"),
+                Text(
+                  "$_lessonDate",
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
 
                 RaisedButton(
                   child: Text("Date"),
