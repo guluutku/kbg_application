@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:kbgapp/screens/withAccount/lessons/lessonsHome.dart';
 import 'package:kbgapp/screens/withAccount/rental/rentalPage.dart';
-import 'package:kbgapp/services/authentication.dart';
-import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/logout.dart';
-import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 import 'profile/profile.dart';
 
 class AccountHome extends StatefulWidget {
@@ -16,8 +12,6 @@ class AccountHome extends StatefulWidget {
 
 class _AccountHomeState extends State<AccountHome> {
 
-  TextEditingController _value = new TextEditingController();
-
   String email;
   String name;
   int age = 0;
@@ -25,19 +19,6 @@ class _AccountHomeState extends State<AccountHome> {
 
   @override
   Widget build(BuildContext context) {
-
-    void _settingSheetPanel(){
-      showModalBottomSheet(context: context, builder: (context){
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: Column(
-            children: <Widget>[
-              logout,
-            ],
-          ),
-        );
-      });
-    }
 
     return Scaffold(
       backgroundColor: Colors.brown[50],
@@ -47,12 +28,6 @@ class _AccountHomeState extends State<AccountHome> {
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.settings),
-            label: Text("settings"),
-            onPressed: () => _settingSheetPanel(),
-          ),
-
-          FlatButton.icon(
             icon: Icon(Icons.person),
             label: Text("Profile"),
             onPressed: (){
@@ -61,7 +36,9 @@ class _AccountHomeState extends State<AccountHome> {
                   MaterialPageRoute(builder: (context) => Profile())
               );
             },
-          )
+          ),
+
+          logout,
         ],
       ),
 

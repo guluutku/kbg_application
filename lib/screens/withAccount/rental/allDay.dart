@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
@@ -283,7 +285,11 @@ class _AllDayRentState extends State<AllDayRent> {
 
               RaisedButton(
                 onPressed: (){
-                  rentConfirmation(context);
+                  if(total == 0){
+                    noInfo(context);
+                  } else{
+                    rentConfirmation(context);
+                  }
                 },
                 child: Text("Continue"),
               ),
@@ -292,6 +298,19 @@ class _AllDayRentState extends State<AllDayRent> {
 
         ),
       ),
+    );
+  }
+
+  void noInfo(BuildContext context){
+    var dialog = AlertDialog(
+      title: Text("Warning!!!!"),
+      content: Text("Please choose at least 1 equipment to rent"),
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return dialog;
+        }
     );
   }
 

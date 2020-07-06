@@ -7,9 +7,7 @@ import 'package:kbgapp/screens/Admin/adminBottomnavigator.dart';
 import 'package:kbgapp/screens/signUp.dart';
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/authentication.dart';
-import 'package:kbgapp/sharedCode/loadingIcon.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
-import 'package:kbgapp/sharedCode/appBar.dart';
 import 'anonymously/anonHome.dart';
 import 'package:kbgapp/services/database.dart';
 
@@ -136,7 +134,10 @@ class _SignInState extends State<EntryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.brown[100],
-        appBar: appBar,
+        appBar: AppBar(
+          backgroundColor: Colors.brown[400],
+          elevation: 0.0,
+        ),
 
         body: SingleChildScrollView(
           child: Container(

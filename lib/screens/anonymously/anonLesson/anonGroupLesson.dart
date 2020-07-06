@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kbgapp/services/authentication.dart';
 
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
@@ -12,6 +13,8 @@ class AnonGroupLesson extends StatefulWidget {
 }
 
 class _AnonGroupLessonState extends State<AnonGroupLesson> {
+
+  AuthService _authService = new AuthService();
 
   DatabaseService _databaseService = new DatabaseService();
 
@@ -160,7 +163,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 child: Row( // Calculate kite+bar price
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text("8 Hours packege: 2100 TL"),
+                    Text("8 Hours package: 2100 TL"),
 
                     new FlatButton( // decrease _eightHoursStack by 1
                       onPressed: (){
@@ -194,7 +197,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 child: Row( // Calculate kite+bar price
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text("6 Hours packege: 1600 TL"),
+                    Text("6 Hours package: 1600 TL"),
 
                     new FlatButton( // decrease _sixHoursStack by 1
                       onPressed: (){
@@ -228,7 +231,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 child: Row( // Calculate kite+bar price
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text("1 Hour packege: 300 TL"),
+                    Text("1 Hour package: 300 TL"),
 
                     new FlatButton( // decrease _hourStack by 1
                       onPressed: (){
@@ -468,7 +471,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 _secondAge,
                 _secondWeight
             );
-            Navigator.of(context).pop(AnonymousHomePage());
+            await _authService.logOut();
           }
         ),
         FlatButton(

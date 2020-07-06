@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:kbgapp/screens/withAccount/profile/updateInformations.dart';
 import 'package:kbgapp/services/authentication.dart';
+import 'package:kbgapp/sharedCode/loadingIcon.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
 class Profile extends StatefulWidget {
@@ -19,6 +20,8 @@ class _ProfileState extends State<Profile> {
   String name, surname, phone, email, password;
   int age;
   double weight;
+  
+  Loading load = new Loading();
 
   _getProfile() async {
     var firebaseUser = await FirebaseAuth.instance.currentUser();
@@ -59,7 +62,7 @@ class _ProfileState extends State<Profile> {
         ],
       ),
       body: Container(
-        child: name == null && surname == null && phone == null && age == null && weight == null ? Text("la") : Column( // TODO: loading ekle
+        child: name == null && surname == null && phone == null && age == null && weight == null ? load.build(context) : Column( // TODO: loading ekle
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[

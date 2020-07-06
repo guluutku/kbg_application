@@ -298,7 +298,11 @@ class _PrivateLessonState extends State<PrivateLesson> {
 
               RaisedButton(
                 onPressed: (){
-                  lessonConfirmation(context);
+                  if(totalHour == 0){
+                    noLesson(context);
+                  } else{
+                    lessonConfirmation(context);
+                  }
                 },
                 child: Text("Make an Appointment"),
               ),
@@ -306,6 +310,19 @@ class _PrivateLessonState extends State<PrivateLesson> {
           ),
         ),
       ),
+    );
+  }
+
+  void noLesson(BuildContext context){
+    var dialog = AlertDialog(
+      title: Text("Warning!!!!"),
+      content: Text("Please buy at least 1 lesson"),
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return dialog;
+        }
     );
   }
 

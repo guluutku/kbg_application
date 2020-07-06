@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:kbgapp/screens/Admin/forAnonymous/admin_AnonProfile.dart';
+import 'package:kbgapp/sharedCode/loadingIcon.dart';
+import 'package:kbgapp/sharedCode/logout.dart';
 
 class Admin_AnonHome extends StatefulWidget {
 
@@ -16,6 +17,8 @@ class _Admin_AnonHomeState extends State<Admin_AnonHome> {
 
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _anony = [];
+
+  Loading load = new Loading();
 
   String _docID;
   bool _loading = true;
@@ -48,9 +51,14 @@ class _Admin_AnonHomeState extends State<Admin_AnonHome> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Anonymous"),
+        actions: <Widget>[
+         logout,
+        ],
+        leading: new Container(),
       ),
+
       body: Container(
-        child: ListView.builder(
+        child: _loading ? load.build(context) : ListView.builder(
             itemCount: _anony.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(

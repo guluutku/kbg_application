@@ -21,7 +21,7 @@ class _GroupLessonState extends State<GroupLesson> {
   int _age;
   double _weight;
 
-  DateTime lessonDate = new DateTime.now();
+  DateTime _lessonDate = new DateTime.now();
 
   int _sixHours = 0;
   int _eightHours = 0;
@@ -295,7 +295,7 @@ class _GroupLessonState extends State<GroupLesson> {
               ),
 
               Text(
-                "$lessonDate",
+                "$_lessonDate",
                 style: TextStyle(
                     fontSize: 20
                 ),
@@ -308,12 +308,12 @@ class _GroupLessonState extends State<GroupLesson> {
                 onPressed: () {
                   showDatePicker(
                     context: context,
-                    initialDate: lessonDate,
+                    initialDate: _lessonDate,
                     firstDate: DateTime(2020),
                     lastDate: DateTime(2021),
                   ).then((date) {
                     setState(() {
-                      lessonDate = date;
+                      _lessonDate = date;
                     });
                   });
                 },
@@ -323,7 +323,13 @@ class _GroupLessonState extends State<GroupLesson> {
 
               RaisedButton(
                 onPressed: () {
-                  lessonConfirmation(context);
+                  if(_totalHour == 0){
+                    _noLesson(context);
+                  } else if(_name == null){
+                    _noSecondStudent(context);
+                  } else{
+                    _lessonConfirmation(context);
+                  }
                 },
                 child: Text("Make an Appointment"),
               ),
@@ -334,7 +340,33 @@ class _GroupLessonState extends State<GroupLesson> {
     );
   }
 
-  void lessonConfirmation(BuildContext context) {
+  void _noSecondStudent(BuildContext context){
+    var alertDialog = AlertDialog(
+      title: Text("Warning!!!!"),
+      content: Text("Please write information about second student in 'Add second student'"),
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return alertDialog;
+        }
+    );
+  }
+
+  void _noLesson(BuildContext context){
+    var dialog = AlertDialog(
+      title: Text("Warning!!!!"),
+      content: Text("Please buy at least 1 lesson"),
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return dialog;
+        }
+    );
+  }
+
+  void _lessonConfirmation(BuildContext context) {
     var alertDialog = AlertDialog(
       title: Text(
         "CONFIRMATION",
@@ -351,7 +383,7 @@ class _GroupLessonState extends State<GroupLesson> {
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: () {
-            _databaseService.groupLessonData(_totalHour, _hour, _sixHours, _eightHours, session, _totalLessonPrice, lessonDate
+            _databaseService.groupLessonData(_totalHour, _hour, _sixHours, _eightHours, session, _totalLessonPrice, _lessonDate
                 , _name, _surname, _age, _weight);
           },
         ),

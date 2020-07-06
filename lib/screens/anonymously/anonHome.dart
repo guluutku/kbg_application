@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:kbgapp/services/authentication.dart';
+import 'package:kbgapp/sharedCode/logout.dart';
 import 'anonLesson/anonyLessonHome.dart';
 import 'package:kbgapp/screens/anonymously/anonRental/anonRentalPage.dart';
 
@@ -12,29 +13,8 @@ class AnonymousHomePage extends StatefulWidget {
 
 class _AnonymousHomePageState extends State<AnonymousHomePage> {
 
-  final AuthService _authService = AuthService();
-
   @override
   Widget build(BuildContext context) {
-
-    void _settingSheetPanel(){
-      showModalBottomSheet(context: context, builder: (context){
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: Column(
-            children: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.person),
-                label: Text("logout"),
-                onPressed: () async{
-                  /**await _authService.signOut();*/
-                },
-              ),
-            ],
-          ),
-        );
-      });
-    }
 
     return Scaffold(
       backgroundColor: Colors.brown[100],
@@ -42,13 +22,7 @@ class _AnonymousHomePageState extends State<AnonymousHomePage> {
       appBar: AppBar(
         title: Text('Welcome User'),
         actions: <Widget>[
-
-
-          FlatButton.icon(
-            icon: Icon(Icons.settings),
-            label: Text("settings"),
-            onPressed: () => _settingSheetPanel(),
-          ),
+          logout,
         ],
       ),
 

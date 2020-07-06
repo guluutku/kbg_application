@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'package:kbgapp/sharedCode/loadingIcon.dart';
+import 'package:kbgapp/sharedCode/logout.dart';
 import 'admin_MemberProfile.dart';
 
 // ignore: camel_case_types
@@ -16,6 +17,8 @@ class Admin_MembersHome extends StatefulWidget {
 class _Admin_MembersHomeState extends State<Admin_MembersHome> {
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _members = [];
+
+  Loading load = new Loading();
 
   bool _loading = true;
 
@@ -49,10 +52,14 @@ class _Admin_MembersHomeState extends State<Admin_MembersHome> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
+        actions: <Widget>[
+          logout,
+        ],
+        leading: new Container(),
       ),
 
       body: Container(
-        child: _members.length == 0 ? Center(child: Text("empty"),) : ListView.builder(
+        child: _loading ? load.build(context) : ListView.builder(
             itemCount: _members.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(

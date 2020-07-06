@@ -286,7 +286,11 @@ class _HalfDayRentalState extends State<HalfDayRental> {
 
                 RaisedButton(
                   onPressed: (){
-                    rentConfirmation(context);
+                    if(totalHalfDayEquip == 0){
+                      noInfo(context);
+                    } else{
+                      rentConfirmation(context);
+                    }
                   },
                   child: Text("Continue"),
                 ),
@@ -294,6 +298,19 @@ class _HalfDayRentalState extends State<HalfDayRental> {
           ),
         ),
       ),
+    );
+  }
+
+  void noInfo(BuildContext context){
+    var dialog = AlertDialog(
+      title: Text("Warning!!!!"),
+      content: Text("Please choose at least 1 equipment to rent"),
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return dialog;
+        }
     );
   }
 
@@ -323,7 +340,6 @@ class _HalfDayRentalState extends State<HalfDayRental> {
           },
         ),
       ],
-      backgroundColor: Colors.pink,
     );
 
     showDialog(

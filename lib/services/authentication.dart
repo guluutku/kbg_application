@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:kbgapp/modules/customers.dart';
@@ -58,8 +60,9 @@ class AuthService{
   }
 
   // sign out
-  Future signOut() async{
+  Future logOut() async{
     try{
+      exit(0);
       return await _auth.signOut();
     } catch(e){
         return null;

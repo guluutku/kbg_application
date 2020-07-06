@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kbgapp/screens/Admin/adminHome.dart';
+
+import 'package:kbgapp/screens/Admin/teacherCheckList.dart';
 import 'package:kbgapp/screens/Admin/forAnonymous/admin_AnonHome.dart';
 import 'package:kbgapp/screens/Admin/forMembers/admin_MembersHome.dart';
 
 class AdminBottomNavigator extends StatefulWidget {
-
   @override
   _AdminBottomNavigatorState createState() => _AdminBottomNavigatorState();
 }
@@ -29,15 +29,15 @@ class _AdminBottomNavigatorState extends State<AdminBottomNavigator> {
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.pan_tool),
-            title: Text("Home"),
+            icon: Icon(Icons.work),
+            title: Text("Teacher Checklist"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.pan_tool),
+            icon: Icon(Icons.account_circle),
             title: Text("Members"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.pan_tool),
+            icon: Icon(Icons.account_box),
             title: Text("Anonymous"),
           )
         ],
