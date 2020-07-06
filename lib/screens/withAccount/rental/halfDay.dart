@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/database.dart';
+import 'package:kbgapp/sharedCode/missingInfo.dart';
 
 class HalfDayRental extends StatefulWidget {
   @override
@@ -287,9 +288,9 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                 RaisedButton(
                   onPressed: (){
                     if(totalHalfDayEquip == 0){
-                      noInfo(context);
+                      noEquipment(context);
                     } else{
-                      rentConfirmation(context);
+                      _rentConfirmation(context);
                     }
                   },
                   child: Text("Continue"),
@@ -301,20 +302,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
     );
   }
 
-  void noInfo(BuildContext context){
-    var dialog = AlertDialog(
-      title: Text("Warning!!!!"),
-      content: Text("Please choose at least 1 equipment to rent"),
-    );
-    showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return dialog;
-        }
-    );
-  }
-
-  void rentConfirmation(BuildContext context){
+  void _rentConfirmation(BuildContext context){
     var alertDialog = AlertDialog(
       title: Text(
         "CONFIRMATION",

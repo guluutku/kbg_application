@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:kbgapp/services/database.dart';
+import 'package:kbgapp/sharedCode/missingInfo.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
 class AnonPrivateLessons extends StatefulWidget {
@@ -304,9 +305,15 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
 
                 RaisedButton(
                   onPressed: (){
-                    personalInfo(context);
+                    if(_totalHours == 0){
+                      noLesson(context);
+                    } else if( _session == null){
+                      noSession(context);
+                    } else{
+                      personalInfo(context);
+                    }
                   },
-                  child: Text("Continue"),
+                  child: Text("Give personal information"),
                 ),
               ],
           ),
@@ -316,79 +323,85 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
   }
 
   void personalInfo(BuildContext context){
-    showModalBottomSheet(context: context, builder: (context){ // TODO: try showCupertinoModalPopup
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 100.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
-                  validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-                  onChanged: (val) => setState(() => _name = val),
-                ),
-                SizedBox(height: 10.0),
+    showCupertinoModalPopup(context: context, builder: (context){
+      return Material(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 10.0),
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                    validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                    onChanged: (val) => setState(() => _name = val),
+                  ),
+                  SizedBox(height: 10.0),
 
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
-                  validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
-                  onChanged: (val) => setState(() => _surname = val),
-                ),
-                SizedBox(height: 10.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                    validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                    onChanged: (val) => setState(() => _surname = val),
+                  ),
+                  SizedBox(height: 10.0),
 
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
-                  validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
-                  onChanged: (val) => setState(() => _phoneNumber = val),
-                ),
-                SizedBox(height: 10.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
+                    validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
+                    onChanged: (val) => setState(() => _phoneNumber = val),
+                  ),
+                  SizedBox(height: 10.0),
 
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
-                  validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
-                  onChanged: (val) => setState(() => _email = val),
-                ),
-                SizedBox(height: 10.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
+                    validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
+                    onChanged: (val) => setState(() => _email = val),
+                  ),
+                  SizedBox(height: 10.0),
 
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
-                  validator: (val) => val.isEmpty ? 'Please enter an age' : null,
-                  inputFormatters: <TextInputFormatter>[
-                    WhitelistingTextInputFormatter.digitsOnly,
-                  ],
-                  onChanged: (val) => setState(() => _age = int.parse(val)),
-                ),
-                SizedBox(height: 10.0),
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
-                  validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
-                  onChanged: (val) => setState(() => _weight = double.parse(val)),
-                ),
-                SizedBox(height: 10.0),
-                RaisedButton(
-                    color: Colors.pink[400],
-                    child: Text(
-                      'Update',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-                      _databaseService.privateLessonData(
-                          _totalHours,
-                          _oneHourStack,
-                          _sixHoursStack,
-                          _eightHoursStack,
-                          _session,
-                          _totalLessonPrice,
-                          _lessonDate
-                      );
-                    }
-                ),
-              ],
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                    validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                    inputFormatters: <TextInputFormatter>[
+                      WhitelistingTextInputFormatter.digitsOnly,
+                    ],
+                    onChanged: (val) => setState(() => _age = int.parse(val)),
+                  ),
+                  SizedBox(height: 10.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                    validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                    onChanged: (val) => setState(() => _weight = double.parse(val)),
+                  ),
+                  SizedBox(height: 10.0),
+                  RaisedButton(
+                      color: Colors.brown[400],
+                      child: Text(
+                        'Make an appointment',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async {
+                        if(_name == null || _surname == null || _email == null || _phoneNumber == null || _weight == null || _age == null){
+                          noInfo(context);
+                        } else{
+                          _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
+                          _databaseService.privateLessonData(
+                              _totalHours,
+                              _oneHourStack,
+                              _sixHoursStack,
+                              _eightHoursStack,
+                              _session,
+                              _totalLessonPrice,
+                              _lessonDate
+                          );
+                        }
+                      }
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/database.dart';
+import 'package:kbgapp/sharedCode/missingInfo.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
 class PrivateLesson extends StatefulWidget {
@@ -301,7 +302,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
                   if(totalHour == 0){
                     noLesson(context);
                   } else{
-                    lessonConfirmation(context);
+                    _lessonConfirmation(context);
                   }
                 },
                 child: Text("Make an Appointment"),
@@ -313,20 +314,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
     );
   }
 
-  void noLesson(BuildContext context){
-    var dialog = AlertDialog(
-      title: Text("Warning!!!!"),
-      content: Text("Please buy at least 1 lesson"),
-    );
-    showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return dialog;
-        }
-    );
-  }
-
-  void lessonConfirmation(BuildContext context) {
+  void _lessonConfirmation(BuildContext context) {
     var alertDialog = AlertDialog(
       title: Text(
         "CONFIRMATION",

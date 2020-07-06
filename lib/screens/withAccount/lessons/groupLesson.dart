@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:kbgapp/services/database.dart';
+import 'package:kbgapp/sharedCode/missingInfo.dart';
 import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
 
 class GroupLesson extends StatefulWidget {
@@ -324,9 +325,9 @@ class _GroupLessonState extends State<GroupLesson> {
               RaisedButton(
                 onPressed: () {
                   if(_totalHour == 0){
-                    _noLesson(context);
+                    noLesson(context);
                   } else if(_name == null){
-                    _noSecondStudent(context);
+                    noSecondStudent(context);
                   } else{
                     _lessonConfirmation(context);
                   }
@@ -337,32 +338,6 @@ class _GroupLessonState extends State<GroupLesson> {
           ),
         ),
       ),
-    );
-  }
-
-  void _noSecondStudent(BuildContext context){
-    var alertDialog = AlertDialog(
-      title: Text("Warning!!!!"),
-      content: Text("Please write information about second student in 'Add second student'"),
-    );
-    showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return alertDialog;
-        }
-    );
-  }
-
-  void _noLesson(BuildContext context){
-    var dialog = AlertDialog(
-      title: Text("Warning!!!!"),
-      content: Text("Please buy at least 1 lesson"),
-    );
-    showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return dialog;
-        }
     );
   }
 
