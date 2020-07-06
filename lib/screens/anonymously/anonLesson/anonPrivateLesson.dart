@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:kbgapp/services/database.dart';
-import 'package:kbgapp/sharedCode/missingInfo.dart';
-import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
+import 'package:kbgapp/sharedCode/missingInformations.dart';
+import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 
 class AnonPrivateLessons extends StatefulWidget {
   @override
@@ -369,12 +369,17 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                       WhitelistingTextInputFormatter.digitsOnly,
                     ],
                     onChanged: (val) => setState(() => _age = int.parse(val)),
+                    keyboardType: TextInputType.number,
                   ),
                   SizedBox(height: 10.0),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
                     validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
                     onChanged: (val) => setState(() => _weight = double.parse(val)),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      WhitelistingTextInputFormatter.digitsOnly,
+                    ],
                   ),
                   SizedBox(height: 10.0),
                   RaisedButton(

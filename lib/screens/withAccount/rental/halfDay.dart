@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/database.dart';
-import 'package:kbgapp/sharedCode/missingInfo.dart';
+import 'package:kbgapp/sharedCode/missingInformations.dart';
 
 class HalfDayRental extends StatefulWidget {
   @override

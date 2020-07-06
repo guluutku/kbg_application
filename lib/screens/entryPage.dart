@@ -7,7 +7,7 @@ import 'package:kbgapp/screens/Admin/adminBottomnavigator.dart';
 import 'package:kbgapp/screens/signUp.dart';
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/authentication.dart';
-import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
+import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 import 'anonymously/anonHome.dart';
 import 'package:kbgapp/services/database.dart';
 
@@ -33,7 +33,7 @@ class _SignInState extends State<EntryPage> {
 
   final AuthService _auth = AuthService();
 
-  writeText(BuildContext context){
+  _writeText(BuildContext context){
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -114,7 +114,7 @@ class _SignInState extends State<EntryPage> {
     return showDialog(context: context, builder: (context){
       return AlertDialog(
         title: Text("Missing Info"),
-        content: writeText(context),
+        content: _writeText(context),
         actions: <Widget>[
           RaisedButton(
             child: Text("Save"),

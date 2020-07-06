@@ -8,5 +8,3 @@ const textInputDecoration = InputDecoration(
     ),
   ),
 );
-
-

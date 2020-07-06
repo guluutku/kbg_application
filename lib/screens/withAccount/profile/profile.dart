@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:kbgapp/screens/withAccount/profile/updateInformations.dart';
 import 'package:kbgapp/services/authentication.dart';
 import 'package:kbgapp/sharedCode/loadingIcon.dart';
-import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
+import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 
 class Profile extends StatefulWidget {
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kbgapp/services/database.dart';
 
-import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
+import 'package:kbgapp/services/database.dart';
+import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 
 class UpdateInformation extends StatefulWidget {
   @override

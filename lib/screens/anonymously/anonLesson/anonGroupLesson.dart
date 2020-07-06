@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:kbgapp/services/authentication.dart';
 
 import 'package:kbgapp/services/database.dart';
-import 'package:kbgapp/sharedCode/missingInfo.dart';
-import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
+import 'package:kbgapp/sharedCode/missingInformations.dart';
+import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 import '../anonHome.dart';
 
 class AnonGroupLesson extends StatefulWidget {
@@ -407,6 +407,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                     inputFormatters: <TextInputFormatter>[
                       WhitelistingTextInputFormatter.digitsOnly,
                     ],
+                    keyboardType: TextInputType.number,
                     onChanged: (val) => setState(() => _age = int.parse(val)),
                   ),
                   SizedBox(height: 10.0),
@@ -414,6 +415,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                   TextFormField(
                     decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
                     validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                    keyboardType: TextInputType.number,
                     onChanged: (val) => setState(() => _weight = double.parse(val)),
                   ),
                   SizedBox(height: 10.0),
@@ -439,6 +441,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                   TextFormField(
                     decoration: textInputDecoration.copyWith(labelText: "Enter their age"),
                     validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                    keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
                       WhitelistingTextInputFormatter.digitsOnly,
                     ],
@@ -450,6 +453,10 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                     decoration: textInputDecoration.copyWith(labelText: "Enter their weight"),
                     validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
                     onChanged: (val) => setState(() => _secondWeight = double.parse(val)),
+                    inputFormatters: <TextInputFormatter>[
+                      WhitelistingTextInputFormatter.digitsOnly,
+                    ],
+                    keyboardType: TextInputType.number,
                   ),
                   SizedBox(height: 10.0),
 

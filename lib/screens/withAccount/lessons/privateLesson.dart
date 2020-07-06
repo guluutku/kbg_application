@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/database.dart';
-import 'package:kbgapp/sharedCode/missingInfo.dart';
-import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
+import 'package:kbgapp/sharedCode/missingInformations.dart';
 
 class PrivateLesson extends StatefulWidget {
   @override
@@ -14,92 +13,92 @@ class _PrivateLessonState extends State<PrivateLesson> {
 
   DatabaseService _databaseService = new DatabaseService();
 
-  DateTime lessonDate = new DateTime.now();
+  DateTime _lessonDate = new DateTime.now();
 
   int _sixHours = 0;
   int _eightHours = 0;
   int _hour = 0;
 
-  int sixHoursStack = 0;
-  int eightHoursStack = 0;
-  int hourStack = 0;
+  int _sixHoursStack = 0;
+  int _eightHoursStack = 0;
+  int _hourStack = 0;
 
-  int totalLessonPrice = 0;
-  int totalHour = 0;
+  int _totalLessonPrice = 0;
+  int _totalHour = 0;
 
-  bool morningSession;
-  String session;
+  bool _morningSession;
+  String _session;
 
-  void selectedSession(){
-    if(morningSession){
+  void _selectedSession(){
+    if(_morningSession){
       setState(() {
-        session ="Morning Session";
+        _session ="Morning Session";
       });
     } else{
-      session = "Afternoon Session";
+      _session = "Afternoon Session";
     }
   }
 
-  void incrementSixHours(){
+  void _incrementSixHours(){
     setState(() {
-      sixHoursStack++;
+      _sixHoursStack++;
     });
   }
 
-  void decreaseSixHours(){
-    if(sixHoursStack != 0){
+  void _decreaseSixHours(){
+    if(_sixHoursStack != 0){
       setState(() {
-        sixHoursStack--;
+        _sixHoursStack--;
       });
     }
   }
 
-  int sixHoursPrice(){
-    return _sixHours = 1300 * sixHoursStack;
+  int _sixHoursPrice(){
+    return _sixHours = 1300 * _sixHoursStack;
   }
 
-  void incrementEightHours(){
+  void _incrementEightHours(){
     setState(() {
-      eightHoursStack++;
+      _eightHoursStack++;
     });
   }
 
-  void decreaseEightHours(){
-    if(eightHoursStack != 0){
+  void _decreaseEightHours(){
+    if(_eightHoursStack != 0){
       setState(() {
-        eightHoursStack--;
+        _eightHoursStack--;
       });
     }
   }
 
-  int eightHoursPrice(){
-    return _eightHours = 1600 * eightHoursStack;
+  int _eightHoursPrice(){
+    return _eightHours = 1600 * _eightHoursStack;
   }
 
-  void incrementHour(){
+  void _incrementHour(){
     setState(() {
-      hourStack++;
+      _hourStack++;
     });
   }
 
-  void decreaseHour(){
-    if(hourStack != 0){
+  void _decreaseHour(){
+    if(_hourStack != 0){
       setState(() {
-        hourStack--;
+        _hourStack--;
       });
     }
   }
 
-  int hourPrice(){
-    return _hour = 250 * hourStack;
+  int _hourPrice(){
+    return _hour = 250 * _hourStack;
   }
 
-  int totalPrice() {
-    return totalLessonPrice = _eightHours + _hour + _sixHours;
+  int _totalPrice() {
+    return _totalLessonPrice = _eightHours + _hour + _sixHours;
   }
 
-  int totalHours(){
-    return totalHour = 1 * hourStack + 6 * sixHoursStack + 8 * eightHoursStack;
+  int _totalHours(){
+    return _totalHour = 1 * _hourStack + 6 * _sixHoursStack + 8 * _eightHoursStack;
   }
 
 
@@ -144,25 +143,25 @@ class _PrivateLessonState extends State<PrivateLesson> {
 
                     new FlatButton( // decrease _eightHoursStack by 1
                       onPressed: (){
-                        decreaseEightHours();
-                        eightHoursPrice();
-                        totalPrice();
-                        totalHours();
+                        _decreaseEightHours();
+                        _eightHoursPrice();
+                        _totalPrice();
+                        _totalHours();
                       },
                       child: new Icon(
                           const IconData(0xe15b, fontFamily: 'MaterialIcons'),
                           color: Colors.black),
                     ),
 
-                    new Text('$eightHoursStack',
+                    new Text('$_eightHoursStack',
                         style: new TextStyle(fontSize: 30.0)),
 
                     new FlatButton( // increase _eightHoursStack by 1
                       onPressed: (){
-                        incrementEightHours();
-                        eightHoursPrice();
-                        totalPrice();
-                        totalHours();
+                        _incrementEightHours();
+                        _eightHoursPrice();
+                        _totalPrice();
+                        _totalHours();
                       },
                       child: new Icon(Icons.add, color: Colors.black,),
                     ),
@@ -178,25 +177,25 @@ class _PrivateLessonState extends State<PrivateLesson> {
 
                     new FlatButton( // decrease _sixHoursStack by 1
                       onPressed: (){
-                        decreaseSixHours();
-                        sixHoursPrice();
-                        totalPrice();
-                        totalHours();
+                        _decreaseSixHours();
+                        _sixHoursPrice();
+                        _totalPrice();
+                        _totalHours();
                       },
                       child: new Icon(
                           const IconData(0xe15b, fontFamily: 'MaterialIcons'),
                           color: Colors.black),
                     ),
 
-                    new Text('$sixHoursStack',
+                    new Text('$_sixHoursStack',
                         style: new TextStyle(fontSize: 30.0)),
 
                     new FlatButton( // increase _sixHoursStack by 1
                       onPressed: (){
-                        incrementSixHours();
-                        sixHoursPrice();
-                        totalPrice();
-                        totalHours();
+                        _incrementSixHours();
+                        _sixHoursPrice();
+                        _totalPrice();
+                        _totalHours();
                       },
                       child: new Icon(Icons.add, color: Colors.black,),
                     ),
@@ -212,29 +211,39 @@ class _PrivateLessonState extends State<PrivateLesson> {
 
                     new FlatButton( // decrease _hourStack by 1
                       onPressed: (){
-                        decreaseHour();
-                        hourPrice();
-                        totalPrice();
-                        totalHours();
+                        _decreaseHour();
+                        _hourPrice();
+                        _totalPrice();
+                        _totalHours();
                       },
                       child: new Icon(
                           const IconData(0xe15b, fontFamily: 'MaterialIcons'),
                           color: Colors.black),
                     ),
 
-                    new Text('$hourStack',
+                    new Text('$_hourStack',
                         style: new TextStyle(fontSize: 30.0)),
 
                     new FlatButton( // increase _hourStack by 1
                       onPressed: (){
-                        incrementHour();
-                        hourPrice();
-                        totalPrice();
-                        totalHours();
+                        _incrementHour();
+                        _hourPrice();
+                        _totalPrice();
+                        _totalHours();
                       },
                       child: new Icon(Icons.add, color: Colors.black,),
                     ),
                   ],
+                ),
+              ),
+
+              SizedBox(height: 10,),
+
+              Text(
+                "Total price: $_totalLessonPrice",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25
                 ),
               ),
 
@@ -258,23 +267,23 @@ class _PrivateLessonState extends State<PrivateLesson> {
                 onChanged: (value){
                   if(value){
                     setState(() {
-                      morningSession = true;
-                      selectedSession();
+                      _morningSession = true;
+                      _selectedSession();
                     });
                   } else if(value == false){
                     setState(() {
-                      morningSession = false;
-                      selectedSession();
+                      _morningSession = false;
+                      _selectedSession();
                     });
                   } else{
                     return "wrong";
                   }
                 },
-                hint: Text(morningSession == null ? "Sessions" : "$session" ),
+                hint: Text(_morningSession == null ? "Sessions" : "$_session" ),
               ),
 
               Text(
-                "$lessonDate",
+                "$_lessonDate",
                 style: TextStyle(
                   fontSize: 20
               ),
@@ -286,12 +295,12 @@ class _PrivateLessonState extends State<PrivateLesson> {
                 onPressed: (){
                   showDatePicker(
                     context: context,
-                    initialDate: lessonDate,
+                    initialDate: _lessonDate,
                     firstDate: DateTime(2020),
                     lastDate: DateTime(2021),
                   ).then((date)  {
                     setState((){
-                      lessonDate = date;
+                      _lessonDate = date;
                     });
                   });
                 },
@@ -299,9 +308,11 @@ class _PrivateLessonState extends State<PrivateLesson> {
 
               RaisedButton(
                 onPressed: (){
-                  if(totalHour == 0){
+                  if(_totalHour == 0){
                     noLesson(context);
-                  } else{
+                  } else if(_morningSession == null){
+                     noSession(context);
+                 }else{
                     _lessonConfirmation(context);
                   }
                 },
@@ -322,29 +333,26 @@ class _PrivateLessonState extends State<PrivateLesson> {
       ),
       content: Text(
           "The lessons you want to take are:"
-              "$hourStack" + "  One Hour Lessons,  "
-              "$sixHoursStack" + "  6 hours lessons,  "
-              "$eightHoursStack" + "  8 hours lessons,  "
-              "Total: $totalLessonPrice  TL"
-              "At $session"
-              "In $lessonDate"
+              "$_hourStack" + "  One Hour Lessons,  "
+              "$_sixHoursStack" + "  6 hours lessons,  "
+              "$_eightHoursStack" + "  8 hours lessons,  "
+              "Total: $_totalLessonPrice  TL"
+              "At $_session"
+              "In $_lessonDate"
       ),
       actions: <Widget>[
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: () {
             _databaseService.privateLessonData(
-                totalHour,
-                hourStack,
-                sixHoursStack,
-                eightHoursStack,
-                session,
-                totalLessonPrice,
-                lessonDate);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AccountHome()),
-            );
+                _totalHour,
+                _hourStack,
+                _sixHoursStack,
+                _eightHoursStack,
+                _session,
+                _totalLessonPrice,
+                _lessonDate);
+            Navigator.of(context).pop(false);
           },
         ),
       ],

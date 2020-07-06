@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:kbgapp/services/database.dart';
-import 'package:kbgapp/sharedCode/textInpuDecoration.dart';
+import 'package:kbgapp/sharedCode/missingInformations.dart';
+import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 
 import '../anonHome.dart';
 
@@ -135,7 +136,17 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
                   fontSize: 17
               ),
             ),
-            onPressed: () => rentalConfirmation(context),
+            onPressed: (){
+              if( _totalHalfDayEquipPrice == 0){
+                noEquipment(context);
+              } else if(_name == null || _surname == null || _weight == null || _age == null || _email == null || _phoneNumber == null){
+                noInfo(context);
+              } else{
+                _databaseService.halfDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalHalfDayEquipPrice, _rentalDate);
+                _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
+                Navigator.of(context).pop(AnonymousHomePage());
+              }
+            },
           ),
         ],
       ),
@@ -318,11 +329,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
               RaisedButton(
                 child: Text("Give personal information"),
                 onPressed: (){
-                  if( _totalHalfDayEquipPrice == 0){
-                    print("Wrong info");
-                  } else{
-                    personalInfo(context);
-                  }
+                  _personalInfo(context);
                 },
               ),
             ],
@@ -332,116 +339,91 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
     );
   }
 
-  void personalInfo(BuildContext context){
-    showModalBottomSheet(context: context, builder: (context){ // TODO: try showCupertinoModalPopup
-      return Container(
-        padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 100.0),
-        child: Form(
-          key: _formKey,
+  void _personalInfo(BuildContext context){
+    showCupertinoModalPopup(context: context, builder: (context){
+      return Material(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+          child: Form(
+            key: _formKey,
 
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
 
-              children: <Widget>[
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
-                  validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-                  onChanged: (val) => setState(() => _name = val),
-                ),
-                SizedBox(height: 10.0),
+                children: <Widget>[
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                    validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                    onChanged: (val) => setState(() => _name = val),
+                  ),
+                  SizedBox(height: 10.0),
 
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
-                  validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
-                  onChanged: (val) => setState(() => _surname = val),
-                ),
-                SizedBox(height: 10.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                    validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                    onChanged: (val) => setState(() => _surname = val),
+                  ),
+                  SizedBox(height: 10.0),
 
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
-                  validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
-                  onChanged: (val) => setState(() => _phoneNumber = val),
-                ),
-                SizedBox(height: 10.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
+                    validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
+                    onChanged: (val) => setState(() => _phoneNumber = val),
+                  ),
+                  SizedBox(height: 10.0),
 
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
-                  validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
-                  onChanged: (val) => setState(() => _email = val),
-                ),
-                SizedBox(height: 10.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
+                    validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
+                    onChanged: (val) => setState(() => _email = val),
+                  ),
+                  SizedBox(height: 10.0),
 
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
-                  validator: (val) => val.isEmpty ? 'Please enter an age' : null,
-                  inputFormatters: <TextInputFormatter>[
-                    WhitelistingTextInputFormatter.digitsOnly,
-                  ],
-                  onChanged: (val) => setState(() => _age = int.parse(val)),
-                ),
-                SizedBox(height: 10.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                    validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                    inputFormatters: <TextInputFormatter>[
+                      WhitelistingTextInputFormatter.digitsOnly,
+                    ],
+                    keyboardType: TextInputType.number,
+                    onChanged: (val) => setState(() => _age = int.parse(val)),
+                  ),
+                  SizedBox(height: 10.0),
 
-                TextFormField(
-                  decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
-                  validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
-                  onChanged: (val) => setState(() => _weight = double.parse(val)),
-                ),
-                SizedBox(height: 10.0),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                    validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                    keyboardType: TextInputType.number,
+                    onChanged: (val) => setState(() => _weight = double.parse(val)),
+                    inputFormatters: <TextInputFormatter>[
+                      WhitelistingTextInputFormatter.digitsOnly,
+                    ],
+                  ),
+                  SizedBox(height: 10.0),
 
-                RaisedButton(
-                    color: Colors.pink[400],
-                    child: Text(
-                      'Update',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    }
-                ),
-              ],
+                  RaisedButton(
+                      color: Colors.brown[400],
+                      child: Text(
+                        'Update',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        if(_name == null || _surname == null || _weight == null || _age == null || _email == null || _phoneNumber == null){
+                          noInfo(context);
+                        } else{
+                          Navigator.of(context).pop(false);
+                        }
+                      }
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       );
     });
-  }
-
-  void rentalConfirmation(BuildContext context) { //TODO: bu sayfaya göre uygun hale getir
-    var alertDialog = AlertDialog(
-      title: Text(
-        "CONFIRMATION",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      content: Text(
-          ""
-      ),
-      actions: <Widget>[
-        FlatButton(
-            child: Text("Confirm & Continue"),
-            onPressed: () async {
-              _databaseService.halfDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalHalfDayEquipPrice, _rentalDate);
-              _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-              Navigator.of(context).pop(AnonymousHomePage());
-            }
-        ),
-        FlatButton(
-          child: Text("Close"),
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
-        ),
-      ],
-      backgroundColor: Colors.pink,
-    );
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alertDialog;
-        }
-    );
   }
 
 }
