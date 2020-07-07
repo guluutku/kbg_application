@@ -15,6 +15,8 @@ class _PrivateLessonState extends State<PrivateLesson> {
 
   DateTime _lessonDate = new DateTime.now();
 
+  bool _authorise = false;
+
   int _sixHours = 0;
   int _eightHours = 0;
   int _hour = 0;
@@ -351,7 +353,9 @@ class _PrivateLessonState extends State<PrivateLesson> {
                 _eightHoursStack,
                 _session,
                 _totalLessonPrice,
-                _lessonDate);
+                _lessonDate,
+                _authorise
+            );
             Navigator.of(context).pop(false);
           },
         ),

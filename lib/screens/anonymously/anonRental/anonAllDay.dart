@@ -27,6 +27,8 @@ class _AllDayRentState extends State<AllDayRent> {
   final _focus4 = FocusNode();
   final _focus5 = FocusNode();
 
+  bool _authorise = false;
+
   String _name, _surname, _phoneNumber, _email;
   int _age;
   double _weight;
@@ -139,7 +141,7 @@ class _AllDayRentState extends State<AllDayRent> {
                 } else if(_name == null || _surname == null || _weight == null || _age == null || _email == null || _phoneNumber == null){
                   noInfo(context);
                 } else {
-                  _databaseService.allDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalAllDayEquipPrice, _rentalDate);
+                  _databaseService.allDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalAllDayEquipPrice, _rentalDate, _authorise);
                   _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
                   Navigator.of(context).pop(AnonymousHomePage());
                 }

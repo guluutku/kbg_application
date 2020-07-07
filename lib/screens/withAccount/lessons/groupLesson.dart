@@ -26,6 +26,7 @@ class _GroupLessonState extends State<GroupLesson> {
   String _surname;
   int _age;
   double _weight;
+  bool _authorise = false;
 
   DateTime _lessonDate = new DateTime.now();
 
@@ -347,7 +348,7 @@ class _GroupLessonState extends State<GroupLesson> {
                     noSession(context);
                   } else{
                     setState(() {
-                      _databaseService.groupLessonData(_totalHour, _hour, _sixHours, _eightHours, _session, _totalLessonPrice, _lessonDate, _name, _surname, _age, _weight);
+                      _databaseService.groupLessonData(_totalHour, _hour, _sixHours, _eightHours, _session, _totalLessonPrice, _lessonDate, _name, _surname, _age, _weight, _authorise);
                       Navigator.of(context).pop(false);
                     });
                   }

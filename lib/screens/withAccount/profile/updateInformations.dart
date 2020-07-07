@@ -28,7 +28,7 @@ class _UpdateInformationState extends State<UpdateInformation> {
             onPressed: (){
               setState(() {
                 Navigator.pop(context);
-                _databaseService.memberDataUpdate(_name, _surname, _age, _weight, _phoneNumber);
+                _databaseService.updateMemberData(_name, _surname, _age, _weight, _phoneNumber);
               });
             },
           ),

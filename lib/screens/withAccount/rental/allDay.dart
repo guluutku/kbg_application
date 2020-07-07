@@ -17,6 +17,8 @@ class _AllDayRentState extends State<AllDayRent> {
 
   DateTime _rentalDate = new DateTime.now();
 
+  bool _authorise = false;
+
   int _full = 0;
   int _kiteBar = 0;
   int _board = 0;
@@ -332,7 +334,7 @@ class _AllDayRentState extends State<AllDayRent> {
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: (){
-            _databaseService.allDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, _totalPrice, _rentalDate);
+            _databaseService.allDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, _totalPrice, _rentalDate, _authorise);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AccountHome()),

@@ -24,6 +24,8 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
   final _focus4 = FocusNode();
   final _focus5 = FocusNode();
 
+  bool _authorise = false;
+
   String _name;
   String _surname;
   int _age;
@@ -143,7 +145,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
               } else if(_name == null || _surname == null || _weight == null || _age == null || _email == null || _phoneNumber == null){
                 noInfo(context);
               } else{
-                _databaseService.halfDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalHalfDayEquipPrice, _rentalDate);
+                _databaseService.halfDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalHalfDayEquipPrice, _rentalDate, _authorise);
                 _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
                 Navigator.of(context).pop(AnonymousHomePage());
               }

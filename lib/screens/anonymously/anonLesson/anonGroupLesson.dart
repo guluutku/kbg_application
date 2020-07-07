@@ -29,6 +29,8 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
   final _focus8 = FocusNode();
   final _focus9 = FocusNode();
 
+  bool _authorise = false;
+
   // personal information of person who makes appointment
   String _name;
   String _surname;
@@ -158,7 +160,8 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                       _secondName,
                       _secondSurname,
                       _secondAge,
-                      _secondWeight
+                      _secondWeight,
+                      _authorise
                   );
                   Navigator.of(context).pop(false);
                 }

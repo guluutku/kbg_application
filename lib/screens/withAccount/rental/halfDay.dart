@@ -13,86 +13,88 @@ class _HalfDayRentalState extends State<HalfDayRental> {
 
   DatabaseService _databaseService = new DatabaseService();
 
-  DateTime rentalDate = new DateTime.now();
+  DateTime _rentalDate = new DateTime.now();
+
+  bool _authorise = false;
 
   int _full = 0;
   int _kiteBar = 0;
   int _board = 0;
   int _harness = 0;
 
-  int fullStack = 0;
-  int kiteBarStack = 0;
-  int boardStack = 0;
-  int harnessStack = 0;
+  int _fullStack = 0;
+  int _kiteBarStack = 0;
+  int _boardStack = 0;
+  int _harnessStack = 0;
 
   int _totalPrice = 0;
 
   void _minusFullEquipStack() { // decrease _fullStack by 1 never under 0
     setState(() {
-      if (fullStack != 0)
-        fullStack--;
+      if (_fullStack != 0)
+        _fullStack--;
     });
   }
 
   void _incrementFullEquipStack() { // increase _fullStack by 1
     setState(() {
-      fullStack++;
+      _fullStack++;
     });
   }
 
   void _incrementKiteBarStack() { // increase _kiteBarStack by 1
     setState(() {
-      kiteBarStack++;
+      _kiteBarStack++;
     });
   }
 
   void _minusKiteBarStack() { // increase _kiteBarStack by 1 never under 0
     setState(() {
-      if (kiteBarStack != 0)
-        kiteBarStack--;
+      if (_kiteBarStack != 0)
+        _kiteBarStack--;
     });
   }
 
   void _incrementBoardStack() { // increase _boardStack by 1
     setState(() {
-      boardStack++;
+      _boardStack++;
     });
   }
 
   void _minusBoardStack() { // increase _boardStack by 1 never under 0
     setState(() {
-      if (boardStack != 0)
-        boardStack--;
+      if (_boardStack != 0)
+        _boardStack--;
     });
   }
 
   void _incrementHarnessStack() { // increase _harnessStack by 1
     setState(() {
-      harnessStack++;
+      _harnessStack++;
     });
   }
 
   void _minusHarnessStack() { // increase _harnessStack by 1 never under 0
     setState(() {
-      if (harnessStack != 0)
-        harnessStack--;
+      if (_harnessStack != 0)
+        _harnessStack--;
     });
   }
 
   int _fullEquipmentPrice(){ // multiply to give us total full equipment price
-    return _full = 160 * fullStack;
+    return _full = 160 * _fullStack;
   }
 
   int _kiteBarPrice(){ // multiply to give us total kite+bar price
-    return _kiteBar = 140 * kiteBarStack;
+    return _kiteBar = 140 * _kiteBarStack;
   }
 
   int _boardPrice(){ // multiply to give us total board price
-    return _board = 120 * boardStack;
+    return _board = 120 * _boardStack;
   }
 
   int _harnessPrice(){ // multiply to give us total harness price
-    return _harness = 60 * harnessStack;
+    return _harness = 60 * _harnessStack;
   }
 
   int totalPrice(){ // Calculate total price the customer will pay
@@ -136,7 +138,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                       ),
 
                       new Text(
-                        '$fullStack',
+                        '$_fullStack',
                         style: new TextStyle(
                             fontSize: 30.0
                         ),
@@ -175,7 +177,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                         color: Colors.black),
                       ),
 
-                      new Text('$kiteBarStack',
+                      new Text('$_kiteBarStack',
                         style: new TextStyle(fontSize: 30.0)),
 
                       new FlatButton( // increase _kiteBarStack by 1
@@ -208,7 +210,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                         ),
                       ),
 
-                      new Text('$boardStack',
+                      new Text('$_boardStack',
                         style: new TextStyle(fontSize: 30.0)),
 
                       new FlatButton( // increase _boardStack by 1
@@ -241,7 +243,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                         ),
                       ),
 
-                      new Text('$harnessStack',
+                      new Text('$_harnessStack',
                         style: new TextStyle(fontSize: 30.0)
                       ),
 
@@ -273,7 +275,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                 ),
 
                 Text(
-                  "$rentalDate",
+                  "$_rentalDate",
                   style: TextStyle(
                       fontSize: 20
                   ),
@@ -284,12 +286,12 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                   onPressed: (){
                     showDatePicker(
                       context: context,
-                      initialDate: rentalDate,
+                      initialDate: _rentalDate,
                       firstDate: DateTime(2020),
                       lastDate: DateTime(2021),
                     ).then((date)  {
                       setState((){
-                        rentalDate = date;
+                        _rentalDate = date;
                       });
                     });
                   },
@@ -320,17 +322,17 @@ class _HalfDayRentalState extends State<HalfDayRental> {
       ),
       content: Text(
           "The equipments you want to rent are:"
-              "$fullStack" +"  Full Equipment,  "
-              "$kiteBarStack"+"  Kite and Bar,  "
-              "$boardStack"+"  Boards,  "
-              "$harnessStack"+"  Harnesses  "
+              "$_fullStack" +"  Full Equipment,  "
+              "$_kiteBarStack"+"  Kite and Bar,  "
+              "$_boardStack"+"  Boards,  "
+              "$_harnessStack"+"  Harnesses  "
               "Total: $_totalPrice  TL"
       ),
       actions: <Widget>[
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: (){
-            _databaseService.halfDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, _totalPrice, rentalDate);
+            _databaseService.halfDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalPrice, _rentalDate, _authorise);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AccountHome()),

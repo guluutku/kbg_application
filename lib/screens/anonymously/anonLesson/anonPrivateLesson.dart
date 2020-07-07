@@ -25,6 +25,7 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
   final _focus4 = FocusNode();
   final _focus5 = FocusNode();
 
+  bool _authorise = false;
 
   String _name;
   String _surname;
@@ -442,7 +443,8 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                                   _eightHoursStack,
                                   _session,
                                   _totalLessonPrice,
-                                  _lessonDate
+                                  _lessonDate,
+                                  _authorise
                               );
                             }
                           }

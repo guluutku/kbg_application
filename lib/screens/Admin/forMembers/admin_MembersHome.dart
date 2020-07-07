@@ -51,7 +51,7 @@ class _Admin_MembersHomeState extends State<Admin_MembersHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
+        title: Text("Members"),
         actions: <Widget>[
           logout,
         ],
@@ -67,13 +67,15 @@ class _Admin_MembersHomeState extends State<Admin_MembersHome> {
                   radius: 20,
                   backgroundColor: Colors.brown,
                 ),
-                title: Text("Customer: " + _members[index].data["name"] + " " + _members[index].data["surname"]),
-                onTap: (){
-                  _getDocID(_members[index].data["name"]).then({
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Admin_MemberProfile(docID: _docID,))
-                    )
+                title: _members[index].data["name"] == null || _members[index].data["surname"] == null ? Text("User haven't give their information") : Text("Customer: " + _members[index].data["name"] + " " + _members[index].data["surname"]),
+                onTap: (){_members[index].data["name"] == null || _members[index].data["surname"] == null ? null :
+                  setState((){
+                    _getDocID(_members[index].data["name"]).then({
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Admin_MemberProfile(docID: _docID,))
+                      )
+                    });
                   });
                 },
               );

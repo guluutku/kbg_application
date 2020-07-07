@@ -43,8 +43,20 @@ class DatabaseService{
     });
   }
 
+  void updateMemberData(String name, String surname,  int age, double weight, String phoneNumber) async {
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    await databaseReference.collection("membership")
+        .document(firebaseUser.uid).updateData({
+      'name': name,
+      'surname': surname,
+      'age': age,
+      'weight': weight,
+      'phone number': phoneNumber,
+    });
+  }
+
   // update Half Day Rentals Collection to firestore
-  void halfDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate) async{
+  void halfDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate, bool authorise) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     await databaseReference.collection("Half Day Rentals").document(firebaseUser.uid).setData({
       'Full Equipment': full,
@@ -52,12 +64,13 @@ class DatabaseService{
       'Board': board,
       'Harness': harness,
       'Price(TL)': price,
-      'Rental Date': rentDate
+      'Rental Date': rentDate,
+      'Rental Authorise' : authorise,
     });
   }
 
   // update All Day Rentals Collection to firestore
-  void allDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate) async{
+  void allDayRentalData(int full, int kiteBar, int board, int harness, int price, DateTime rentDate, bool authorise) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     await databaseReference.collection("All Day Rentals").document(firebaseUser.uid).setData({
       'Full Equipment': full,
@@ -65,12 +78,13 @@ class DatabaseService{
       'Board': board,
       'Harness': harness,
       'Price(TL)': price,
-      'Rental Date': rentDate
+      'Rental Date': rentDate,
+      'Rental Authorise' : authorise,
     });
   }
 
   // update Private Lessons Collection to firestore
-  void privateLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate) async{
+  void privateLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate, bool authorise) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     await databaseReference.collection("Private Lessons").document(firebaseUser.uid).setData({
       'Total Hours': hours,
@@ -80,12 +94,13 @@ class DatabaseService{
       'Session': session,
       'Price': price,
       'Date': lessonDate,
+      'Lesson Authorise' : authorise
     });
   }
 
   // update Group Lessons Collection to firestore
   void groupLessonData(int hours, int oneHour, int sixHours, int eightHours, String session, int price, DateTime lessonDate
-      , String name, String surname, int age, double weight) async{
+      , String name, String surname, int age, double weight, bool authorise) async{
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     await databaseReference.collection("Group Lessons").document(firebaseUser.uid).setData({
       'Total Hours': hours,
@@ -95,7 +110,8 @@ class DatabaseService{
       'Session': session,
       'Price': price,
       'Date': lessonDate,
-      'Second Student': FieldValue.arrayUnion([name, surname, age, weight])
+      'Second Student': FieldValue.arrayUnion([name, surname, age, weight]),
+      'Lesson Authorise' : authorise,
     });
   }
 
