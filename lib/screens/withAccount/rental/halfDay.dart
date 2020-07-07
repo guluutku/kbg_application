@@ -25,7 +25,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
   int boardStack = 0;
   int harnessStack = 0;
 
-  int totalHalfDayEquip = 0;
+  int _totalPrice = 0;
 
   void _minusFullEquipStack() { // decrease _fullStack by 1 never under 0
     setState(() {
@@ -96,7 +96,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
   }
 
   int totalPrice(){ // Calculate total price the customer will pay
-    return totalHalfDayEquip = _harness + _board + _kiteBar + _full;
+    return _totalPrice = _harness + _board + _kiteBar + _full;
   }
 
   @override
@@ -257,6 +257,16 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                   ),
                 ),
 
+                SizedBox(height: 10,),
+
+                Text(
+                  "Total price: $_totalPrice",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25
+                  ),
+                ),
+
                 CheckboxListTile(
                   title: Text('Likra and Wetsuit: Free'),
                     value: true,
@@ -287,7 +297,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
 
                 RaisedButton(
                   onPressed: (){
-                    if(totalHalfDayEquip == 0){
+                    if(_totalPrice == 0){
                       noEquipment(context);
                     } else{
                       _rentConfirmation(context);
@@ -314,13 +324,13 @@ class _HalfDayRentalState extends State<HalfDayRental> {
               "$kiteBarStack"+"  Kite and Bar,  "
               "$boardStack"+"  Boards,  "
               "$harnessStack"+"  Harnesses  "
-              "Total: $totalHalfDayEquip  TL"
+              "Total: $_totalPrice  TL"
       ),
       actions: <Widget>[
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: (){
-            _databaseService.halfDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, totalHalfDayEquip, rentalDate);
+            _databaseService.halfDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, _totalPrice, rentalDate);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AccountHome()),

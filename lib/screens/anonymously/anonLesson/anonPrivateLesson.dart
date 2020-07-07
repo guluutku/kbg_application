@@ -19,6 +19,13 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final _focus1 = FocusNode();
+  final _focus2 = FocusNode();
+  final _focus3 = FocusNode();
+  final _focus4 = FocusNode();
+  final _focus5 = FocusNode();
+
+
   String _name;
   String _surname;
   int _age;
@@ -37,11 +44,11 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
   int _totalLessonPrice = 0;
   int _totalHours = 0;
 
-  bool morningSession;
+  bool _morningSession;
   String _session;
 
-  void selectedSession(){
-    if(morningSession){
+  void _selectedSession(){
+    if(_morningSession){
       setState(() {
         _session ="Morning Session";
       });
@@ -50,13 +57,13 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
     }
   }
 
-  void incrementSixHours(){
+  void _incrementSixHours(){
     setState(() {
       _sixHoursStack++;
     });
   }
 
-  void decreaseSixHours(){
+  void _decreaseSixHours(){
     if(_sixHoursStack != 0){
       setState(() {
         _sixHoursStack--;
@@ -64,17 +71,17 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
     }
   }
 
-  int sixHoursPrice(){
+  int _sixHoursPrice(){
     return _sixHours = 1300 * _sixHoursStack;
   }
 
-  void incrementEightHours(){
+  void _incrementEightHours(){
     setState(() {
       _eightHoursStack++;
     });
   }
 
-  void decreaseEightHours(){
+  void _decreaseEightHours(){
     if(_eightHoursStack != 0){
       setState(() {
         _eightHoursStack--;
@@ -82,17 +89,17 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
     }
   }
 
-  int eightHoursPrice(){
+  int _eightHoursPrice(){
     return _eightHours = 1600 * _eightHoursStack;
   }
 
-  void incrementHour(){
+  void _incrementHour(){
     setState(() {
       _oneHourStack++;
     });
   }
 
-  void decreaseHour(){
+  void _decreaseHour(){
     if(_oneHourStack != 0){
       setState(() {
         _oneHourStack--;
@@ -100,15 +107,15 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
     }
   }
 
-  int hourPrice(){
+  int _hourPrice(){
     return _hour = 250 * _oneHourStack;
   }
 
-  int totalPrice() {
+  int _totalPrice() {
     return _totalLessonPrice = _eightHours + _hour + _sixHours;
   }
 
-  int totalHours(){
+  int _totalHour(){
     return _totalHours = 1 * _oneHourStack + 6 * _sixHoursStack + 8 * _eightHoursStack;
   }
 
@@ -147,14 +154,14 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                   child: Row( // Calculate kite+bar price
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text("8 Hours packege: 1600 TL"),
+                      Text("8 Hours package: 1600 TL"),
 
                       new FlatButton( // decrease _eightHoursStack by 1
                         onPressed: (){
-                          decreaseEightHours();
-                          eightHoursPrice();
-                          totalPrice();
-                          totalHours();
+                          _decreaseEightHours();
+                          _eightHoursPrice();
+                          _totalPrice();
+                          _totalHour();
                         },
                         child: new Icon(
                             const IconData(0xe15b, fontFamily: 'MaterialIcons'),
@@ -166,10 +173,10 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
 
                       new FlatButton( // increase _eightHoursStack by 1
                         onPressed: (){
-                          incrementEightHours();
-                          eightHoursPrice();
-                          totalPrice();
-                          totalHours();
+                          _incrementEightHours();
+                          _eightHoursPrice();
+                          _totalPrice();
+                          _totalHour();
                         },
                         child: new Icon(Icons.add, color: Colors.black,),
                       ),
@@ -181,14 +188,14 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                   child: Row( // Calculate kite+bar price
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text("6 Hours packege: 1300 TL"),
+                      Text("6 Hours package: 1300 TL"),
 
                       new FlatButton( // decrease _sixHoursStack by 1
                         onPressed: (){
-                          decreaseSixHours();
-                          sixHoursPrice();
-                          totalPrice();
-                          totalHours();
+                          _decreaseSixHours();
+                          _sixHoursPrice();
+                          _totalPrice();
+                          _totalHour();
                         },
                         child: new Icon(
                             const IconData(0xe15b, fontFamily: 'MaterialIcons'),
@@ -200,10 +207,10 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
 
                       new FlatButton( // increase _sixHoursStack by 1
                         onPressed: (){
-                          incrementSixHours();
-                          sixHoursPrice();
-                          totalPrice();
-                          totalHours();
+                          _incrementSixHours();
+                          _sixHoursPrice();
+                          _totalPrice();
+                          _totalHour();
                         },
                         child: new Icon(Icons.add, color: Colors.black,),
                       ),
@@ -215,14 +222,14 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                   child: Row( // Calculate kite+bar price
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text("1 Hour packege: 250 TL"),
+                      Text("1 Hour package: 250 TL"),
 
                       new FlatButton( // decrease _hourStack by 1
                         onPressed: (){
-                          decreaseHour();
-                          hourPrice();
-                          totalPrice();
-                          totalHours();
+                          _decreaseHour();
+                          _hourPrice();
+                          _totalPrice();
+                          _totalHour();
                         },
                         child: new Icon(
                             const IconData(0xe15b, fontFamily: 'MaterialIcons'),
@@ -234,10 +241,10 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
 
                       new FlatButton( // increase _hourStack by 1
                         onPressed: (){
-                          incrementHour();
-                          hourPrice();
-                          totalPrice();
-                          totalHours();
+                          _incrementHour();
+                          _hourPrice();
+                          _totalPrice();
+                          _totalHour();
                         },
                         child: new Icon(Icons.add, color: Colors.black,),
                       ),
@@ -265,23 +272,23 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                   onChanged: (value){
                     if(value){
                       setState(() {
-                         morningSession = true;
-                         selectedSession();
+                         _morningSession = true;
+                         _selectedSession();
                       });
                     } else if(value == false){
                       setState(() {
-                         morningSession = false;
-                         selectedSession();
+                         _morningSession = false;
+                         _selectedSession();
                       });
                     } else{
                       return "wrong";
                     }
                   },
-                  hint: Text(morningSession == null ? "Sessions" : "$_session"),
+                  hint: Text(_morningSession == null ? "Sessions" : "$_session"),
                 ),
 
                 Text(
-                  "$_lessonDate",
+                  _lessonDate == null ? "Choose a date" : "$_lessonDate",
                   style: TextStyle(
                       fontSize: 20
                   ),
@@ -293,7 +300,7 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                     showDatePicker(
                       context: context,
                       initialDate: _lessonDate,
-                      firstDate: DateTime(2020),
+                      firstDate: DateTime.now(),
                       lastDate: DateTime(2021),
                     ).then((date)  {
                       setState((){
@@ -310,7 +317,7 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                     } else if( _session == null){
                       noSession(context);
                     } else{
-                      personalInfo(context);
+                      _personalInfo(context);
                     }
                   },
                   child: Text("Give personal information"),
@@ -322,93 +329,130 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
     );
   }
 
-  void personalInfo(BuildContext context){
+  void _personalInfo(BuildContext context){
     showCupertinoModalPopup(context: context, builder: (context){
-      return Material(
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 10.0),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
-                    validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-                    onChanged: (val) => setState(() => _name = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
-                    validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
-                    onChanged: (val) => setState(() => _surname = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
-                    validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
-                    onChanged: (val) => setState(() => _phoneNumber = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
-                    validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
-                    onChanged: (val) => setState(() => _email = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
-                    validator: (val) => val.isEmpty ? 'Please enter an age' : null,
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
-                    ],
-                    onChanged: (val) => setState(() => _age = int.parse(val)),
-                    keyboardType: TextInputType.number,
-                  ),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
-                    validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
-                    onChanged: (val) => setState(() => _weight = double.parse(val)),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
-                    ],
-                  ),
-                  SizedBox(height: 10.0),
-                  RaisedButton(
-                      color: Colors.brown[400],
-                      child: Text(
-                        'Make an appointment',
-                        style: TextStyle(color: Colors.white),
+      return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Material(
+          child: Container(
+              padding: EdgeInsets.symmetric(vertical: 95.0, horizontal: 10.0),
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                        validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                        onChanged: (val) => setState(() => _name = val),
+                        textInputAction: TextInputAction.next,
+                        autofocus: true,
+                        onFieldSubmitted: (v){
+                          FocusScope.of(context).requestFocus(_focus1);
+                        },
                       ),
-                      onPressed: () async {
-                        if(_name == null || _surname == null || _email == null || _phoneNumber == null || _weight == null || _age == null){
-                          noInfo(context);
-                        } else{
-                          _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-                          _databaseService.privateLessonData(
-                              _totalHours,
-                              _oneHourStack,
-                              _sixHoursStack,
-                              _eightHoursStack,
-                              _session,
-                              _totalLessonPrice,
-                              _lessonDate
-                          );
-                        }
-                      }
+                      SizedBox(height: 10.0),
+
+                      TextFormField(
+                        focusNode: _focus1,
+                        textInputAction: TextInputAction.next,
+                        autofocus: true,
+                        onFieldSubmitted: (v){
+                          FocusScope.of(context).requestFocus(_focus2);
+                        },
+                        decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                        validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                        onChanged: (val) => setState(() => _surname = val),
+                      ),
+                      SizedBox(height: 10.0),
+
+                      TextFormField(
+                        focusNode: _focus2,
+                        textInputAction: TextInputAction.next,
+                        autofocus: true,
+                        onFieldSubmitted: (v){
+                          FocusScope.of(context).requestFocus(_focus3);
+                        },
+                        decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
+                        validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
+                        onChanged: (val) => setState(() => _phoneNumber = val),
+                      ),
+                      SizedBox(height: 10.0),
+
+                      TextFormField(
+                        focusNode: _focus3,
+                        textInputAction: TextInputAction.next,
+                        autofocus: true,
+                        onFieldSubmitted: (v){
+                          FocusScope.of(context).requestFocus(_focus4);
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
+                        validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
+                        onChanged: (val) => setState(() => _email = val),
+                      ),
+                      SizedBox(height: 10.0),
+
+                      TextFormField(
+                        focusNode: _focus4,
+                        textInputAction: TextInputAction.next,
+                        autofocus: true,
+                        onFieldSubmitted: (v){
+                          FocusScope.of(context).requestFocus(_focus5);
+                        },
+                        decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                        validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly,
+                        ],
+                        onChanged: (val) => setState(() => _age = int.parse(val)),
+                        keyboardType: TextInputType.number,
+                      ),
+
+                      SizedBox(height: 10.0),
+                      TextFormField(
+                        focusNode: _focus5,
+                        decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                        validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                        onChanged: (val) => setState(() => _weight = double.parse(val)),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          WhitelistingTextInputFormatter.digitsOnly,
+                        ],
+                      ),
+
+                      SizedBox(height: 10.0),
+                      RaisedButton(
+                          color: Colors.brown[400],
+                          child: Text(
+                            'Make an appointment',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () async {
+                            if(_name == null || _surname == null || _email == null || _phoneNumber == null || _weight == null || _age == null){
+                              noInfo(context);
+                            } else{
+                              _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
+                              _databaseService.privateLessonData(
+                                  _totalHours,
+                                  _oneHourStack,
+                                  _sixHoursStack,
+                                  _eightHoursStack,
+                                  _session,
+                                  _totalLessonPrice,
+                                  _lessonDate
+                              );
+                            }
+                          }
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
+
         ),
       );
     });

@@ -283,7 +283,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
               ),
 
               Text(
-                "$_lessonDate",
+                _lessonDate == null ? "Choose a date" :"$_lessonDate",
                 style: TextStyle(
                   fontSize: 20
               ),
@@ -296,7 +296,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
                   showDatePicker(
                     context: context,
                     initialDate: _lessonDate,
-                    firstDate: DateTime(2020),
+                    firstDate: DateTime.now(),
                     lastDate: DateTime(2021),
                   ).then((date)  {
                     setState((){

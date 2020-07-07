@@ -17,11 +17,15 @@ class _AllDayRentState extends State<AllDayRent> {
 
   DatabaseService _databaseService = new DatabaseService();
 
-  final dateForm = DateFormat("dd - mm - yyyy");
-
   DateTime _rentalDate = new DateTime.now();
 
   final _formKey = GlobalKey<FormState>();
+
+  final _focus1 = FocusNode();
+  final _focus2 = FocusNode();
+  final _focus3 = FocusNode();
+  final _focus4 = FocusNode();
+  final _focus5 = FocusNode();
 
   String _name, _surname, _phoneNumber, _email;
   int _age;
@@ -295,7 +299,7 @@ class _AllDayRentState extends State<AllDayRent> {
               ),
 
               Text(
-                "$_rentalDate",
+                _rentalDate == null ? "Choose a date" : "$_rentalDate",
                 style: TextStyle(
                     fontSize: 20
                 ),
@@ -307,7 +311,7 @@ class _AllDayRentState extends State<AllDayRent> {
                   showDatePicker(
                     context: context,
                     initialDate: _rentalDate,
-                    firstDate: DateTime(2020),
+                    firstDate: DateTime.now(),
                     lastDate: DateTime(2021),
                   ).then((date)  {
                     setState((){
@@ -334,80 +338,114 @@ class _AllDayRentState extends State<AllDayRent> {
 
   void _personalInfo(BuildContext context){
     showCupertinoModalPopup(context: context, builder: (context){
-      return Material(
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-          child: Form(
-            key: _formKey,
+      return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Material(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 95.0, horizontal: 10.0),
+            child: Form(
+              key: _formKey,
 
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
 
-                children: <Widget>[
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
-                    validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-                    onChanged: (val) => setState(() => _name = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
-                    validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
-                    onChanged: (val) => setState(() => _surname = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
-                    validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
-                    onChanged: (val) => setState(() => _phoneNumber = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
-                    validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
-                    onChanged: (val) => setState(() => _email = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
-                    validator: (val) => val.isEmpty ? 'Please enter an age' : null,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
-                    ],
-                    onChanged: (val) => setState(() => _age = int.parse(val)),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
-                    validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
-                    keyboardType: TextInputType.number,
-                    onChanged: (val) => setState(() => _weight = double.parse(val)),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  RaisedButton(
-                    color: Colors.brown[400],
-                    child: Text(
-                      'Close and Save the Informations',
-                      style: TextStyle(color: Colors.white),
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                      validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                      onChanged: (val) => setState(() => _name = val),
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus1);
+                      },
                     ),
-                    onPressed: (){
-                      if(_name == null || _surname == null || _weight == null || _age == null || _email == null || _phoneNumber == null){
-                        noInfo(context);
-                      } else {
-                        Navigator.of(context).pop(false);
-                      }
-                    },
-                  ),
-                ],
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus1,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus2);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                      validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                      onChanged: (val) => setState(() => _surname = val),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus2,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus3);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
+                      validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
+                      onChanged: (val) => setState(() => _phoneNumber = val),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus3,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus4);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
+                      validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
+                      onChanged: (val) => setState(() => _email = val),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus4,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus5);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                      validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      onChanged: (val) => setState(() => _age = int.parse(val)),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus5,
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                      validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                      keyboardType: TextInputType.number,
+                      onChanged: (val) => setState(() => _weight = double.parse(val)),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    RaisedButton(
+                      color: Colors.brown[400],
+                      child: Text(
+                        'Close and Save the Informations',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: (){
+                        if(_name == null || _surname == null || _weight == null || _age == null || _email == null || _phoneNumber == null){
+                          noInfo(context);
+                        } else {
+                          Navigator.of(context).pop(false);
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -15,7 +15,7 @@ class _AllDayRentState extends State<AllDayRent> {
 
   DatabaseService _databaseService = new DatabaseService();
 
-  DateTime rentalDate = new DateTime.now();
+  DateTime _rentalDate = new DateTime.now();
 
   int _full = 0;
   int _kiteBar = 0;
@@ -27,7 +27,7 @@ class _AllDayRentState extends State<AllDayRent> {
   int boardStack = 0;
   int harnessStack = 0;
 
-  int total = 0;
+  int _totalPrice = 0;
 
   void _minusFullEquipStack() { // decrease _fullStack by 1 never under 0
     setState(() {
@@ -97,8 +97,8 @@ class _AllDayRentState extends State<AllDayRent> {
     return _harness = 100 * harnessStack;
   }
 
-  int totalPrice(){ // Calculate total price the customer will pay
-    return total = _harness + _board + _kiteBar + _full;
+  int _totalPrices(){ // Calculate total price the customer will pay
+    return _totalPrice = _harness + _board + _kiteBar + _full;
   }
 
   @override
@@ -127,7 +127,7 @@ class _AllDayRentState extends State<AllDayRent> {
                       onPressed: (){
                         _minusFullEquipStack();
                         _fullEquipmentPrice();
-                        totalPrice();
+                        _totalPrices();
                       },
                       child: new Icon(
                           const IconData(
@@ -148,7 +148,7 @@ class _AllDayRentState extends State<AllDayRent> {
                       onPressed: (){
                         _incrementFullEquipStack();
                         _fullEquipmentPrice();
-                        totalPrice();
+                        _totalPrices();
                       },
                       child: new Icon(
                         Icons.add,
@@ -170,7 +170,7 @@ class _AllDayRentState extends State<AllDayRent> {
                       onPressed: (){
                         _minusKiteBarStack();
                         _kiteBarPrice();
-                        totalPrice();
+                        _totalPrices();
                       },
                       child: new Icon(
                           const IconData(0xe15b, fontFamily: 'MaterialIcons'),
@@ -184,7 +184,7 @@ class _AllDayRentState extends State<AllDayRent> {
                       onPressed: (){
                         _incrementKiteBarStack();
                         _kiteBarPrice();
-                        totalPrice();
+                        _totalPrices();
                       },
                       child: new Icon(Icons.add, color: Colors.black,),
                     ),
@@ -202,7 +202,7 @@ class _AllDayRentState extends State<AllDayRent> {
                       onPressed: (){
                         _minusBoardStack();
                         _boardPrice();
-                        totalPrice();
+                        _totalPrices();
                       },
                       child: new Icon(
                           const IconData(0xe15b, fontFamily: 'MaterialIcons'),
@@ -216,7 +216,7 @@ class _AllDayRentState extends State<AllDayRent> {
                       onPressed: (){
                         _incrementBoardStack();
                         _boardPrice();
-                        totalPrice();
+                        _totalPrices();
                       },
                       child: new Icon(Icons.add, color: Colors.black,),
                     ),
@@ -234,7 +234,7 @@ class _AllDayRentState extends State<AllDayRent> {
                       onPressed: (){
                         _minusHarnessStack();
                         _harnessPrice();
-                        totalPrice();
+                        _totalPrices();
                       },
                       child: new Icon(
                           const IconData(0xe15b, fontFamily: 'MaterialIcons'),
@@ -248,11 +248,21 @@ class _AllDayRentState extends State<AllDayRent> {
                       onPressed: (){
                         _incrementHarnessStack();
                         _harnessPrice();
-                        totalPrice();
+                        _totalPrices();
                       },
                       child: new Icon(Icons.add, color: Colors.black,),
                     ),
                   ],
+                ),
+              ),
+
+              SizedBox(height: 10,),
+
+              Text(
+                "Total price: $_totalPrice",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25
                 ),
               ),
 
@@ -262,7 +272,7 @@ class _AllDayRentState extends State<AllDayRent> {
               ),
 
               Text(
-                "$rentalDate",
+                _rentalDate == null ? "Choose a date" : "$_rentalDate",
                 style: TextStyle(
                     fontSize: 20
                 ),
@@ -273,12 +283,12 @@ class _AllDayRentState extends State<AllDayRent> {
                 onPressed: (){
                   showDatePicker(
                     context: context,
-                    initialDate: rentalDate,
-                    firstDate: DateTime(2020),
+                    initialDate: _rentalDate,
+                    firstDate: DateTime.now(),
                     lastDate: DateTime(2021),
                   ).then((date)  {
                     setState((){
-                      rentalDate = date;
+                      _rentalDate = date;
                     });
                   });
                 },
@@ -286,7 +296,7 @@ class _AllDayRentState extends State<AllDayRent> {
 
               RaisedButton(
                 onPressed: (){
-                  if(total == 0){
+                  if(_totalPrice == 0){
                     noEquipment(context);
                   } else{
                     _rentConfirmation(context);
@@ -316,13 +326,13 @@ class _AllDayRentState extends State<AllDayRent> {
               "$kiteBarStack  Kite and Bar,  "
               "$boardStack  Boards,  "
               "$harnessStack  Harnesses  "
-              "Total: $total  TL"
+              "Total: $_totalPrice  TL"
       ),
       actions: <Widget>[
         FlatButton(
           child: Text("Confirm & Continue"),
           onPressed: (){
-            _databaseService.allDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, total, rentalDate);
+            _databaseService.allDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, _totalPrice, _rentalDate);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AccountHome()),

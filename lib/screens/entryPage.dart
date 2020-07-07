@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,6 +8,7 @@ import 'package:kbgapp/screens/Admin/adminBottomnavigator.dart';
 import 'package:kbgapp/screens/signUp.dart';
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/authentication.dart';
+import 'package:kbgapp/sharedCode/loadingIcon.dart';
 import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 import 'anonymously/anonHome.dart';
 import 'package:kbgapp/services/database.dart';
@@ -18,34 +20,46 @@ class EntryPage extends StatefulWidget {
 
 class _SignInState extends State<EntryPage> {
 
-  String name, surname, phoneNumber;
-  int age = 0;
-  double weight = 0.0;
+  final _focus = FocusNode();
+  final _focus1 = FocusNode();
+  final _focus2 = FocusNode();
+  final _focus3 = FocusNode();
+  final _focus4 = FocusNode();
+
+  String _name, _surname, _phoneNumber;
+  int _age = 0;
+  double _weight = 0.0;
 
   DatabaseService _databaseService = new DatabaseService();
 
   final _formKey = GlobalKey<FormState>();
-  bool loading = false;
 
-  String email = "";
-  String password = "";
-  String error = "";
+  String _email = "";
+  String _password = "";
+
+  bool _wrongEmail, _wrongPassword;
 
   final AuthService _auth = AuthService();
 
   _writeText(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: <Widget>[
 
               TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "name"),
+                textInputAction: TextInputAction.next,
+                autofocus: true,
+                onFieldSubmitted: (v){
+                  FocusScope.of(context).requestFocus(_focus1);
+                },
+                decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
                 validator: (value) => value.isEmpty ? "name" : null,
                 onChanged: (value){
                   setState(() {
-                    name = value;
+                    _name = value;
                   });
                 },
               ),
@@ -53,18 +67,30 @@ class _SignInState extends State<EntryPage> {
               SizedBox(height: 20,),
 
               TextFormField(
-                decoration: textInputDecoration.copyWith(labelText: "surname"),
+                focusNode: _focus1,
+                textInputAction: TextInputAction.next,
+                autofocus: true,
+                onFieldSubmitted: (v){
+                  FocusScope.of(context).requestFocus(_focus2);
+                },
+                decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
                 validator: (value) => value.isEmpty ? "surname" : null,
                 onChanged: (value){
                   setState(() {
-                    surname = value;
+                    _surname = value;
                   });
                 },
               ),
 
               SizedBox(height: 20,),
 
-              TextField(
+              TextFormField(
+                focusNode: _focus2,
+                textInputAction: TextInputAction.next,
+                autofocus: true,
+                onFieldSubmitted: (v){
+                  FocusScope.of(context).requestFocus(_focus3);
+                },
                 decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
@@ -72,22 +98,7 @@ class _SignInState extends State<EntryPage> {
                 ],
                 onChanged: (_value){
                   setState(() {
-                    age = int.parse(_value);
-                  });
-                },
-              ),
-
-              SizedBox(height: 20,),
-
-              TextField(
-                decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ],
-                onChanged: (_value){
-                  setState(() {
-                    weight = double.parse(_value);
+                    _age = int.parse(_value);
                   });
                 },
               ),
@@ -95,11 +106,33 @@ class _SignInState extends State<EntryPage> {
               SizedBox(height: 20,),
 
               TextFormField(
+                focusNode: _focus3,
+                textInputAction: TextInputAction.next,
+                autofocus: true,
+                onFieldSubmitted: (v){
+                  FocusScope.of(context).requestFocus(_focus4);
+                },
+                decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  WhitelistingTextInputFormatter.digitsOnly
+                ],
+                onChanged: (_value){
+                  setState(() {
+                    _weight = double.parse(_value);
+                  });
+                },
+              ),
+
+              SizedBox(height: 20,),
+
+              TextFormField(
+                focusNode: _focus4,
                 decoration: textInputDecoration.copyWith(labelText: "phone number"),
                 validator: (value) => value.isEmpty ? "phone number" : null,
                 onChanged: (value){
                   setState(() {
-                    phoneNumber = value;
+                    _phoneNumber = value;
                   });
                 },
               ),
@@ -110,7 +143,7 @@ class _SignInState extends State<EntryPage> {
     );
   }
 
-  userInfoDialog(BuildContext context){
+  _userInfoDialog(BuildContext context){
     return showDialog(context: context, builder: (context){
       return AlertDialog(
         title: Text("Missing Info"),
@@ -120,7 +153,7 @@ class _SignInState extends State<EntryPage> {
             child: Text("Save"),
             onPressed: (){
               setState(() {
-                _databaseService.memberDataUpdate(name, surname, age, weight, phoneNumber);
+                _databaseService.memberDataUpdate(_name, _surname, _age, _weight, _phoneNumber);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => AccountHome()));
               });
             },
@@ -133,6 +166,7 @@ class _SignInState extends State<EntryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
         backgroundColor: Colors.brown[100],
         appBar: AppBar(
           backgroundColor: Colors.brown[400],
@@ -152,53 +186,101 @@ class _SignInState extends State<EntryPage> {
                   /** e-mail */
                   SizedBox(height:  20.0),
                   TextFormField(
-                    validator: (value) => value.isEmpty ? "Enter email" : null,
+                    validator: (value) => _wrongEmail == true ? "Invalid Email" : null,
+                    textInputAction: TextInputAction.next,
+                    autofocus: true,
+                    onFieldSubmitted: (v){
+                      FocusScope.of(context).requestFocus(_focus);
+                    },
                     onChanged: (value){
                       setState(() {
-                        email = value;
+                        _email = value;
                       });
                     },
                     decoration: textInputDecoration.copyWith(labelText: "Email"),
+                    keyboardType: TextInputType.emailAddress,
                   ),
 
                   /** password */
                   SizedBox(height:  20.0),
                   TextFormField(
-                    validator: (value) => value.length < 6 ? "Enter password" : null,
+                    focusNode: _focus,
+                    validator: (value) => value.length < 6 || _wrongPassword == true ? "Invalid Password" : null,
                     onChanged: (value){
                       setState(() {
-                        password = value;
+                        _password = value;
                       });
                     },
+
                     decoration: textInputDecoration.copyWith(labelText: "Password"),
                     obscureText: true,
                   ),
 
+                  SizedBox(height: 20,),
+
                   // sign-in with e-mail
-                  RaisedButton(
-                      child: Text('sign-in'),
-                      onPressed: () {
-                        signIn();
-                      }
+                  SizedBox(
+                    height: 50,
+                    child: RaisedButton(
+                        child: Text("Log-in with an account"),
+                        color: Colors.blueAccent[200],
+                        onPressed: () {
+                          signIn();
+                          },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.red)
+                        ),
+                    ),
                   ),
+
+                  SizedBox(height: 20,),
 
                   /** sign-in anonymously */
-                  RaisedButton(
-                    child: Text('sign in anon'),
-                    onPressed: () async {
-                      anonymous();
-                    },
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: RaisedButton(
+                      child: Text(
+                       "Don't have an account? Log-in as anonymous",
+                      ),
+                      onPressed: () async {
+                        Loading();
+                        anonymous();
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.red)
+                      ),
+                    ),
                   ),
 
+                  SizedBox(height: 20,),
+
                   /** sign-up */
-                  RaisedButton(
-                    child: Text('sign-up'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignUpPage()),
-                      );
-                    },
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: FlatButton(
+                      visualDensity: VisualDensity.adaptivePlatformDensity,
+                      child: Text(
+                        "Don't have an account? Sign-up for free",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      color: Colors.blueAccent[200],
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignUpPage()),
+                        );
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.red)
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -215,6 +297,7 @@ class _SignInState extends State<EntryPage> {
     if(result == null){
       print('error signing in');
     } else {
+      Loading();
       Navigator.push(context, MaterialPageRoute(builder: (context) => AnonymousHomePage()));
     }
   }
@@ -223,13 +306,13 @@ class _SignInState extends State<EntryPage> {
   void signIn() async {
     if (_formKey.currentState.validate()) {
 
-      dynamic result = await _auth.signInEmail(email, password);
+      dynamic result = await _auth.signInEmail(_email, _password);
       var firebaseUser = await FirebaseAuth.instance.currentUser();
-
+      Loading();
       if (result == null) { // if email is false
         setState(() {
-          loading = false;
-          error = "Wrong email";
+          _wrongPassword = true;
+          _wrongEmail = true;
         });
       } else if(firebaseUser.uid == "aMDsuSJ9h6eIJuWX0SvwmXJTvTJ3"){ // tried to find admin with its uid
           Navigator.push(context, MaterialPageRoute(builder: (context) => AdminBottomNavigator()));
@@ -242,7 +325,7 @@ class _SignInState extends State<EntryPage> {
           if(snapShot.exists){ // if user has a collection, go to user screens
             Navigator.push(context, MaterialPageRoute(builder: (context) => AccountHome()));
           } else{ // if user doesn't have any collection, pop-up a dialog
-            userInfoDialog(context);
+            _userInfoDialog(context);
           }
       }
     }

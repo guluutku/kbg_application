@@ -17,6 +17,10 @@ class _GroupLessonState extends State<GroupLesson> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final _focus1 = FocusNode();
+  final _focus2 = FocusNode();
+  final _focus3 = FocusNode();
+
   // personal information of second student
   String _name;
   String _surname;
@@ -307,7 +311,7 @@ class _GroupLessonState extends State<GroupLesson> {
               ),
 
               Text(
-                "$_lessonDate",
+                _lessonDate == null ? "Choose a date" : "$_lessonDate",
                 style: TextStyle(
                     fontSize: 20
                 ),
@@ -321,7 +325,7 @@ class _GroupLessonState extends State<GroupLesson> {
                   showDatePicker(
                     context: context,
                     initialDate: _lessonDate,
-                    firstDate: DateTime(2020),
+                    firstDate: DateTime.now(),
                     lastDate: DateTime(2021),
                   ).then((date) {
                     setState(() {
@@ -359,66 +363,88 @@ class _GroupLessonState extends State<GroupLesson> {
 
   void _secondStudent(BuildContext context){
     showCupertinoModalPopup(context: context, builder: (context){
-      return Material(
-        child: Container(
-          color: Colors.brown[100],
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 45.0),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text("Please write the second student's personal information"),
+      return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Material(
+          child: Container(
+            color: Colors.brown[100],
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 45.0),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Text("Please write the second student's personal information"),
 
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
-                    validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-                    onChanged: (val) => setState(() => _name = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
-                    validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
-                    onChanged: (val) => setState(() => _surname = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
-                    validator: (val) => val.isEmpty ? 'Please enter an age' : null,
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
-                    ],
-                    keyboardType: TextInputType.number,
-                    onChanged: (val) => setState(() => _age = int.parse(val)),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
-                    validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
-                    onChanged: (val) => setState(() => _weight = double.parse(val)),
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
-                    ],
-                    keyboardType: TextInputType.number,
-                  ),
-                  SizedBox(height: 10.0),
-
-                  RaisedButton(
-                    color: Colors.brown[400],
-                    child: Text(
-                      'Close and Save Information',
-                      style: TextStyle(color: Colors.white),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                      validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                      onChanged: (val) => setState(() => _name = val),
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus1);
+                      },
                     ),
-                    onPressed: (){
-                      Navigator.of(context).pop(false);
-                    },
-                  ),
-                ],
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                      validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                      onChanged: (val) => setState(() => _surname = val),
+                      focusNode: _focus1,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus2);
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                      validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      keyboardType: TextInputType.number,
+                      onChanged: (val) => setState(() => _age = int.parse(val)),
+                      focusNode: _focus2,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus3);
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                      validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                      onChanged: (val) => setState(() => _weight = double.parse(val)),
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      keyboardType: TextInputType.number,
+                      focusNode: _focus3,
+
+                    ),
+                    SizedBox(height: 10.0),
+
+                    RaisedButton(
+                      color: Colors.brown[400],
+                      child: Text(
+                        'Close and Save Information',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: (){
+                        Navigator.of(context).pop(false);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

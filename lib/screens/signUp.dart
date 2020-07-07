@@ -22,15 +22,18 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
 
-  final AuthService authService = new AuthService();
+  final AuthService _authService = new AuthService();
 
   final _formKey = GlobalKey<FormState>();
 
 
-  String email = "";
-  String password = "";
-  String error = "";
-  bool loading = false;
+  String _email;
+  String _password1;
+  String _password2;
+  String _error = "";
+
+  final _focus1 = new FocusNode();
+  final _focus2 = new FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +69,17 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(height: 20.0),
 
                 TextFormField(
+                  textInputAction: TextInputAction.next,
+                  autofocus: true,
+                  onFieldSubmitted: (v){
+                    FocusScope.of(context).requestFocus(_focus1);
+                  },
                   decoration: textInputDecoration.copyWith(labelText: "Email"),
                   validator: (value) => value.isEmpty ? "Enter email" : null,
+                  keyboardType: TextInputType.emailAddress,
                   onChanged: (value){
                     setState(() {
-                      email = value;
+                      _email = value;
                     });
                   },
                 ),
@@ -78,10 +87,30 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(height:  20.0),
 
                 TextFormField(
+                  focusNode: _focus1,
+                  textInputAction: TextInputAction.next,
+                  autofocus: true,
+                  onFieldSubmitted: (v){
+                    FocusScope.of(context).requestFocus(_focus2);
+                  },
                   validator: (value) => value.length < 6 ? "Enter password" : null,
                   onChanged: (value){
                     setState(() {
-                      password = value;
+                      _password1 = value;
+                    });
+                  },
+                  decoration: textInputDecoration.copyWith(labelText: "Password"),
+                  obscureText: true,
+                ),
+
+                SizedBox(height:  20.0),
+
+                TextFormField(
+                  focusNode: _focus2,
+                  validator: (value) => value.length < 6 ? "Enter password" : null,
+                  onChanged: (value){
+                    setState(() {
+                      _password2 = value;
                     });
                   },
                   decoration: textInputDecoration.copyWith(labelText: "Password"),
@@ -93,17 +122,21 @@ class _SignUpPageState extends State<SignUpPage> {
                 RaisedButton(
                   child: Text('create account'),
                   onPressed: () async {
-
-                    if(_formKey.currentState.validate()) {
-                      authService.signUpEmail(email, password);
-                    }
+                    setState(() {
+                      if(_formKey.currentState.validate()) {
+                        _authService.signUpEmail(_email, _password1);
+                        Navigator.of(context).pop(false);
+                      } else{
+                        _error = "Missing Information or not same password";
+                      }
+                    });
                   },
                 ),
 
                 SizedBox(height: 20.0,),
 
                 Text(
-                  error,
+                  _error,
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 15.0,

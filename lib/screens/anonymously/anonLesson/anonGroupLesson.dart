@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kbgapp/services/authentication.dart';
 
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/missingInformations.dart';
 import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
-import '../anonHome.dart';
 
 class AnonGroupLesson extends StatefulWidget {
   @override
@@ -15,13 +13,21 @@ class AnonGroupLesson extends StatefulWidget {
 
 class _AnonGroupLessonState extends State<AnonGroupLesson> {
 
-  AuthService _authService = new AuthService();
-
   DatabaseService _databaseService = new DatabaseService();
 
   DateTime _lessonDate = new DateTime.now();
 
   final _formKey = GlobalKey<FormState>();
+
+  final _focus1 = FocusNode();
+  final _focus2 = FocusNode();
+  final _focus3 = FocusNode();
+  final _focus4 = FocusNode();
+  final _focus5 = FocusNode();
+  final _focus6 = FocusNode();
+  final _focus7 = FocusNode();
+  final _focus8 = FocusNode();
+  final _focus9 = FocusNode();
 
   // personal information of person who makes appointment
   String _name;
@@ -323,7 +329,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
               ),
 
               Text(
-                "$_lessonDate",
+                _lessonDate == null ? "Choose a date" : "$_lessonDate",
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -335,7 +341,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                   showDatePicker(
                     context: context,
                     initialDate: _lessonDate,
-                    firstDate: DateTime(2020),
+                    firstDate: DateTime.now(),
                     lastDate: DateTime(2021),
                   ).then((date)  {
                     setState((){
@@ -359,123 +365,181 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
   }
 
   void _personalInfo(BuildContext context){
-    showCupertinoModalPopup(context: context, builder: (context){ // TODO: try showCupertinoModalPopup
-      return Material(
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text("Your information"),
-                  SizedBox(height: 10.0),
+    showCupertinoModalPopup(context: context, builder: (context){
+      return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Material(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Text("Your information"),
+                    SizedBox(height: 10.0),
 
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
-                    validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-                    onChanged: (val) => setState(() => _name = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
-                    validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
-                    onChanged: (val) => setState(() => _surname = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
-                    validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
-                    onChanged: (val) => setState(() => _phoneNumber = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
-                    validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
-                    onChanged: (val) => setState(() => _email = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
-                    validator: (val) => val.isEmpty ? 'Please enter an age' : null,
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
-                    ],
-                    keyboardType: TextInputType.number,
-                    onChanged: (val) => setState(() => _age = int.parse(val)),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
-                    validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
-                    keyboardType: TextInputType.number,
-                    onChanged: (val) => setState(() => _weight = double.parse(val)),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  Text("Group members information"),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter their name"),
-                    validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-                    onChanged: (val) => setState(() => _secondName = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter their surname"),
-                    validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
-                    onChanged: (val) => setState(() => _secondSurname = val),
-                  ),
-                  SizedBox(height: 10.0),
-
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter their age"),
-                    validator: (val) => val.isEmpty ? 'Please enter an age' : null,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
-                    ],
-                    onChanged: (val) => setState(() => _secondAge = int.parse(val)),
-                  ),
-                  SizedBox(height: 10.0),
-
-                  TextFormField(
-                    decoration: textInputDecoration.copyWith(labelText: "Enter their weight"),
-                    validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
-                    onChanged: (val) => setState(() => _secondWeight = double.parse(val)),
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly,
-                    ],
-                    keyboardType: TextInputType.number,
-                  ),
-                  SizedBox(height: 10.0),
-
-                  RaisedButton(
-                      color: Colors.brown[100],
-                      child: Text(
-                        'Close and Save Information',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: (){
-                        if(_name == null || _surname == null || _email == null || _phoneNumber == null || _weight == null || _age == null
-                        ||  _secondName == null || _secondSurname == null || _secondAge == null || _secondWeight == null){
-                          noInfo(context);
-                        } else {
-                          Navigator.of(context).pop(false);
-                        }
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your name"),
+                      validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                      onChanged: (val) => setState(() => _name = val),
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus1);
                       },
-                  ),
-                ],
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus1,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus2);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your surname"),
+                      validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                      onChanged: (val) => setState(() => _surname = val),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus2,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus3);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your phone"),
+                      validator: (val) => val.isEmpty ? 'Please enter a phone number' : null,
+                      onChanged: (val) => setState(() => _phoneNumber = val),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus3,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus4);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
+                      validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (val) => setState(() => _email = val),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus4,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus5);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your age"),
+                      validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      keyboardType: TextInputType.number,
+                      onChanged: (val) => setState(() => _age = int.parse(val)),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus5,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus6);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter your weight"),
+                      validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                      keyboardType: TextInputType.number,
+                      onChanged: (val) => setState(() => _weight = double.parse(val)),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    Text("Group members information"),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus6,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus7);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter their name"),
+                      validator: (val) => val.isEmpty ? 'Please enter a name' : null,
+                      onChanged: (val) => setState(() => _secondName = val),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus7,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus8);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter their surname"),
+                      validator: (val) => val.isEmpty ? 'Please enter a surname' : null,
+                      onChanged: (val) => setState(() => _secondSurname = val),
+                    ),
+                    SizedBox(height: 10.0),
+
+
+                    TextFormField(
+                      focusNode: _focus8,
+                      textInputAction: TextInputAction.next,
+                      autofocus: true,
+                      onFieldSubmitted: (v){
+                        FocusScope.of(context).requestFocus(_focus9);
+                      },
+                      decoration: textInputDecoration.copyWith(labelText: "Enter their age"),
+                      validator: (val) => val.isEmpty ? 'Please enter an age' : null,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      onChanged: (val) => setState(() => _secondAge = int.parse(val)),
+                    ),
+                    SizedBox(height: 10.0),
+
+                    TextFormField(
+                      focusNode: _focus9,
+                      decoration: textInputDecoration.copyWith(labelText: "Enter their weight"),
+                      validator: (val) => val.isEmpty ? 'Please enter a weight' : null,
+                      onChanged: (val) => setState(() => _secondWeight = double.parse(val)),
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                      ],
+                      keyboardType: TextInputType.number,
+                    ),
+                    SizedBox(height: 10.0),
+
+                    RaisedButton(
+                        color: Colors.brown[100],
+                        child: Text(
+                          'Close and Save Information',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: (){
+                          if(_name == null || _surname == null || _email == null || _phoneNumber == null || _weight == null || _age == null
+                          ||  _secondName == null || _secondSurname == null || _secondAge == null || _secondWeight == null){
+                            noInfo(context);
+                          } else {
+                            Navigator.of(context).pop(false);
+                          }
+                        },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
