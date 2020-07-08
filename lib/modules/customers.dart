@@ -7,7 +7,6 @@ class Customer {
   final int age;
   final double weight;
 
-
   Customer({ this.uid, this.name, this.age, this.weight });
 
 }

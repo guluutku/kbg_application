@@ -26,6 +26,8 @@ class _SignInState extends State<EntryPage> {
   final _focus3 = FocusNode();
   final _focus4 = FocusNode();
 
+  bool _loading = false;
+
   String _name, _surname, _phoneNumber;
   int _age = 0;
   double _weight = 0.0;
@@ -166,21 +168,21 @@ class _SignInState extends State<EntryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.brown[100],
         appBar: AppBar(
+          leading: new Container(),
           backgroundColor: Colors.brown[400],
           elevation: 0.0,
         ),
 
-        body: SingleChildScrollView(
+        body: _loading ? Loading() : SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
             child: Form(
               key: _formKey,
               child: Column(
                 children: <Widget>[
-
                   Image.asset('assets/images/kbgLogo.png'),
 
                   /** e-mail */
@@ -225,7 +227,10 @@ class _SignInState extends State<EntryPage> {
                         child: Text("Log-in with an account"),
                         color: Colors.blueAccent[200],
                         onPressed: () {
-                          signIn();
+                          setState(() {
+                            _loading = true;
+                            _signIn();
+                          });
                           },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
@@ -244,9 +249,11 @@ class _SignInState extends State<EntryPage> {
                       child: Text(
                        "Don't have an account? Log-in as anonymous",
                       ),
-                      onPressed: () async {
-                        Loading();
-                        anonymous();
+                      onPressed: () {
+                       setState(() {
+                         _loading = true;
+                         _anonymous();
+                       });
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
@@ -271,10 +278,12 @@ class _SignInState extends State<EntryPage> {
                       ),
                       color: Colors.blueAccent[200],
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignUpPage()),
-                        );
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SignUpPage()),
+                          );
+                        });
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
@@ -292,23 +301,22 @@ class _SignInState extends State<EntryPage> {
   }
 
   // log-in anonymously
-  Future<void> anonymous() async {
+  Future<void> _anonymous() async {
     dynamic result = await _auth.signInAnon();
     if(result == null){
       print('error signing in');
     } else {
-      Loading();
+      _loading = false;
       Navigator.push(context, MaterialPageRoute(builder: (context) => AnonymousHomePage()));
     }
   }
 
   //log-in via e-mail
-  void signIn() async {
+  void _signIn() async {
     if (_formKey.currentState.validate()) {
 
       dynamic result = await _auth.signInEmail(_email, _password);
       var firebaseUser = await FirebaseAuth.instance.currentUser();
-      Loading();
       if (result == null) { // if email is false
         setState(() {
           _wrongPassword = true;
@@ -317,6 +325,7 @@ class _SignInState extends State<EntryPage> {
       } else if(firebaseUser.uid == "aMDsuSJ9h6eIJuWX0SvwmXJTvTJ3"){ // tried to find admin with its uid
           Navigator.push(context, MaterialPageRoute(builder: (context) => AdminBottomNavigator()));
       } else { // sends to account page
+          _loading = false;
           var firebaseUser = await FirebaseAuth.instance.currentUser();
           final snapShot = await Firestore.instance.collection("membership")
               .document(firebaseUser.uid)

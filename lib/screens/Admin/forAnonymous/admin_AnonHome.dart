@@ -23,11 +23,13 @@ class _Admin_AnonHomeState extends State<Admin_AnonHome> {
   String _docID;
   bool _loading = true;
 
-  _getDocID(String name){ //TODO: use this DO NOT FORGET
-    var ref = _firestore.collection("anonymous").where("name", isEqualTo: name).getDocuments();
+  // gets document ID by using name of the customer
+  _getDocID(String _name){
+    var ref = _firestore.collection("anonymous").where("name", isEqualTo: _name).getDocuments();
     ref.then((_documentID) => this._docID = _documentID.documents[0].documentID); // take document ID to a variable
   }
 
+  //customer's data from firestore
   _getCustomer() async {
     Query query = _firestore.collection("anonymous");
     setState(() {
@@ -69,12 +71,11 @@ class _Admin_AnonHomeState extends State<Admin_AnonHome> {
                 title: Text("Customer: " + _anony[index].data["name"] + " " + _anony[index].data["surname"]),
                 onTap: (){
                   setState(() {
-                    _getDocID(_anony[index].data["name"]).then({
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Admin_AnonProfile(docID: _docID,))
-                      )
-                    });
+                    _getDocID(_anony[index].data["name"]);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Admin_AnonProfile(docID: _docID,))
+                    );
                   });
                 },
               );

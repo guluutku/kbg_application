@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import 'package:kbgapp/sharedCode/loadingIcon.dart';
 import 'package:kbgapp/sharedCode/logout.dart';
 
 class AdminHome extends StatefulWidget {
@@ -10,9 +11,39 @@ class AdminHome extends StatefulWidget {
 
 class _AdminHomeState extends State<AdminHome> {
 
-  bool _gunWork = false;
-  bool _gunMorning = false;
-  bool _gunAfternoon = false;
+  Firestore _firestore = Firestore.instance;
+
+  Loading load = new Loading();
+
+  // variables, read and send check of Gün
+  bool _gunWork;
+  bool _gunMorning;
+  bool  _gunAfternoon;
+  _getGunCheck() async {
+    DocumentSnapshot snapshot = await _firestore.collection('Teacher Checklist').document('gunUluutku').get();
+    snapshot == null ? null :
+    setState(() {
+      _gunWork = snapshot['work'];
+      _gunMorning = snapshot['morning lesson'];
+      _gunAfternoon = snapshot['afternoon lesson'];
+
+
+    });
+  }
+  void _gunChangeChecks(bool gunWork, bool gunMorning, bool gunAfternoon) async{
+    await _firestore.collection("Teacher Checklist").document('gunUluutku').updateData({
+      'work' : gunWork,
+      'morning lesson' : gunMorning,
+      'afternoon lesson' : gunAfternoon,
+
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getGunCheck();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +56,10 @@ class _AdminHomeState extends State<AdminHome> {
         leading: new Container(),
       ),
 
-      body: Center( // TODO: Firebase bağlamadan öğretmenleri listele
+      body: _gunWork == null && _gunAfternoon == null && _gunMorning == null ? Loading() : Center(
         child: Column(
           children: <Widget>[
-            Card(
+            Card(// Gün's check list
               child: Column(
                 children: <Widget>[
                   Text(
@@ -51,6 +82,7 @@ class _AdminHomeState extends State<AdminHome> {
                               onChanged: (bool value){
                                 setState(() {
                                   _gunWork = value;
+                                  _gunChangeChecks(_gunWork, _gunMorning, _gunAfternoon);
                                 });
                               },
                             )
@@ -69,6 +101,7 @@ class _AdminHomeState extends State<AdminHome> {
                               onChanged: (bool value){
                                 setState(() {
                                   _gunMorning = value;
+                                  _gunChangeChecks(_gunWork, _gunMorning, _gunAfternoon);
                                 });
                               },
                             ),
@@ -87,6 +120,7 @@ class _AdminHomeState extends State<AdminHome> {
                               onChanged: (bool value){
                                 setState(() {
                                   _gunAfternoon = value;
+                                  _gunChangeChecks(_gunWork, _gunMorning, _gunAfternoon);
                                 });
                               },
                             ),

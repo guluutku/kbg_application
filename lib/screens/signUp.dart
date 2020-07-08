@@ -41,17 +41,19 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
+        leading: new Container(),
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign up to Application'),
+        title: Text('Create Account'),
         actions: <Widget>[
           FlatButton(
-            child: Text("Go back to sign-in"),
+            child: Text("Go back to entry page",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
             onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EntryPage()),
-              );
+              Navigator.of(context).pop(false);
             },
           )
         ],
@@ -119,18 +121,26 @@ class _SignUpPageState extends State<SignUpPage> {
 
                 SizedBox(height:  20.0),
 
-                RaisedButton(
-                  child: Text('create account'),
-                  onPressed: () async {
-                    setState(() {
-                      if(_formKey.currentState.validate()) {
-                        _authService.signUpEmail(_email, _password1);
-                        Navigator.of(context).pop(false);
-                      } else{
-                        _error = "Missing Information or not same password";
-                      }
-                    });
-                  },
+                SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.red)
+                    ),
+                    child: Text('Create an account'),
+                    onPressed: () async {
+                      setState(() {
+                        if(_formKey.currentState.validate()) {
+                          _authService.signUpEmail(_email, _password1);
+                          Navigator.of(context).pop(false);
+                        } else{
+                          _error = "Missing Information or not same password";
+                        }
+                      });
+                    },
+                  ),
                 ),
 
                 SizedBox(height: 20.0,),

@@ -19,6 +19,8 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
   String _docID;
   _Admin_MemberProfileState(this._docID);
 
+  bool _loading = true;
+
   // variables for customers' data
   String _name, _surname, _phone, _secondPersonName, _secondPersonSurname;
   int _age, _secondPersonAge;
@@ -51,20 +53,21 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
   // gets customer data from firestore
   _getCustomerInfo() async {
     DocumentSnapshot snapshot =  await _firestore.collection('membership').document(_docID).get();
-    snapshot == null ? null :
-    setState(() {
-      _name = snapshot['name'];
-      _surname = snapshot['surname'];
-      _phone = snapshot['phone number'];
-      _age = snapshot['age'];
-      _weight = snapshot['weight'];
-    });
+      setState(() {
+        _loading = true;
+        _name = snapshot['name'];
+        _surname = snapshot['surname'];
+        _phone = snapshot['phone number'];
+        _age = snapshot['age'];
+        _weight = snapshot['weight'];
+        _loading = false;
+      });
   }
 
   // gets Half Day Rentals data from firestore
   _getHalfDayRentalData() async {
     DocumentSnapshot snapshot =  await _firestore.collection('Half Day Rentals').document(_docID).get();
-    snapshot == null ? null :
+
     setState(() {
       _halfBoard = snapshot['Board'];
       _halfEquipment = snapshot['Full Equipment'];
@@ -75,6 +78,7 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
       _halfDate = timestampHalf.toDate();
       _halfAuthorise = snapshot['Rental Authorise'];
     });
+
   }
   void _halfDayAuthorise(bool authorise) async{
     await _firestore.collection("Half Day Rentals").document(_docID).updateData({
@@ -106,7 +110,7 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
   // gets Private Lessons data from firestore
   _getPrivateLessonData() async {
     DocumentSnapshot snapshot =   _firestore.collection('Private Lessons').document(_docID).get() as DocumentSnapshot;
-    snapshot == null ? null :
+    _loading ? null :
     setState(() {
       _privateEightHours = snapshot['Eight Hours'];
       _privateOneHours = snapshot['One Hour'];
@@ -167,7 +171,7 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
       appBar: AppBar(
         title: Text("Profile"),
       ),
-      body: _name == null && _surname == null && _phone == null && _age == null && _weight == null ? Loading() : Container(
+      body: _loading ? Loading() : Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,

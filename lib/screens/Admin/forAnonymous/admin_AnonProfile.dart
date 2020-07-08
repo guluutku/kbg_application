@@ -61,7 +61,7 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
 
   // gets Half Day Rentals data from firestore
   _getHalfDayRentalData() async {
-    DocumentSnapshot snapshot =  await _firestore.collection('Half Day Rentals').document(_docID).get();
+    DocumentSnapshot snapshot = await _firestore.collection('Half Day Rentals').document(_docID).get();
     setState(() {
       _halfBoard = snapshot['Board'];
       _halfEquipment = snapshot['Full Equipment'];
@@ -80,8 +80,8 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
   }
 
   // gets All Day Rentals data from firestore
-  _getFullDayRentalData() async {
-    DocumentSnapshot snapshot =  await _firestore.collection('All Day Rentals').document(_docID).get();
+  _getFullDayRentalData()  async{
+    DocumentSnapshot snapshot = await _firestore.collection('All Day Rentals').document(_docID).get();
     setState(() {
       _fullBoard = snapshot['Board'];
       _fullEquipment = snapshot['Full Equipment'];
@@ -100,8 +100,8 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
   }
 
   // gets Private Lessons data from firestore
-  _getPrivateLessonData() async {
-    DocumentSnapshot snapshot =  await _firestore.collection('Private Lessons').document(_docID).get();
+  _getPrivateLessonData()async {
+    DocumentSnapshot snapshot = await  _firestore.collection('Private Lessons').document(_docID).get();
     setState(() {
       _privateEightHours = snapshot['Eight Hours'];
       _privateOneHours = snapshot['One Hour'];
@@ -123,19 +123,19 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
 
   // gets group Lessons data from firestore
   _getGroupLessonData() async {
-    DocumentSnapshot snapshot =   _firestore.collection('Group Lessons').document(_docID).get() as DocumentSnapshot;
-    snapshot == null ? null :
+    DocumentSnapshot snapshot = await _firestore.collection('Group Lessons').document(_docID).get();
     setState(() {
-      _groupEightHours = snapshot['Eight Hours'];
-      _groupOneHours = snapshot['One Hour'];
-      _groupPrice = snapshot['Price'];
-      _groupSession = snapshot['Session'];
-      _groupSixHours = snapshot['Six Hours'];
-      _groupTotalHours = snapshot['Total Hours'];
-      _secondStudentList = snapshot['Second Student'];
-      Timestamp timestampGroup = snapshot['Date'];
-      _groupDate = timestampGroup.toDate();
-      _groupAuthorise = snapshot['Lesson Authorise'];
+      snapshot == null ? null :
+        _groupEightHours = snapshot['Eight Hours'];
+        _groupOneHours = snapshot['One Hour'];
+        _groupPrice = snapshot['Price'];
+        _groupSession = snapshot['Session'];
+        _groupSixHours = snapshot['Six Hours'];
+        _groupTotalHours = snapshot['Total Hours'];
+        _secondStudentList = snapshot['Second Student'];
+        Timestamp timestampGroup = snapshot['Date'];
+        _groupDate = timestampGroup.toDate();
+        _groupAuthorise = snapshot['Lesson Authorise'];
     });
   }
   void _groupLessonAuthorise(bool authorise) async{

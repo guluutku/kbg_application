@@ -15,17 +15,17 @@ class Admin_MembersHome extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Admin_MembersHomeState extends State<Admin_MembersHome> {
+
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _members = [];
 
   Loading load = new Loading();
 
   bool _loading = true;
-
   String _docID;
 
-  _getDocID(String name){ //TODO: use this DO NOT FORGET
-    var ref = _firestore.collection("membership").where("name", isEqualTo: name).getDocuments();
+  _getDocID(String _name) {
+    var ref = _firestore.collection("membership").where("name", isEqualTo: _name).getDocuments();
     ref.then((_documentID) => this._docID = _documentID.documents[0].documentID); // take document ID to a variable
   }
 
@@ -70,12 +70,11 @@ class _Admin_MembersHomeState extends State<Admin_MembersHome> {
                 title: _members[index].data["name"] == null || _members[index].data["surname"] == null ? Text("User haven't give their information") : Text("Customer: " + _members[index].data["name"] + " " + _members[index].data["surname"]),
                 onTap: (){_members[index].data["name"] == null || _members[index].data["surname"] == null ? null :
                   setState((){
-                    _getDocID(_members[index].data["name"]).then({
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Admin_MemberProfile(docID: _docID,))
-                      )
-                    });
+                    _getDocID(_members[index].data["name"]);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Admin_MemberProfile(docID: _docID,))
+                    );
                   });
                 },
               );
