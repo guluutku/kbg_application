@@ -38,7 +38,7 @@ class _AccountHomeState extends State<AccountHome> {
               );
             },
           ),
-          logOut(context),
+          //logOut(context),
         ],
       ),
 

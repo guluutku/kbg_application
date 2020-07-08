@@ -23,7 +23,7 @@ class _AnonymousHomePageState extends State<AnonymousHomePage> {
         leading: new Container(),
         title: Text('Welcome User'),
         actions: <Widget>[
-          logOut(context),
+          LogOut(),
         ],
       ),
 

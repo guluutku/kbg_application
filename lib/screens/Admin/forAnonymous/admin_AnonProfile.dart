@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/loadingIcon.dart';
 
 class Admin_AnonProfile extends StatefulWidget {
@@ -16,6 +17,8 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
 
   String _docID;
   _Admin_AnonProfileState(this._docID);
+
+  DatabaseService _databaseService = new DatabaseService();
 
   // variables for customers' data
   String _name, _surname, _phone, _secondPersonName, _secondPersonSurname, _email;
@@ -73,11 +76,6 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
       _halfAuthorise = snapshot['Rental Authorise'];
     });
   }
-  void _halfDayAuthorise(bool authorise) async{
-    await _firestore.collection("Half Day Rentals").document(_docID).updateData({
-      'Rental Authorise' : authorise,
-    });
-  }
 
   // gets All Day Rentals data from firestore
   _getFullDayRentalData()  async{
@@ -91,11 +89,6 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
       Timestamp timestampFull = snapshot['Rental Date'];
       _fullDate = timestampFull.toDate();
       _fullAuthorise = snapshot['Rental Authorise'];
-    });
-  }
-  void _fullDayAuthorise(bool authorise) async{
-    await _firestore.collection("All Day Rentals").document(_docID).updateData({
-      'Rental Authorise' : authorise,
     });
   }
 
@@ -115,11 +108,6 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
       _privateAuthorise = snapshot['Lesson Authorise'];
     });
   }
-  void _privateLessonAuthorise(bool authorise) async{
-    await _firestore.collection("Private Lessons").document(_docID).updateData({
-      'Lesson Authorise' : authorise,
-    });
-  }
 
   // gets group Lessons data from firestore
   _getGroupLessonData() async {
@@ -136,11 +124,6 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
         Timestamp timestampGroup = snapshot['Date'];
         _groupDate = timestampGroup.toDate();
         _groupAuthorise = snapshot['Lesson Authorise'];
-    });
-  }
-  void _groupLessonAuthorise(bool authorise) async{
-    await _firestore.collection("Group Lessons").document(_docID).updateData({
-      'Lesson Authorise' : authorise,
     });
   }
 
@@ -205,7 +188,7 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
                     onChanged: (bool value){
                       setState(() {
                         _halfAuthorise = value;
-                        _halfDayAuthorise(_halfAuthorise);
+                        _databaseService.halfDayAuthorise(_halfAuthorise, _docID);
                       });
                     },
                   ),
@@ -240,7 +223,7 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
                     onChanged: (bool value){
                       setState(() {
                         _fullAuthorise = value;
-                        _fullDayAuthorise(_fullAuthorise);
+                        _databaseService.fullDayAuthorise(_fullAuthorise, _docID);
                       });
                     },
                   ),
@@ -276,7 +259,7 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
                     onChanged: (bool value){
                       setState(() {
                         _privateAuthorise = value;
-                        _privateLessonAuthorise(_privateAuthorise);
+                        _databaseService.privateLessonAuthorise(_privateAuthorise, _docID);
                       });
                     },
                   ),
@@ -312,7 +295,7 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
                     onChanged: (bool value){
                       setState(() {
                         _groupAuthorise = value;
-                        _groupLessonAuthorise(_groupAuthorise);
+                        _databaseService.groupLessonAuthorise(_groupAuthorise, _docID);
                       });
                     },
                   ),

@@ -54,7 +54,7 @@ class _Admin_AnonHomeState extends State<Admin_AnonHome> {
       appBar: AppBar(
         title: Text("Anonymous"),
         actions: <Widget>[
-          logOut(context),
+          LogOut(),
         ],
         leading: new Container(),
       ),

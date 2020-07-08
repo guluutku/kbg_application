@@ -19,26 +19,29 @@ class _ProfileState extends State<Profile> {
   String name, surname, phone, email, password;
   int age;
   double weight;
-  
+
+  bool _loading = true;
+
   Loading load = new Loading();
 
   _getProfile() async {
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     DocumentSnapshot snapshot =  await _firestore.collection('membership').document(firebaseUser.uid).get();
     setState(() {
+      _loading = true;
       name = snapshot['name'];
       surname = snapshot['surname'];
       phone = snapshot['phone number'];
       age = snapshot['age'];
       weight = snapshot['weight'];
-      print(name);
+      _loading = false;
     });
   }
 
   @override
   void initState() {
-    super.initState();
     _getProfile();
+    super.initState();
   }
 
   @override
@@ -61,7 +64,7 @@ class _ProfileState extends State<Profile> {
         ],
       ),
       body: Container(
-        child: name == null && surname == null && phone == null && age == null && weight == null ? load.build(context) : Column( // TODO: loading ekle
+        child: _loading ? load.build(context) : Column( // TODO: loading ekle
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[

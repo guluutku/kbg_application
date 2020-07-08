@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:kbgapp/services/authentication.dart';
 
-AuthService _authService = new AuthService();
+class LogOut extends StatelessWidget{
 
-logOut(BuildContext context){
-  var logout = FlatButton.icon(
-    icon: Icon(Icons.close),
-    label: Text("Log Out"),
-    onPressed: () async{
-      await _authService.logOut();
-      Navigator.of(context).pop(false);
-    },
-  );
+  AuthService _authService = new AuthService();
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton.icon(
+      icon: Icon(Icons.close),
+      label: Text("Log Out"),
+      onPressed: () async{
+        await _authService.logOut();
+        Navigator.of(context).pop(false);
+      },
+    );
+  }
+
 }
