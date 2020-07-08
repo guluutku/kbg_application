@@ -51,7 +51,7 @@ class _AdminHomeState extends State<AdminHome> {
       appBar: new AppBar(
         title: Text("Daily Teacher Checklist"),
         actions: <Widget>[
-          logout,
+          logOut(context),
         ],
         leading: new Container(),
       ),

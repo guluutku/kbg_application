@@ -53,7 +53,7 @@ class _Admin_MembersHomeState extends State<Admin_MembersHome> {
       appBar: AppBar(
         title: Text("Members"),
         actions: <Widget>[
-          logout,
+          logOut(context),
         ],
         leading: new Container(),
       ),

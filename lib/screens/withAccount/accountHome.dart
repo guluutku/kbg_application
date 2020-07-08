@@ -23,6 +23,7 @@ class _AccountHomeState extends State<AccountHome> {
     return Scaffold(
       backgroundColor: Colors.brown[50],
       appBar: AppBar(
+        leading: new Container(),
         title: Text("Home Page"),
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
@@ -37,8 +38,7 @@ class _AccountHomeState extends State<AccountHome> {
               );
             },
           ),
-
-          logout,
+          logOut(context),
         ],
       ),
 

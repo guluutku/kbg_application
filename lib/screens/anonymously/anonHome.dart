@@ -20,9 +20,10 @@ class _AnonymousHomePageState extends State<AnonymousHomePage> {
       backgroundColor: Colors.brown[100],
 
       appBar: AppBar(
+        leading: new Container(),
         title: Text('Welcome User'),
         actions: <Widget>[
-          logout,
+          logOut(context),
         ],
       ),
 
