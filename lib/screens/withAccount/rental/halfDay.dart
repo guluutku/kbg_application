@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/missingInformations.dart';
 
@@ -271,7 +270,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                 SizedBox(height: 10,),
 
                 Text(
-                  "Total price: $_totalPrice",
+                  "Total price: $_totalPrice TL",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25
@@ -284,19 +283,19 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                 ),
 
                 Text(
-                  "$_rentalDate",
+                  _rentalDate == null ? "Choose a date" : "$_rentalDate",
                   style: TextStyle(
                       fontSize: 20
                   ),
                 ),
 
                 RaisedButton(
-                  child: Text("Date"),
+                  child: Text("Rental Date"),
                   onPressed: (){
                     showDatePicker(
                       context: context,
-                      initialDate: _rentalDate,
-                      firstDate: DateTime(2020),
+                      initialDate: _rentalDate == null ? DateTime.now() : _rentalDate,
+                      firstDate: DateTime.now(),
                       lastDate: DateTime(2021),
                     ).then((date)  {
                       setState((){
@@ -314,7 +313,7 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                       _rentConfirmation(context);
                     }
                   },
-                  child: Text("Continue"),
+                  child: Text("Make an Appointment"),
                 ),
             ],
           ),
@@ -325,16 +324,18 @@ class _HalfDayRentalState extends State<HalfDayRental> {
 
   void _rentConfirmation(BuildContext context){
     var alertDialog = AlertDialog(
+      backgroundColor: Colors.brown[100],
       title: Text(
         "CONFIRMATION",
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: Text(
-          "The equipments you want to rent are:"
-              "$_fullStack" +"  Full Equipment,  "
-              "$_kiteBarStack"+"  Kite and Bar,  "
-              "$_boardStack"+"  Boards,  "
-              "$_harnessStack"+"  Harnesses  "
+          "The equipments you want to rent are:\n"
+              "$_fullStack" +"  Full Equipment\n  "
+              "$_kiteBarStack"+"  Kite and Bar\n  "
+              "$_boardStack"+"  Boards\n  "
+              "$_harnessStack"+"  Harnesses\n"
+              "On $_rentalDate\n  "
               "Total: $_totalPrice  TL"
       ),
       actions: <Widget>[
@@ -342,10 +343,8 @@ class _HalfDayRentalState extends State<HalfDayRental> {
           child: Text("Confirm & Continue"),
           onPressed: (){
             _databaseService.halfDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalPrice, _rentalDate, _authorise);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AccountHome()),
-            );
+            Navigator.of(context).pop(false);
+
           },
         ),
       ],

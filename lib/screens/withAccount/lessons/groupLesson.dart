@@ -6,6 +6,8 @@ import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/missingInformations.dart';
 import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 
+import '../accountHome.dart';
+
 class GroupLesson extends StatefulWidget {
   @override
   _GroupLessonState createState() => _GroupLessonState();
@@ -266,7 +268,7 @@ class _GroupLessonState extends State<GroupLesson> {
               SizedBox(height: 10,),
 
               Text(
-                "Total price: $_totalLessonPrice",
+                "Total price: $_totalLessonPrice TL",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25
@@ -325,7 +327,7 @@ class _GroupLessonState extends State<GroupLesson> {
                     onPressed: () {
                       showDatePicker(
                         context: context,
-                        initialDate: _lessonDate,
+                        initialDate: _lessonDate == null ? DateTime.now() : _lessonDate,
                         firstDate: DateTime.now(),
                         lastDate: DateTime(2021),
                       ).then((date) {
@@ -348,8 +350,7 @@ class _GroupLessonState extends State<GroupLesson> {
                         noSession(context);
                       } else{
                         setState(() {
-                          _databaseService.groupLessonData(_totalHour, _hourStack, _sixHoursStack, _eightHoursStack, _session, _totalLessonPrice, _lessonDate, _name, _surname, _age, _weight, _authorise);
-                          Navigator.of(context).pop(false);
+                          _lessonConfirmation(context);
                         });
                       }
                     },
@@ -455,4 +456,41 @@ class _GroupLessonState extends State<GroupLesson> {
       );
     });
   }
+
+  void _lessonConfirmation(BuildContext context){
+    var alertDialog = AlertDialog(
+      title: Text(
+        "CONFIRMATION",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      content: Text(
+          "Lesson Packages you will buy:\n"
+              "$_eightHoursStack Sight Hour Package\n  "
+              "$_sixHoursStack  Six Hour Package\n "
+              "$_hourStack  One Hour Package\n  "
+              "$_session\n"
+              "Total hour: $_totalHour\n"
+              "Total price: $_totalLessonPrice  TL\n"
+              "Name and Surname:  $_name $_surname\n"
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text("Confirm & Continue"),
+          onPressed: (){
+            _databaseService.groupLessonData(_totalHour, _hourStack, _sixHoursStack, _eightHoursStack, _session, _totalLessonPrice, _lessonDate, _name, _surname, _age, _weight, _authorise);
+            Navigator.of(context).pop(false);
+          },
+        ),
+      ],
+      backgroundColor: Colors.brown[100],
+    );
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return alertDialog;
+        }
+    );
+  }
+
 }

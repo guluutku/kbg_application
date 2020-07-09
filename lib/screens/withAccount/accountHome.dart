@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kbgapp/screens/entryPage.dart';
 
 import 'package:kbgapp/screens/withAccount/lessons/lessonsHome.dart';
 import 'package:kbgapp/screens/withAccount/rental/rentalPage.dart';
-import 'package:kbgapp/sharedCode/logout.dart';
+import 'package:kbgapp/services/authentication.dart';
 import 'profile/profile.dart';
 
 class AccountHome extends StatefulWidget {
@@ -12,10 +13,7 @@ class AccountHome extends StatefulWidget {
 
 class _AccountHomeState extends State<AccountHome> {
 
-  String email;
-  String name;
-  int age = 0;
-  double weight = 0.0;
+  AuthService _authService = new AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class _AccountHomeState extends State<AccountHome> {
       backgroundColor: Colors.brown[50],
       appBar: AppBar(
         leading: new Container(),
-        title: Text("Home Page"),
+        title: Text("Welcome"),
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         actions: <Widget>[
@@ -34,11 +32,21 @@ class _AccountHomeState extends State<AccountHome> {
             onPressed: (){
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Profile())
+                  MaterialPageRoute(builder: (context) => EntryPage())
               );
             },
           ),
-          //logOut(context),
+          FlatButton.icon(
+            icon: Icon(Icons.close),
+            label: Text("Log Out"),
+            onPressed: () async{
+              await _authService.logOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EntryPage())
+              );
+            },
+          ),
         ],
       ),
 
@@ -50,10 +58,19 @@ class _AccountHomeState extends State<AccountHome> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
 
             children: <Widget>[
-              Text("Choose lesson or rent"),
+              Image.asset("assets/images/accountHome.JPG"),
+              Text(
+                    " You can rent our equipments or get lessons "
+                    "\n "
+                    "from our professional teachers. ",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
 
               RaisedButton(
-                child: Text("Lesson"),
+                child: Text("Take Lesson"),
                 onPressed: (){
                   Navigator.push(
                       context,
@@ -63,7 +80,7 @@ class _AccountHomeState extends State<AccountHome> {
               ),
 
               RaisedButton(
-                child: Text("Rent"),
+                child: Text("Rent Equipments"),
                 onPressed: (){
                   Navigator.push(
                       context,

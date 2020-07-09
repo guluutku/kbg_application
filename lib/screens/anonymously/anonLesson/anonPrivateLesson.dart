@@ -6,6 +6,8 @@ import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/missingInformations.dart';
 import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 
+import '../anonHome.dart';
+
 class AnonPrivateLessons extends StatefulWidget {
   @override
   _AnonPrivateLessonsState createState() => _AnonPrivateLessonsState();
@@ -252,7 +254,7 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                 ),
 
                 Text(
-                  "Total price: $_totalLessonPrice",
+                  "Total price: $_totalLessonPrice TL",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
@@ -309,7 +311,7 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                       onPressed: (){
                         showDatePicker(
                           context: context,
-                          initialDate: _lessonDate,
+                          initialDate: _lessonDate == null ? DateTime.now() : _lessonDate,
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2021),
                         ).then((date)  {
@@ -446,17 +448,7 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                             if(_name == null || _surname == null || _email == null || _phoneNumber == null || _weight == null || _age == null){
                               noInfo(context);
                             } else{
-                              _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-                              _databaseService.privateLessonData(
-                                  _totalHours,
-                                  _oneHourStack,
-                                  _sixHoursStack,
-                                  _eightHoursStack,
-                                  _session,
-                                  _totalLessonPrice,
-                                  _lessonDate,
-                                  _authorise
-                              );
+                              _lessonConfirmation(context);
                             }
                           }
                       ),
@@ -469,6 +461,57 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
         ),
       );
     });
+  }
+
+  void _lessonConfirmation(BuildContext context){
+    var alertDialog = AlertDialog(
+      title: Text(
+        "CONFIRMATION",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      content: Text(
+          "Lesson Packages you will buy:\n"
+              "$_eightHoursStack Sight Hour Package\n  "
+              "$_sixHoursStack  Six Hour Package\n "
+              "$_oneHourStack  One Hour Package\n  "
+              "$_session\n"
+              "Total hour: $_totalHours\n"
+              "Total price: $_totalLessonPrice  TL\n"
+              "Name and Surname:  $_name $_surname\n"
+              "Your Information: \n"
+              "Age: $_age\n"
+              "Weight: $_weight\n"
+              "Phone Number: $_phoneNumber\n"
+              "Email: $_email\n"
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text("Confirm & Continue"),
+          onPressed: (){
+            _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
+            _databaseService.privateLessonData(
+                _totalHours,
+                _oneHourStack,
+                _sixHoursStack,
+                _eightHoursStack,
+                _session,
+                _totalLessonPrice,
+                _lessonDate,
+                _authorise
+            );
+            Navigator.of(context).pop(false);
+          },
+        ),
+      ],
+      backgroundColor: Colors.brown[100],
+    );
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return alertDialog;
+        }
+    );
   }
 
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kbgapp/screens/anonymously/anonHome.dart';
 
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/missingInformations.dart';
@@ -148,22 +149,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                     ||  _secondName == null || _secondSurname == null || _secondAge == null || _secondWeight == null){
                   noInfo(context);
                 } else{
-                  _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-                  _databaseService.groupLessonData(
-                      _totalHours,
-                      _oneHourStack,
-                      _sixHoursStack,
-                      _eightHoursStack,
-                      _session,
-                      _totalLessonPrice,
-                      _lessonDate,
-                      _secondName,
-                      _secondSurname,
-                      _secondAge,
-                      _secondWeight,
-                      _authorise
-                  );
-                  Navigator.of(context).pop(false);
+                  _lessonConfirmation(context);
                 }
               });
             },
@@ -294,7 +280,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
               ),
 
               Text(
-                "Total price: $_totalLessonPrice",
+                "Total price: $_totalLessonPrice TL",
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -351,7 +337,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                    onPressed: (){
                      showDatePicker(
                        context: context,
-                       initialDate: _lessonDate,
+                       initialDate: _lessonDate == null ? DateTime.now() : _lessonDate,
                        firstDate: DateTime.now(),
                        lastDate: DateTime(2021),
                      ).then((date)  {
@@ -537,7 +523,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                     SizedBox(height: 10.0),
 
                     RaisedButton(
-                        color: Colors.brown[100],
+                        color: Colors.brown[400],
                         child: Text(
                           'Close and Save Information',
                           style: TextStyle(color: Colors.white),
@@ -559,6 +545,65 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
         ),
       );
     });
+  }
+
+  void _lessonConfirmation(BuildContext context){
+    var alertDialog = AlertDialog(
+      title: Text(
+        "CONFIRMATION",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      content: Text(
+          "Lesson Packages you will buy:\n"
+              "$_eightHoursStack Sight Hour Package\n  "
+              "$_sixHoursStack  Six Hour Package\n "
+              "$_oneHourStack  One Hour Package\n  "
+              "$_session\n"
+              "Total hour: $_totalHours\n"
+              "Total price: $_totalLessonPrice  TL\n"
+              "Name and Surname:  $_name $_surname\n"
+              "Your Information: \n"
+              "Age: $_age\n"
+              "Weight: $_weight\n"
+              "Phone Number: $_phoneNumber\n"
+              "Email: $_email\n"
+              "Second Student's Information:\n"
+              "Name Surname: $_secondName  $_secondSurname\n"
+              "Age: $_secondAge\n"
+              "Weight: $_secondWeight"
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text("Confirm & Continue"),
+          onPressed: (){
+            _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
+            _databaseService.groupLessonData(
+                _totalHours,
+                _oneHourStack,
+                _sixHoursStack,
+                _eightHoursStack,
+                _session,
+                _totalLessonPrice,
+                _lessonDate,
+                _secondName,
+                _secondSurname,
+                _secondAge,
+                _secondWeight,
+                _authorise
+            );
+            Navigator.of(context).pop(false);
+          },
+        ),
+      ],
+      backgroundColor: Colors.brown[100],
+    );
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return alertDialog;
+        }
+    );
   }
 
 }

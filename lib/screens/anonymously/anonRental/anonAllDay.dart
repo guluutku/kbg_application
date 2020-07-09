@@ -141,9 +141,7 @@ class _AllDayRentState extends State<AllDayRent> {
                 } else if(_name == null || _surname == null || _weight == null || _age == null || _email == null || _phoneNumber == null){
                   noInfo(context);
                 } else {
-                  _databaseService.allDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalAllDayEquipPrice, _rentalDate, _authorise);
-                  _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
-                  Navigator.of(context).pop(AnonymousHomePage());
+                  _rentConfirmation(context);
                 }
               });
             },
@@ -310,7 +308,7 @@ class _AllDayRentState extends State<AllDayRent> {
               ),
 
               Text(
-                "Total price: $_totalAllDayEquipPrice",
+                "Total price: $_totalAllDayEquipPrice TL",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -332,7 +330,7 @@ class _AllDayRentState extends State<AllDayRent> {
                 onPressed: (){
                   showDatePicker(
                     context: context,
-                    initialDate: _rentalDate,
+                    initialDate: _rentalDate == null ? DateTime.now() : _rentalDate,
                     firstDate: DateTime.now(),
                     lastDate: DateTime(2021),
                   ).then((date)  {
@@ -475,5 +473,48 @@ class _AllDayRentState extends State<AllDayRent> {
       );
     });
   }
+
+  void _rentConfirmation(BuildContext context){
+    var alertDialog = AlertDialog(
+      backgroundColor: Colors.brown[100],
+      title: Text(
+        "CONFIRMATION",
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      content: Text(
+          "The equipments you want to rent are:\n"
+              "$_fullStack" +"  Full Equipment\n  "
+              "$_kiteBarStack"+"  Kite and Bar\n  "
+              "$_boardStack"+"  Boards\n  "
+              "$_harnessStack"+"  Harnesses\n"
+              "On $_rentalDate\n  "
+              "Total: $_totalAllDayEquipPrice  TL\n\n"
+              "Information:\n"
+              "Name and Surname:  $_name $_surname\n"
+              "Age: $_age\n"
+              "Weight: $_weight\n"
+              "Phone Number: $_phoneNumber\n"
+              "Email: $_email"
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text("Confirm & Continue"),
+          onPressed: (){
+            _databaseService.allDayRentalData(_fullStack, _kiteBarStack, _boardStack, _harnessStack, _totalAllDayEquipPrice, _rentalDate, _authorise);
+            _databaseService.anonCustomerDataUpdate(_name, _surname, _email, _age, _weight, _phoneNumber);
+            Navigator.of(context).pop(false);
+          },
+        ),
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return alertDialog;
+        }
+    );
+  }
+
 
 }

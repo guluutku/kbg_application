@@ -240,7 +240,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
               SizedBox(height: 10,),
 
               Text(
-                "Total price: $_totalLessonPrice",
+                "Total price: $_totalLessonPrice TL",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25
@@ -298,7 +298,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
                     onPressed: (){
                       showDatePicker(
                         context: context,
-                        initialDate: _lessonDate,
+                        initialDate: _lessonDate == null ? DateTime.now() : _lessonDate,
                         firstDate: DateTime.now(),
                         lastDate: DateTime(2021),
                       ).then((date)  {
@@ -337,13 +337,14 @@ class _PrivateLessonState extends State<PrivateLesson> {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: Text(
-          "The lessons you want to take are:"
-              "$_hourStack" + "  One Hour Lessons,  "
-              "$_sixHoursStack" + "  6 hours lessons,  "
-              "$_eightHoursStack" + "  8 hours lessons,  "
-              "Total: $_totalLessonPrice  TL"
-              "At $_session"
-              "In $_lessonDate"
+          "Lesson Packages you will buy:\n"
+              "$_eightHoursStack Sight Hour Package\n  "
+              "$_sixHoursStack  Six Hour Package\n "
+              "$_hourStack  One Hour Package\n  "
+              "$_session\n"
+              "Total hour: $_totalHour\n"
+              "On $_lessonDate\n"
+              "Total price: $_totalLessonPrice  TL"
       ),
       actions: <Widget>[
         FlatButton(
@@ -363,7 +364,7 @@ class _PrivateLessonState extends State<PrivateLesson> {
           },
         ),
       ],
-      backgroundColor: Colors.pink,
+      backgroundColor: Colors.brown[100],
     );
 
     showDialog(

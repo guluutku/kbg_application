@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/database.dart';
 import 'package:kbgapp/sharedCode/missingInformations.dart';
 
@@ -270,7 +267,7 @@ class _AllDayRentState extends State<AllDayRent> {
               SizedBox(height: 10,),
 
               Text(
-                "Total price: $_totalPrice",
+                "Total price: $_totalPrice TL",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25
@@ -290,11 +287,11 @@ class _AllDayRentState extends State<AllDayRent> {
               ),
 
               RaisedButton(
-                child: Text("Date"),
+                child: Text("Rental Date"),
                 onPressed: (){
                   showDatePicker(
                     context: context,
-                    initialDate: _rentalDate,
+                    initialDate: _rentalDate == null ? DateTime.now() : _rentalDate,
                     firstDate: DateTime.now(),
                     lastDate: DateTime(2021),
                   ).then((date)  {
@@ -313,7 +310,7 @@ class _AllDayRentState extends State<AllDayRent> {
                     _rentConfirmation(context);
                   }
                 },
-                child: Text("Continue"),
+                child: Text("Make an Appointment"),
               ),
             ],
           ),
@@ -332,11 +329,12 @@ class _AllDayRentState extends State<AllDayRent> {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: Text(
-          "The equipments you want to rent are:"
-              "$fullStack  Full Equipment,  "
-              "$kiteBarStack  Kite and Bar,  "
-              "$boardStack  Boards,  "
-              "$harnessStack  Harnesses  "
+          "The equipments you want to rent are: \n"
+              "$fullStack  Full Equipment\n  "
+              "$kiteBarStack  Kite and Bar\n  "
+              "$boardStack  Boards\n  "
+              "$harnessStack  Harnesses\n  "
+              "On $_rentalDate\n"
               "Total: $_totalPrice  TL"
       ),
       actions: <Widget>[
@@ -344,14 +342,12 @@ class _AllDayRentState extends State<AllDayRent> {
           child: Text("Confirm & Continue"),
           onPressed: (){
             _databaseService.allDayRentalData(fullStack, kiteBarStack, boardStack, harnessStack, _totalPrice, _rentalDate, _authorise);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AccountHome()),
-            );
+            Navigator.of(context).pop(false);
+
           },
         ),
       ],
-      backgroundColor: Colors.pink,
+      backgroundColor: Colors.brown[100],
     );
 
     showDialog(
