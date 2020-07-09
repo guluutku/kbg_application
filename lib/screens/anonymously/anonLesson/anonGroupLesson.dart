@@ -175,18 +175,15 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Text(
-                "Please how many hours you want to purchase.",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 20,
-                ),
+              Image.asset(
+                "assets/images/groupLesson.jpg",
+                scale: 7,
               ),
-
               Text(
-                "You can only take lessons up to 3 hours for 1 day. Other hours will be done in the next day. "
-                    "This is done because learning more than 3 hours a day would be too hard for your body.",
+                " Choose how many hours you want to buy."
+                    "\n"
+                    " Your body learns how to control a kite and\n ride a board."
+                    " That means, if you don't have\n enough time to learn everything, you can \n continue another time where you left off.",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
@@ -195,7 +192,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
               ),
 
               Card(
-                child: Row( // Calculate kite+bar price
+                child: Row( // Calculate 8 hour lesson package
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text("8 Hours package: 2100 TL"),
@@ -229,7 +226,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
               ),
 
               Card(
-                child: Row( // Calculate kite+bar price
+                child: Row( // Calculate 6 hour package price
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text("6 Hours package: 1600 TL"),
@@ -263,7 +260,7 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
               ),
 
               Card(
-                child: Row( // Calculate kite+bar price
+                child: Row( // Calculate one hour package price
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text("1 Hour package: 300 TL"),
@@ -293,6 +290,14 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                       child: new Icon(Icons.add, color: Colors.black,),
                     ),
                   ],
+                ),
+              ),
+
+              Text(
+                "Total price: $_totalLessonPrice",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
 
@@ -338,28 +343,33 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 ),
               ),
 
-              RaisedButton(
-                child: Text("Date"),
-                onPressed: (){
-                  showDatePicker(
-                    context: context,
-                    initialDate: _lessonDate,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2021),
-                  ).then((date)  {
-                    setState((){
-                      _lessonDate = date;
-                    });
-                  });
-                },
-              ),
-
-              RaisedButton(
-                onPressed: (){
-                  _personalInfo(context);
-                },
-                child: Text("Give personal information"),
-              ),
+             Row(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: <Widget>[
+                 RaisedButton(
+                   child: Text("Date"),
+                   onPressed: (){
+                     showDatePicker(
+                       context: context,
+                       initialDate: _lessonDate,
+                       firstDate: DateTime.now(),
+                       lastDate: DateTime(2021),
+                     ).then((date)  {
+                       setState((){
+                         _lessonDate = date;
+                       });
+                     });
+                   },
+                 ),
+                 SizedBox(width: 16,),
+                 RaisedButton(
+                   onPressed: (){
+                     _personalInfo(context);
+                   },
+                   child: Text("Give personal information"),
+                 ),
+               ],
+             )
             ],
           ),
         ),

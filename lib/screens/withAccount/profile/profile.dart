@@ -64,7 +64,7 @@ class _ProfileState extends State<Profile> {
         ],
       ),
       body: Container(
-        child: _loading ? load.build(context) : Column( // TODO: loading ekle
+        child: _loading ? load.build(context) : Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[

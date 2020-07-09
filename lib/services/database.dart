@@ -110,7 +110,10 @@ class DatabaseService{
       'Session': session,
       'Price': price,
       'Date': lessonDate,
-      'Second Student': FieldValue.arrayUnion([name, surname, age, weight]),
+      'Second Student Name': name,
+      'Second Student Surname': surname,
+      'Second Student age': age,
+      'Second Student weight': weight,
       'Lesson Authorise' : authorise,
     });
   }

@@ -22,10 +22,13 @@ class _AnonRentalPageState extends State<AnonRentalPage> {
       body: Center(
         child: Column(
           children: <Widget>[
+            Image.asset("assets/images/equipments.jpg"),
+            SizedBox(height: 10,),
             Text(
-              "Choose if you use equipment full day or half a day",
+              " You can rent equipments for either half a day or all day long.",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: 15,
               ),
             ),
             RaisedButton(
@@ -46,6 +49,14 @@ class _AnonRentalPageState extends State<AnonRentalPage> {
                 );
               },
               child: Text("Half day rental"),
+            ),
+
+            Text(
+              " Note that, if you don't know how to do kitesurf, we will NOT\n provide you any equipments.",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
             ),
           ],
         ),

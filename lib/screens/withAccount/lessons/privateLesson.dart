@@ -118,18 +118,16 @@ class _PrivateLessonState extends State<PrivateLesson> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Text(
-                "Please how many hours you want to puchose.",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 20,
-                ),
+              Image.asset(
+                "assets/images/privateLes.JPG",
+                scale: 25,
               ),
-
+              SizedBox(height: 10,),
               Text(
-                "You can only take lessons up to 3 hours for 1 day. Other hours will be done in the next day. "
-                    "This is done because learning more than 3 hours a day would be too hard for your body.",
+                " Choose how many hours you want to buy."
+                    "\n"
+                    " Your body learns how to control a kite and\n ride a board."
+                    " That means, if you don't have\n enough time learn everything, you can \n continue another time where you left off.",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
@@ -292,33 +290,38 @@ class _PrivateLessonState extends State<PrivateLesson> {
               ),
 
               SizedBox(height:  10.0),
-              RaisedButton(
-                child: Text("Lesson Date"),
-                onPressed: (){
-                  showDatePicker(
-                    context: context,
-                    initialDate: _lessonDate,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2021),
-                  ).then((date)  {
-                    setState((){
-                      _lessonDate = date;
-                    });
-                  });
-                },
-              ),
-
-              RaisedButton(
-                onPressed: (){
-                  if(_totalHour == 0){
-                    noLesson(context);
-                  } else if(_morningSession == null){
-                     noSession(context);
-                 }else{
-                    _lessonConfirmation(context);
-                  }
-                },
-                child: Text("Make an Appointment"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("Lesson Date"),
+                    onPressed: (){
+                      showDatePicker(
+                        context: context,
+                        initialDate: _lessonDate,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2021),
+                      ).then((date)  {
+                        setState((){
+                          _lessonDate = date;
+                        });
+                      });
+                    },
+                  ),
+                  SizedBox(width: 16,),
+                  RaisedButton(
+                    onPressed: (){
+                      if(_totalHour == 0){
+                        noLesson(context);
+                      } else if(_morningSession == null){
+                        noSession(context);
+                      }else{
+                        _lessonConfirmation(context);
+                      }
+                    },
+                    child: Text("Make an Appointment"),
+                  ),
+                ],
               ),
             ],
           ),

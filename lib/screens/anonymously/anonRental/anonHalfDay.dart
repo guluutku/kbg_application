@@ -158,6 +158,14 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              Text(
+                " Full equipment means you rent all of the\n equipments. "
+                    " Likra and wetsuits can be\n provided by school.",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Card(
 
                 child: Row( // Calculate full equipment price
@@ -305,6 +313,16 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
                 title: Text('Likra and Wetsuit: Free'),
                 value: true,
               ),
+
+              Text(
+                "Total price: $_totalHalfDayEquipPrice",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
+
+              SizedBox(height: 10,),
 
               Text(
                 _rentalDate == null ? "Choose a date" : "$_rentalDate",

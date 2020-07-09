@@ -116,6 +116,14 @@ class _HalfDayRentalState extends State<HalfDayRental> {
           child: Center(
             child: Column(
               children: <Widget>[
+                Text(
+                  " Full equipment means you rent all of the\n equipments. "
+                      " Likra and wetsuits can be\n provided by school.",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
 
                 Card(
                   child: Row( // Calculate full equipment price
@@ -171,10 +179,11 @@ class _HalfDayRentalState extends State<HalfDayRental> {
                           _minusKiteBarStack();
                           _kiteBarPrice();
                           totalPrice();
-                      },
-                      child: new Icon(
-                        const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                        color: Colors.black),
+                        },
+                        child: new Icon(
+                          const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+                          color: Colors.black
+                        ),
                       ),
 
                       new Text('$_kiteBarStack',

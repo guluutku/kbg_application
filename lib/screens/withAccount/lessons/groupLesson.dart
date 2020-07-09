@@ -145,22 +145,19 @@ class _GroupLessonState extends State<GroupLesson> {
         child: Center(
           child: Column(
             children: <Widget>[
-              Text(
-                "Please how many hours you want to puchose.",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 20,
-                ),
+              Image.asset(
+                "assets/images/group.JPG",
+                scale: 25,
               ),
-
               Text(
-                "You can only take lessons up to 3 hours for 1 day. Other hours will be done in the next day. "
-                    "This is done because learning more than 3 hours a day would be too hard for your body.",
+                " Choose how many hours you want to buy."
+                    "\n"
+                    " Your body learns how to control a kite and\n ride a board."
+                    " That means, if you don't have\n enough time to learn everything, you can \n continue another time where you left off.",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
-                  fontSize: 20,
+                  fontSize: 18,
                 ),
               ),
 
@@ -320,40 +317,45 @@ class _GroupLessonState extends State<GroupLesson> {
 
               SizedBox(height: 10.0,),
 
-              RaisedButton(
-                child: Text("Lesson Date"),
-                onPressed: () {
-                  showDatePicker(
-                    context: context,
-                    initialDate: _lessonDate,
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2021),
-                  ).then((date) {
-                    setState(() {
-                      _lessonDate = date;
-                    });
-                  });
-                },
-              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("Lesson Date"),
+                    onPressed: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: _lessonDate,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(2021),
+                      ).then((date) {
+                        setState(() {
+                          _lessonDate = date;
+                        });
+                      });
+                    },
+                  ),
 
-              SizedBox(height: 10.0,),
+                  SizedBox(width: 16.0,),
 
-              RaisedButton(
-                onPressed: () {
-                  if(_totalHour == 0){
-                    noLesson(context);
-                  } else if(_name == null || _surname == null || _weight == null || _age == null){
-                    noSecondStudent(context);
-                  } else if(_morningSession == null){
-                    noSession(context);
-                  } else{
-                    setState(() {
-                      _databaseService.groupLessonData(_totalHour, _hour, _sixHours, _eightHours, _session, _totalLessonPrice, _lessonDate, _name, _surname, _age, _weight, _authorise);
-                      Navigator.of(context).pop(false);
-                    });
-                  }
-                },
-                child: Text("Make an Appointment"),
+                  RaisedButton(
+                    onPressed: () {
+                      if(_totalHour == 0){
+                        noLesson(context);
+                      } else if(_name == null || _surname == null || _weight == null || _age == null){
+                        noSecondStudent(context);
+                      } else if(_morningSession == null){
+                        noSession(context);
+                      } else{
+                        setState(() {
+                          _databaseService.groupLessonData(_totalHour, _hourStack, _sixHoursStack, _eightHoursStack, _session, _totalLessonPrice, _lessonDate, _name, _surname, _age, _weight, _authorise);
+                          Navigator.of(context).pop(false);
+                        });
+                      }
+                    },
+                    child: Text("Make an Appointment"),
+                  ),
+                ],
               ),
             ],
           ),

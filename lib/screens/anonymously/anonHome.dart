@@ -21,7 +21,7 @@ class _AnonymousHomePageState extends State<AnonymousHomePage> {
 
       appBar: AppBar(
         leading: new Container(),
-        title: Text('Welcome User'),
+        title: Text('Welcome'),
         actions: <Widget>[
           LogOut(),
         ],
@@ -29,17 +29,24 @@ class _AnonymousHomePageState extends State<AnonymousHomePage> {
 
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
 
           children: <Widget>[
             Text(
-              "Please select 'Kite Lessons' to make a appointment for the lessons "
-                  "or 'Rent Equipment' to rent our equipments:",
+              " Welcome to KBG Appointment. "
+                  "\n"
+                  " You can rent our equipments or get lessons "
+                  "\n "
+                  "from our professional teachers. ",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
             ),
+
+            SizedBox(height: 10,),
+
+            Image.asset("assets/images/huseyinAbee.jpg"),
 
             RaisedButton(
               onPressed: () {

@@ -156,10 +156,19 @@ class _AllDayRentState extends State<AllDayRent> {
 
           child: Column(
             children: <Widget>[
+              Text(
+                " Full equipment means you rent all of the\n equipments. "
+                    " Likra and wetsuits can be\n provided by school.",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Card(
                 child: Row( // Calculate full equipment price
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+
                     Text("Full Equipment (250 TL)"),
 
                     new FlatButton( // decrease _fullStack by 1
@@ -299,6 +308,17 @@ class _AllDayRentState extends State<AllDayRent> {
                 title: Text('Likra and Wetsuit: Free'),
                 value: true,
               ),
+
+              Text(
+                "Total price: $_totalAllDayEquipPrice",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
+
+              SizedBox(height: 10,),
+
 
               Text(
                 _rentalDate == null ? "Choose a date" : "$_rentalDate",

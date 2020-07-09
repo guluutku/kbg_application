@@ -119,6 +119,15 @@ class _AllDayRentState extends State<AllDayRent> {
 
           child: Column(
             children: <Widget>[
+              Text(
+                " Full equipment means you rent all of the\n equipments. "
+                    " Likra and wetsuits can be\n provided by school.",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
               Card(
                 child: Row( // Calculate full equipment price
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

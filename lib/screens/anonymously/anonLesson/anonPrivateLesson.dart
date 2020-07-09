@@ -132,18 +132,16 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
         child: Center(
           child: Column(
               children: <Widget>[
-                Text(
-                  "Please how many hours you want to puchose.",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 20,
-                  ),
+                Image.asset(
+                  "assets/images/ders.jpg",
+                  scale: 7,
                 ),
-
+                SizedBox(height: 10,),
                 Text(
-                  "You can only take lessons up to 3 hours for 1 day. Other hours will be done in the next day. "
-                      "This is done because learning more than 3 hours a day would be too hard for your body.",
+                  " Choose how many hours you want to buy."
+                      "\n"
+                      " Your body learns how to control a kite and\n ride a board."
+                      " That means, if you don't have\n enough time learn everything, you can \n continue another time where you left off.",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
@@ -253,6 +251,14 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                   ),
                 ),
 
+                Text(
+                  "Total price: $_totalLessonPrice",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+
                 DropdownButton<bool>(
                   items: [
                     DropdownMenuItem<bool>(
@@ -294,35 +300,40 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                       fontSize: 20
                   ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
 
-                RaisedButton(
-                  child: Text("Date"),
-                  onPressed: (){
-                    showDatePicker(
-                      context: context,
-                      initialDate: _lessonDate,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2021),
-                    ).then((date)  {
-                      setState((){
-                        _lessonDate = date;
-                      });
-                    });
-                  },
-                ),
-
-                RaisedButton(
-                  onPressed: (){
-                    if(_totalHours == 0){
-                      noLesson(context);
-                    } else if( _session == null){
-                      noSession(context);
-                    } else{
-                      _personalInfo(context);
-                    }
-                  },
-                  child: Text("Give personal information"),
-                ),
+                    RaisedButton(
+                      child: Text("Date"),
+                      onPressed: (){
+                        showDatePicker(
+                          context: context,
+                          initialDate: _lessonDate,
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2021),
+                        ).then((date)  {
+                          setState((){
+                            _lessonDate = date;
+                          });
+                        });
+                      },
+                    ),
+                    SizedBox(width: 16,),
+                    RaisedButton(
+                      onPressed: (){
+                        if(_totalHours == 0){
+                          noLesson(context);
+                        } else if( _session == null){
+                          noSession(context);
+                        } else{
+                          _personalInfo(context);
+                        }
+                      },
+                      child: Text("Give personal information"),
+                    ),
+                  ],
+                )
               ],
           ),
         ),
