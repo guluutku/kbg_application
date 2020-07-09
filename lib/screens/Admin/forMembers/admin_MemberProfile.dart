@@ -45,7 +45,6 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
   // variables for group lesson
   int _groupEightHours, _groupSixHours, _groupOneHours, _groupPrice, _groupTotalHours;
   String _groupSession;
-  List _secondStudentList = [];
   bool _groupAuthorise = false;
 
   // dates
@@ -111,7 +110,6 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
       _privateSession = snapshot['Session'];
       _privateSixHours = snapshot['Six Hours'];
       _privateTotalHours = snapshot['Total Hours'];
-      _secondStudentList = snapshot['Second Student'];
       Timestamp timestampPrivate = snapshot['Date'];
       _privateDate = timestampPrivate.toDate();
       _privateAuthorise = snapshot['Lesson Authorise'];
@@ -129,9 +127,12 @@ class _Admin_MemberProfileState extends State<Admin_MemberProfile> {
       _groupSession = snapshot['Session'];
       _groupSixHours = snapshot['Six Hours'];
       _groupTotalHours = snapshot['Total Hours'];
-      _secondStudentList = snapshot['Second Student'];
       Timestamp timestampGroup = snapshot['Date'];
       _groupDate = timestampGroup.toDate();
+      _secondPersonName = snapshot["Second Student Name"];
+      _secondPersonSurname =snapshot["Second Student Surname"];
+      _secondPersonAge = snapshot["Second Student Age"];
+      _secondPersonWeight = snapshot["Second Student Age"];
       _groupAuthorise = snapshot['Lesson Authorise'];
     });
   }
