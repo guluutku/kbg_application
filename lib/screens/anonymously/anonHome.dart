@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:kbgapp/services/authentication.dart';
 import 'package:kbgapp/sharedCode/logout.dart';
 import 'anonLesson/anonyLessonHome.dart';
 import 'package:kbgapp/screens/anonymously/anonRental/anonRentalPage.dart';
@@ -27,47 +26,49 @@ class _AnonymousHomePageState extends State<AnonymousHomePage> {
         ],
       ),
 
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
 
-          children: <Widget>[
-            Text(
-              " Welcome to KBG Appointment. "
-                  "\n"
-                  " You can rent our equipments or get lessons "
-                  "\n "
-                  "from our professional teachers. ",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+            children: <Widget>[
+              Text(
+                " Welcome to KBG Appointment. "
+                    "\n"
+                    " You can rent our equipments or get lessons "
+                    "\n "
+                    "from our professional teachers. ",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-            ),
 
-            SizedBox(height: 10,),
+              SizedBox(height: 10,),
 
-            Image.asset("assets/images/huseyinAbee.jpg"),
+              Image.asset("assets/images/huseyinAbee.jpg"),
 
-            RaisedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LessonsHomePage())
-                );
-              },
-              child: Text('Take Lesson'),
-            ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LessonsHomePage())
+                  );
+                },
+                child: Text('Take Lesson'),
+              ),
 
-            RaisedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AnonRentalPage())
-                );
-              },
-              child: Text('Rent Equipments'),
-            ),
-          ],
+              RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AnonRentalPage())
+                  );
+                },
+                child: Text('Rent Equipments'),
+              ),
+            ],
+          ),
         ),
       ),
     );

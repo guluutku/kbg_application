@@ -9,6 +9,7 @@ import 'package:kbgapp/screens/signUp.dart';
 import 'package:kbgapp/screens/withAccount/accountHome.dart';
 import 'package:kbgapp/services/authentication.dart';
 import 'package:kbgapp/sharedCode/loadingIcon.dart';
+import 'package:kbgapp/sharedCode/missingInformations.dart';
 import 'package:kbgapp/sharedCode/textInpuDecorations.dart';
 import 'anonymously/anonHome.dart';
 import 'package:kbgapp/services/database.dart';
@@ -155,8 +156,13 @@ class _SignInState extends State<EntryPage> {
             child: Text("Save"),
             onPressed: (){
               setState(() {
-                _databaseService.memberDataUpdate(_name, _surname, _age, _weight, _phoneNumber);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AccountHome()));
+                if(_name == null || _surname == null || _age == null || _phoneNumber == null || _weight == null){
+                  noInfo(context);
+                }
+                else{
+                  _databaseService.memberDataUpdate(_name, _surname, _age, _weight, _phoneNumber);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AccountHome()));
+                }
               });
             },
           ),

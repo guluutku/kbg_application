@@ -132,7 +132,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
         actions: <Widget>[
           FlatButton(
             child: Text(
-                "Send rental",
+                "Make an Appointment",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -422,6 +422,7 @@ class _AnonHalfDayRentalState extends State<AnonHalfDayRental> {
                       decoration: textInputDecoration.copyWith(labelText: "Enter your e-mail"),
                       validator: (val) => val.isEmpty ? 'Please enter an e-mail' : null,
                       onChanged: (val) => setState(() => _email = val),
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     SizedBox(height: 10.0),
 

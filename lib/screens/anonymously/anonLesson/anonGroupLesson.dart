@@ -148,6 +148,8 @@ class _AnonGroupLessonState extends State<AnonGroupLesson> {
                 } else if (_name == null || _surname == null || _email == null || _phoneNumber == null || _weight == null || _age == null
                     ||  _secondName == null || _secondSurname == null || _secondAge == null || _secondWeight == null){
                   noInfo(context);
+                } else if( _session == null){
+                  noSession(context);
                 } else{
                   _lessonConfirmation(context);
                 }

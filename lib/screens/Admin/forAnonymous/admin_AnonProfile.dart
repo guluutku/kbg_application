@@ -144,166 +144,172 @@ class _Admin_AnonProfileState extends State<Admin_AnonProfile> {
       appBar: AppBar(
         title: Text("Profile"),
       ),
-      body: Container(
-        child: _name == null && _surname == null && _phone == null && _age == null && _weight == null ? Loading() : Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Card( // if all of the variables have a value show customer profile
-              child: _name == null && _surname == null && _phone == null && _age == null && _weight == null ? Text("User haven't give their personal information") : Column(
-                children: <Widget>[
-                  Text("Customer Profile:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red),),
-                  Text("Name: $_name", style: TextStyle(fontSize: 15),),
-                  Text("Surname: $_surname", style: TextStyle(fontSize: 15),),
-                  Text("Phone Number: $_phone", style: TextStyle(fontSize: 15),),
-                  Text("Age: $_age", style: TextStyle(fontSize: 15),),
-                  Text("Weight: $_weight", style: TextStyle(fontSize: 15),),
-                ],
+      body: SingleChildScrollView(
+        child: Container(
+          child: _name == null && _surname == null && _phone == null && _age == null && _weight == null ? Loading() : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Card( // if all of the variables have a value show customer profile
+                child: _name == null && _surname == null && _phone == null && _age == null && _weight == null ? Text("User haven't give their personal information") : Column(
+                  children: <Widget>[
+                    Text("Customer Profile:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.red),),
+                    Text("Name: $_name", style: TextStyle(fontSize: 15),),
+                    Text("Surname: $_surname", style: TextStyle(fontSize: 15),),
+                    Text("Phone Number: $_phone", style: TextStyle(fontSize: 15),),
+                    Text("Age: $_age", style: TextStyle(fontSize: 15),),
+                    Text("Weight: $_weight", style: TextStyle(fontSize: 15),),
+                  ],
+                ),
               ),
-            ),
 
-            // show half day rental information
-            Card(
-              color: _halfAuthorise == false ? Colors.grey : Colors.blue,
-              child: _halfBoard == null && _halfHarness == null && _halfPrice == null && _halfEquipment == null ? Text("Customer did not rent any equipment for half a day", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),)
-                  : Column(
-                children: <Widget>[
-                  Text("Half Day Rental:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),),
-                  _halfBoard == 0 ? Text("No board", style: TextStyle(fontSize: 15),) : Text("Number of Boards: $_halfBoard", style: TextStyle(fontSize: 15),),
-                  _halfEquipment == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Full Equipments: $_halfEquipment", style: TextStyle(fontSize: 15),),
-                  _halfHarness == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Harnesses: $_halfHarness", style: TextStyle(fontSize: 15),),
-                  _halfKiteBar == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Kite N Bar: $_halfKiteBar", style: TextStyle(fontSize: 15),),
-                  Text("Price(TL): $_halfPrice", style: TextStyle(fontSize: 15),),
-                  Text("$_halfDate", style: TextStyle(fontSize: 15),),
+              // show half day rental information
+              Card(
+                color: _halfAuthorise == false ? Colors.grey : Colors.blue,
+                child: _halfBoard == null && _halfHarness == null && _halfPrice == null && _halfEquipment == null ? Text("Customer did not rent any equipment for half a day", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),)
+                    : Column(
+                  children: <Widget>[
+                    Text("Half Day Rental:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),),
+                    _halfBoard == 0 ? Text("No board", style: TextStyle(fontSize: 15),) : Text("Number of Boards: $_halfBoard", style: TextStyle(fontSize: 15),),
+                    _halfEquipment == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Full Equipments: $_halfEquipment", style: TextStyle(fontSize: 15),),
+                    _halfHarness == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Harnesses: $_halfHarness", style: TextStyle(fontSize: 15),),
+                    _halfKiteBar == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Kite N Bar: $_halfKiteBar", style: TextStyle(fontSize: 15),),
+                    Text("Price(TL): $_halfPrice", style: TextStyle(fontSize: 15),),
+                    Text("$_halfDate", style: TextStyle(fontSize: 15),),
 
-                  SizedBox(height: 10,),
-                  Text(
-                    "Authorise: ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15
+                    SizedBox(height: 10,),
+                    Text(
+                      "Authorise: ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
+                      ),
                     ),
-                  ),
-                  Checkbox(
-                    value: _halfAuthorise,
-                    onChanged: (bool value){
-                      setState(() {
-                        _halfAuthorise = value;
-                        _databaseService.halfDayAuthorise(_halfAuthorise, _docID);
-                      });
-                    },
-                  ),
-                ],
-              ) ,
-            ),
-
-            // show full day rental information
-            Card(
-              color: _fullAuthorise == false ? Colors.grey : Colors.blue,
-              child: _fullBoard == null && _fullHarness == null && _fullPrice == null && _fullEquipment == null ? Text("Customer did not rent any equipment for a day", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),)
-                  : Column(
-                children: <Widget>[
-                  Text("Full Day Rental:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),),
-                  _fullBoard == 0 ? Text("No board", style: TextStyle(fontSize: 15),) : Text("Number of Boards: $_fullBoard", style: TextStyle(fontSize: 15),),
-                  _fullEquipment == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Full Equipments: $_fullEquipment", style: TextStyle(fontSize: 15),),
-                  _fullHarness == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Harnesses: $_fullHarness", style: TextStyle(fontSize: 15),),
-                  _fullKiteBar == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Kite N Bar: $_fullKiteBar", style: TextStyle(fontSize: 15),),
-                  Text("Price(TL): $_fullPrice", style: TextStyle(fontSize: 15),),
-                  Text("$_fullDate", style: TextStyle(fontSize: 15),),
-
-                  SizedBox(height: 10,),
-                  Text(
-                    "Authorise: ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15
+                    Checkbox(
+                      value: _halfAuthorise,
+                      onChanged: (bool value){
+                        setState(() {
+                          _halfAuthorise = value;
+                          _databaseService.halfDayAuthorise(_halfAuthorise, _docID);
+                        });
+                      },
                     ),
-                  ),
-                  Checkbox(
-                    value: _fullAuthorise,
-                    onChanged: (bool value){
-                      setState(() {
-                        _fullAuthorise = value;
-                        _databaseService.fullDayAuthorise(_fullAuthorise, _docID);
-                      });
-                    },
-                  ),
-                ],
-              ) ,
-            ),
-
-            // show private lesson
-            Card(
-              color: _privateAuthorise == false ? Colors.grey : Colors.blue,
-              child: _privateTotalHours == null && _privateSixHours == null  && _privateSession == null && _privatePrice == null && _privateOneHours == null && _privateEightHours == null && _privateDate == null ? Text("Customer did not buy any private lesson", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),)
-                  : Column(
-                children: <Widget>[
-                  Text("Private Lesson:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),),
-                  _privateOneHours == 0 ? Text("No one hour", style: TextStyle(fontSize: 15),) : Text("One Hour Lessons: $_privateOneHours, style: TextStyle(fontSize: 15),"),
-                  _privateSixHours == 0 ? Text("No six hours", style: TextStyle(fontSize: 15),) : Text("Six Hours Lessons: $_privateSixHours", style: TextStyle(fontSize: 15),),
-                  _privateEightHours == 0 ? Text("No eight hours", style: TextStyle(fontSize: 15),) : Text("Eight Hour Lessons: $_privateEightHours", style: TextStyle(fontSize: 15),),
-                  Text("Total Hours: $_privateTotalHours", style: TextStyle(fontSize: 15),),
-                  Text("Lesson Session: $_privateSession", style: TextStyle(fontSize: 15),),
-                  Text("Price(TL): $_privatePrice", style: TextStyle(fontSize: 15),),
-                  Text("$_privateDate", style: TextStyle(fontSize: 15),),
-
-                  SizedBox(height: 10,),
-                  Text(
-                    "Authorise: ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15
-                    ),
-                  ),
-                  Checkbox(
-                    value: _privateAuthorise,
-                    onChanged: (bool value){
-                      setState(() {
-                        _privateAuthorise = value;
-                        _databaseService.privateLessonAuthorise(_privateAuthorise, _docID);
-                      });
-                    },
-                  ),
-                ],
+                  ],
+                ) ,
               ),
-            ),
 
-            // show Group Lesson
-            Card(
-              color: _groupAuthorise == false ? Colors.grey : Colors.blue,
-              child: _groupTotalHours == null && _groupSixHours == null  && _groupSession == null && _groupPrice == null && _groupOneHours == null && _groupEightHours == null && _groupDate == null ? Text("Customer did not buy any group lesson", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),)
-                  : Column(
-                children: <Widget>[
-                  Text("Private Lesson:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),),
-                  _groupOneHours == 0 ? Text("No one hour", style: TextStyle(fontSize: 15),) : Text("One Hour Lessons: $_privateOneHours", style: TextStyle(fontSize: 15),),
-                  _groupSixHours == 0 ? Text("No six hours", style: TextStyle(fontSize: 15),) : Text("Six Hours Lessons: $_privateSixHours", style: TextStyle(fontSize: 15),),
-                  _groupEightHours == 0 ? Text("No eight hours", style: TextStyle(fontSize: 15),) : Text("Eight Hour Lessons: $_privateEightHours", style: TextStyle(fontSize: 15),),
-                  Text("Total Hours: $_groupTotalHours"),
-                  Text("Lesson Session: $_groupSession"),
-                  Text("Price(TL): $_groupPrice"),
-                  Text("$_groupDate"),
+              // show full day rental information
+              Card(
+                color: _fullAuthorise == false ? Colors.grey : Colors.blue,
+                child: _fullBoard == null && _fullHarness == null && _fullPrice == null && _fullEquipment == null ? Text("Customer did not rent any equipment for a day", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),)
+                    : Column(
+                  children: <Widget>[
+                    Text("Full Day Rental:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),),
+                    _fullBoard == 0 ? Text("No board", style: TextStyle(fontSize: 15),) : Text("Number of Boards: $_fullBoard", style: TextStyle(fontSize: 15),),
+                    _fullEquipment == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Full Equipments: $_fullEquipment", style: TextStyle(fontSize: 15),),
+                    _fullHarness == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Harnesses: $_fullHarness", style: TextStyle(fontSize: 15),),
+                    _fullKiteBar == 0 ? Text("No full equipment", style: TextStyle(fontSize: 15),) : Text("Kite N Bar: $_fullKiteBar", style: TextStyle(fontSize: 15),),
+                    Text("Price(TL): $_fullPrice", style: TextStyle(fontSize: 15),),
+                    Text("$_fullDate", style: TextStyle(fontSize: 15),),
 
-                  SizedBox(height: 10,),
-                  Text(
-                    "Authorise: ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15
+                    SizedBox(height: 10,),
+                    Text(
+                      "Authorise: ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
+                      ),
                     ),
-                  ),
-                  Checkbox(
-                    value: _groupAuthorise,
-                    onChanged: (bool value){
-                      setState(() {
-                        _groupAuthorise = value;
-                        _databaseService.groupLessonAuthorise(_groupAuthorise, _docID);
-                      });
-                    },
-                  ),
-                ],
+                    Checkbox(
+                      value: _fullAuthorise,
+                      onChanged: (bool value){
+                        setState(() {
+                          _fullAuthorise = value;
+                          _databaseService.fullDayAuthorise(_fullAuthorise, _docID);
+                        });
+                      },
+                    ),
+                  ],
+                ) ,
               ),
-            ),
-          ],
+
+              // show private lesson
+              Card(
+                color: _privateAuthorise == false ? Colors.grey : Colors.blue,
+                child: _privateTotalHours == null && _privateSixHours == null  && _privateSession == null && _privatePrice == null && _privateOneHours == null && _privateEightHours == null && _privateDate == null ? Text("Customer did not buy any private lesson", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),)
+                    : Column(
+                  children: <Widget>[
+                    Text("Private Lesson:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),),
+                    _privateOneHours == 0 ? Text("No one hour", style: TextStyle(fontSize: 15),) : Text("One Hour Lessons: $_privateOneHours", style: TextStyle(fontSize: 15),),
+                    _privateSixHours == 0 ? Text("No six hours", style: TextStyle(fontSize: 15),) : Text("Six Hours Lessons: $_privateSixHours", style: TextStyle(fontSize: 15),),
+                    _privateEightHours == 0 ? Text("No eight hours", style: TextStyle(fontSize: 15),) : Text("Eight Hour Lessons: $_privateEightHours", style: TextStyle(fontSize: 15),),
+                    Text("Total Hours: $_privateTotalHours", style: TextStyle(fontSize: 15),),
+                    Text("Lesson Session: $_privateSession", style: TextStyle(fontSize: 15),),
+                    Text("Price(TL): $_privatePrice", style: TextStyle(fontSize: 15),),
+                    Text("$_privateDate", style: TextStyle(fontSize: 15),),
+
+                    SizedBox(height: 10,),
+                    Text(
+                      "Authorise: ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
+                      ),
+                    ),
+                    Checkbox(
+                      value: _privateAuthorise,
+                      onChanged: (bool value){
+                        setState(() {
+                          _privateAuthorise = value;
+                          _databaseService.privateLessonAuthorise(_privateAuthorise, _docID);
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
+              // show Group Lesson
+              Card(
+                color: _groupAuthorise == false ? Colors.grey : Colors.blue,
+                child: _groupTotalHours == null && _groupSixHours == null  && _groupSession == null && _groupPrice == null && _groupOneHours == null && _groupEightHours == null && _groupDate == null ? Text("Customer did not buy any group lesson", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),)
+                    : Column(
+                  children: <Widget>[
+                    Text("Group Lesson:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),),
+                    _groupOneHours == 0 ? Text("No one hour", style: TextStyle(fontSize: 15),) : Text("One Hour Lessons: $_privateOneHours", style: TextStyle(fontSize: 15),),
+                    _groupSixHours == 0 ? Text("No six hours", style: TextStyle(fontSize: 15),) : Text("Six Hours Lessons: $_privateSixHours", style: TextStyle(fontSize: 15),),
+                    _groupEightHours == 0 ? Text("No eight hours", style: TextStyle(fontSize: 15),) : Text("Eight Hour Lessons: $_privateEightHours", style: TextStyle(fontSize: 15),),
+                    Text("Second Student Name: $_secondPersonName"),
+                    Text("Second Student Surname: $_secondPersonSurname"),
+                    Text("Second Student Age: $_secondPersonAge"),
+                    Text("Second Student Weight: $_secondPersonWeight"),
+                    Text("Total Hours: $_groupTotalHours"),
+                    Text("Lesson Session: $_groupSession"),
+                    Text("Price(TL): $_groupPrice"),
+                    Text("$_groupDate"),
+
+                    SizedBox(height: 10,),
+                    Text(
+                      "Authorise: ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
+                      ),
+                    ),
+                    Checkbox(
+                      value: _groupAuthorise,
+                      onChanged: (bool value){
+                        setState(() {
+                          _groupAuthorise = value;
+                          _databaseService.groupLessonAuthorise(_groupAuthorise, _docID);
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

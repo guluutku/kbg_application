@@ -128,6 +128,24 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         title: Text("Private Lesson"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Make an appointment"),
+            onPressed: () {
+              setState(() {
+                if(_totalHours == 0){
+                  noLesson(context);
+                } else if( _session == null){
+                  noSession(context);
+                } else if (_name == null || _surname == null || _email == null || _phoneNumber == null || _weight == null || _age == null){
+                  noInfo(context);
+                }else{
+                  _lessonConfirmation(context);
+                }
+              });
+            },
+          ),
+        ],
       ),
 
       body: SingleChildScrollView(
@@ -324,13 +342,7 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                     SizedBox(width: 16,),
                     RaisedButton(
                       onPressed: (){
-                        if(_totalHours == 0){
-                          noLesson(context);
-                        } else if( _session == null){
-                          noSession(context);
-                        } else{
                           _personalInfo(context);
-                        }
                       },
                       child: Text("Give personal information"),
                     ),
@@ -441,14 +453,14 @@ class _AnonPrivateLessonsState extends State<AnonPrivateLessons> {
                       RaisedButton(
                           color: Colors.brown[400],
                           child: Text(
-                            'Make an appointment',
+                            'Save and Close',
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () async {
                             if(_name == null || _surname == null || _email == null || _phoneNumber == null || _weight == null || _age == null){
                               noInfo(context);
                             } else{
-                              _lessonConfirmation(context);
+                              Navigator.of(context).pop(false);
                             }
                           }
                       ),

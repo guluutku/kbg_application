@@ -32,7 +32,7 @@ class _AccountHomeState extends State<AccountHome> {
             onPressed: (){
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EntryPage())
+                  MaterialPageRoute(builder: (context) => Profile())
               );
             },
           ),
