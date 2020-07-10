@@ -4,6 +4,7 @@ import 'package:kbgapp/screens/entryPage.dart';
 import 'package:kbgapp/screens/withAccount/lessons/lessonsHome.dart';
 import 'package:kbgapp/screens/withAccount/rental/rentalPage.dart';
 import 'package:kbgapp/services/authentication.dart';
+import 'package:kbgapp/sharedCode/logout.dart';
 import 'profile/profile.dart';
 
 class AccountHome extends StatefulWidget {
@@ -36,17 +37,7 @@ class _AccountHomeState extends State<AccountHome> {
               );
             },
           ),
-          FlatButton.icon(
-            icon: Icon(Icons.close),
-            label: Text("Log Out"),
-            onPressed: () async{
-              await _authService.logOut();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EntryPage())
-              );
-            },
-          ),
+         LogOut(),
         ],
       ),
 

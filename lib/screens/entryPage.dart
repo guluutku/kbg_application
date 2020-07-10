@@ -330,6 +330,7 @@ class _SignInState extends State<EntryPage> {
         });
       } else if(firebaseUser.uid == "aMDsuSJ9h6eIJuWX0SvwmXJTvTJ3"){ // tried to find admin with its uid
           Navigator.push(context, MaterialPageRoute(builder: (context) => AdminBottomNavigator()));
+          _loading = false;
       } else { // sends to account page
           _loading = false;
           var firebaseUser = await FirebaseAuth.instance.currentUser();

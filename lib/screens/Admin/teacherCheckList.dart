@@ -43,11 +43,11 @@ class _AdminHomeState extends State<AdminHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
+        leading: new Container(),
         title: Text("Daily Teacher Checklist"),
         actions: <Widget>[
           LogOut(),
         ],
-        leading: new Container(),
       ),
 
       body: _gunWork == null && _gunAfternoon == null && _gunMorning == null ? Loading() : Center(
